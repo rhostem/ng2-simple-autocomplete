@@ -26,7 +26,7 @@ import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 import '../styles/styles.scss';
 
-import { SimpleAutocomplete } from '../ng2-simple-autocomplete';
+import { Ng2SimpleAutocomplete } from '../ng2-simple-autocomplete';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -46,7 +46,7 @@ type StoreType = {
     AppComponent,
     HomeComponent,
     NoContentComponent,
-    SimpleAutocomplete,
+    Ng2SimpleAutocomplete,
   ],
   /**
    * Import Angular's modules.

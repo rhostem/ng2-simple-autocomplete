@@ -3,6 +3,7 @@ const ts = require('gulp-typescript');
 const jasmine = require('gulp-jasmine');
 const clean = require('gulp-clean');
 const runSequence = require('run-sequence');
+var gulpCopy = require('gulp-copy');
 
 gulp.task('build', function() {
     const merge = require('merge2');
@@ -17,8 +18,17 @@ gulp.task('build', function() {
     ]);
 });
 
+gulp.task('copy:asset', function () {
+  var sources = [
+      './src/ng2-simple-autocomplete.css',
+      './src/ng2-simple-autocomplete.html'
+  ];
+  return gulp.src(sources)
+    .pipe(gulp.dest('dist'))
+})
+
 gulp.task('clean', function () {
-    return gulp.src('dist', { read: false })
+    return gulp.src(['dist', 'definitions'], { read: false })
         .pipe(clean());
 });
 
@@ -32,8 +42,9 @@ gulp.task('watch', ['default'], function() {
 });
 
 gulp.task('test', [], function(cb) {
-  runSequence('clean', 'build', 'test:run', cb);
+  runSequence('clean', 'build',  'test:run', cb);
 });
+
 gulp.task('default', [], function(cb) {
-    runSequence('clean', 'build', cb);
+    runSequence('clean', 'build', 'copy:asset', cb);
 });
