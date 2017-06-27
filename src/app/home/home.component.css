@@ -1,1 +1,11 @@
 /*styles for home content only*/
+
+.autocomplete-wrapper {
+  width: 300px;
+}
+
+.autocomplete-wrapper input {
+  font-weight: bold;
+  height: 35px;
+  line-height: 35px;
+}

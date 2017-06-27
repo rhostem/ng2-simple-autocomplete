@@ -363,9 +363,9 @@ module.exports = function (options) {
        *
        * Dependencies: HtmlWebpackPlugin
        */
-      new HtmlElementsPlugin({
-        headTags: require('./head-config.common')
-      }),
+      // new HtmlElementsPlugin({
+      //   // headTags: require('./head-config.common')
+      // }),
 
       /**
        * Plugin LoaderOptionsPlugin (experimental)
