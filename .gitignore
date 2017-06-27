@@ -1,5 +1,4 @@
 # @AngularClass
-
 # Logs
 logs
 *.log
@@ -52,6 +51,8 @@ npm-debug.log
 /public/dist/
 /src/*/dist/
 /dist/**
+/definitions
+/definitions/**
 /.awcache
 .webpack.json
 /compiled/

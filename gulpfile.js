@@ -3,7 +3,6 @@ const ts = require('gulp-typescript');
 const jasmine = require('gulp-jasmine');
 const clean = require('gulp-clean');
 const runSequence = require('run-sequence');
-var gulpCopy = require('gulp-copy');
 
 gulp.task('build', function() {
     const merge = require('merge2');
