@@ -1,6 +1,6 @@
 {
   "name": "ng2-simple-autocomplete",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "autocomplete for Angular",
   "main": "dist/autocomplete.js",
   "typings": "definitions/autocomplete.d.ts",
@@ -104,7 +104,7 @@
     "istanbul-instrumenter-loader": "2.0.0",
     "jasmine-core": "^2.5.2",
     "json-loader": "^0.5.4",
-  "karma": "^1.6.0",
+    "karma": "^1.6.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.1.0",
