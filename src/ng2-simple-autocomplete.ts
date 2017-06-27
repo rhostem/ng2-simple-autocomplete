@@ -29,7 +29,7 @@ const isBackspace = (keyCode) => keyCode === 8;
 const isDelete = (keyCode) => keyCode === 46;
 const isESC = (keyCode) => keyCode === 27;
 const isTab = (keyCode) => keyCode === 9;
-const isEmptyString = (str: string) => str.replace(/\s/g, '') === '';
+const isEmptyString = (str = '') => str.replace(/\s/g, '') === '';
 const removeSpace = (str = '') => {
   if (typeof str === 'string') {
     return str.replace(/\s/g, '');
@@ -90,7 +90,7 @@ export interface AutoCompleteResult {
           [ngClass]="{ 'is-focus': result.isFocus === true }"
           (click)="onClickResult(i)"
           (mouseover)="onMouseOverResultItem(i)"
-          [innerHtml]="(sanitizer.bypassSecurityTrustHtml(result.markup) || result.text)"
+          [innerHtml]="result.text || sanitizer.bypassSecurityTrustHtml(result.markup)"
         ></li>
       </ul>
 
