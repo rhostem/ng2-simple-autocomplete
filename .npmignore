@@ -1,0 +1,7 @@
+.awcache
+.vscode
+config
+src
+node_modules
+tsconfig.json
+webpack.config.js
