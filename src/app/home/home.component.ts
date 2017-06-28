@@ -14,38 +14,46 @@ export class HomeComponent implements OnInit {
   inputStyle = {
     'width': '300px',
     'font-weight': 'normal',
-    'font-size': '24px',
+    // 'font-size': '20px',
     'height': '40px',
     'line-height': '40px',
     'border': '2px solid #eee',
     'border-radius': '4px',
   };
   search = '';
+  selected: AutoCompleteResult;
 
   // constructor(
   // ) {
   // }
 
   public ngOnInit() {
-
+    this.selected = { text: '', value: '' };
     this.results = [
       {
-        markup: '<b>result 1</b>',
-        value: 'result 1',
+        text: 'Ng2',
+        value: 'value_Ng2',
       },
       {
-        text: 'result 2',
-        value: 'result 2',
+        text: 'Simple',
+        value: 'value_Simple',
       },
       {
-        text: 'result 3',
-        value: 'result 3',
+        text: 'Autocomplete',
+        value: 'value_Autocomplete',
       },
       {
-        text: 'result 4',
-        value: 'result 4',
+        markup: '<b>bold text</b>by html tag',
+        value: 'value_<b>bold text</b>by html tag',
       },
     ];
-
   }
+
+  onSelect(v: AutoCompleteResult) {
+    this.selected = v;
+  }
+
+
+
+
 }

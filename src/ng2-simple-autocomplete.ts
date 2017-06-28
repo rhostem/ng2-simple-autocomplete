@@ -66,9 +66,10 @@ export interface AutoCompleteResult {
       <div
         class="autocomplete-iconWrapper"
         [ngClass]="{ 'is-visible': isResetButtonVisible}"
+        [ngStyle]="fontSize"
         (click)="onResetSearchText()"
       >
-        <span class="resetIcon" [ngStyle]="fontSize">✕</span>
+        <span class="resetIcon">✕</span>
       </div>
 
       <!--
@@ -104,8 +105,9 @@ export interface AutoCompleteResult {
         class="autocomplete-result"
         [ngClass]="{ 'is-visible': isSearchHistoryVisible }"
       >
+        <!--
         <li class="autocomplete-resultTitle">
-          <span>최근 검색</span>
+          <span>search recently</span>
           <span
             (click)="onClickResetHistory()"
             class="autocomplete-historyTrash"
@@ -113,6 +115,7 @@ export interface AutoCompleteResult {
             <i class="fa fa-trash-o"></i>
           </span>
         </li>
+        -->
         <li
           *ngFor="let result of searchHistory;let i = index"
           class="autocomplete-item"
@@ -125,23 +128,26 @@ export interface AutoCompleteResult {
           >
           </div>
           <span class="autocomplete-deleteHistoryItemBtn" (click)="onDeleteHistoryItem(i)">
-            <i class="fa fa-minus-square-o"></i>
+            <span class="resetIcon sizeInherit">✕</span>
           </span>
         </li>
 
+        <!--
         <li
           *ngIf="!searchHistory.length"
           class="autocomplete-item"
-        >검색 이력이 없습니다.</li>
+        >no search history</li>
+        -->
       </ul>
     </div>
   `,
   styles: [`
     .autocomplete {
       position: relative;
+      display: inline-block;
       box-sizing: border-box;
       width: 100%;
-      padding: 0 1.5em 0 0.5em;
+      padding: 0 16px;
       height: 35px;
       line-height: 35px;
       border: 1px solid #ddd;
@@ -197,8 +203,8 @@ export interface AutoCompleteResult {
 
     .autocomplete-item {
       position: relative;
-      padding: 8px;
-      padding-right: 24px;
+      padding: 0.5em;
+      padding-right: 1.5em;
       max-height: 200px;
     }
 
@@ -217,10 +223,9 @@ export interface AutoCompleteResult {
       right: 0;
       transform: translateY(-50%);
       display: none;
-      width: 30px;
+      width: 1.5em;
       height: 100%;
       padding: 0 5px;
-      font-size: 14px;
       text-align: center;
       background: white;
     }
@@ -269,15 +274,13 @@ export interface AutoCompleteResult {
       top: 50%;
       right: 0;
       transform: translateY(-50%);
-      width: 30px;
-      font-size: 14px;
-      text-align: right;
+      width: 1.5em;
       display: block;
       color: #3b4752;
-      padding: 8px;
       opacity: 0.3;
-      font-size: 0.9em;
       transition: all 0.2s ease-in-out;
+      font-size: 1em;
+      text-align: center;
     }
 
     .autocomplete-deleteHistoryItemBtn:hover {
@@ -287,6 +290,15 @@ export interface AutoCompleteResult {
 
     .autocomplete-deleteHistoryItemBtn:hover > i {
       transform: scale(1.5);
+    }
+
+    .resetIcon {
+      opacity: 0.3;
+    }
+
+    .resetIcon:hover {
+      opacity: 1;
+      cursor: pointer;
     }
   `],
 })
@@ -336,7 +348,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
   isNoResults = false;                        // 검색 결과 존재 여부. 알 수 없는 경우도 false로 할당한다.
   isResultSelected = false;                   // 검색 결과 선택 여부
   maintainFocus: boolean;                     // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
-  fontSize = <any>{};
+  fontSize = <any>{}; // font-size style extracted from inputStyle
 
   // 초기화 버튼 표시 여부
   get isResetButtonVisible(): Boolean {
@@ -349,12 +361,23 @@ export class Ng2SimpleAutocomplete implements OnInit {
 
   // 결과 목록 표시 여부
   get isResultVisible(): Boolean {
-    return this.isFocusIn && !this.isLoading && !!this.searchResults.length && this.isInputExist;
+    return this.isFocusIn &&
+      !this.isLoading &&
+      !!this.searchResults.length &&
+      this.isInputExist;
   }
 
-  // 검색 히스토리 표시 여부
+  /**
+   * check if history list is visible
+   *
+   * @readonly
+   * @type {Boolean}
+   * @memberof Ng2SimpleAutocomplete
+   */
   get isSearchHistoryVisible(): Boolean {
-    return this.isFocusIn &&
+    // return true;
+    return this.searchHistory.length &&
+      this.isFocusIn &&
       !this.isInputExist &&
       !this.isLoading &&
       // !this.searchResults.length &&
@@ -380,7 +403,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
 
   constructor(
     public sanitizer: DomSanitizer
-  ){}
+  ) {}
 
   ngOnInit() {
     this.searchResults = this.searchResults || [];
@@ -390,6 +413,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
       this.initSearchHistory();
     }
 
+    // extract fontSize style
     this.fontSize = Object.assign({}, {
       'font-size': this.inputStyle['font-size'] || 'inherit',
     });
@@ -403,17 +427,18 @@ export class Ng2SimpleAutocomplete implements OnInit {
       Array.isArray(changes.searchResults.currentValue)
     ) {
       this.searchResults = changes.searchResults.currentValue.map((v, index) => {
-        // 첫번째 아이템 포커스
-        return (this.autoFocusOnFirst && index === 0) ? Object.assign(v, { isFocus: true }) : v;
+        // focus on first result item
+        return (this.autoFocusOnFirst && index === 0) ?
+          Object.assign(v, { isFocus: true }) : v;
       });
     }
 
     // 검색 키워드 없을 경우 결과 초기화
-    if (changes['search']) {
-      if (!changes['search'].currentValue) {
-        this.searchResults = [];
-      }
-    }
+    // if (changes['search']) {
+    //   if (!changes['search'].currentValue) {
+    //     this.searchResults = [];
+    //   }
+    // }
 
     // 검색 결과 확인
     if (changes['isLoading']) {
@@ -435,7 +460,6 @@ export class Ng2SimpleAutocomplete implements OnInit {
     const history = window.localStorage
       .getItem(`ng2_simple_autocomplete_history_${this.historyId}`);
     this.searchHistory = history ? JSON.parse(history) : [];
-    console.log('this.searchHistory', this.searchHistory);
   }
 
   initEventStream() {

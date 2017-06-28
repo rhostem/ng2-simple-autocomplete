@@ -13,7 +13,7 @@
     "typeahead"
   ],
   "author": "rhostem",
-  "homepage": "https://github.com/rhostem/ng2-simple-autocomplete",
+  "homepage": "https://rhostem.github.io/ng2-simple-autocomplete",
   "repository": {
     "type": "git",
     "url": "https://github.com/rhostem/ng2-simple-autocomplete.git"
@@ -43,6 +43,7 @@
     "start:hmr": "npm run server:dev:hmr",
     "server": "npm run server:dev",
     "start": "npm run server:dev",
+    "dev": "npm run server:dev",
     "test": "npm run lint && karma start",
     "tslint": "tslint",
     "webdriver-manager": "webdriver-manager",

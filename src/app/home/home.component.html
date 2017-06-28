@@ -4,8 +4,15 @@
       [(search)]="search"
       [searchResults]="results"
       [inputStyle]="inputStyle"
-      historyId="sample1"
+      historyId="static"
+      (onSelect)="onSelect($event)"
     ></ng2-simple-autocomplete>
+    <h2>Selected Item</h2>
+    <ul>
+      <li>text or markup = {{selected.text || selected.markup}}</li>
+      <li>value = {{selected.value}}</li>
+    </ul>
+
   </div>
 
 </div>
