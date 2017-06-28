@@ -105,9 +105,8 @@ export interface AutoCompleteResult {
         class="autocomplete-result"
         [ngClass]="{ 'is-visible': isSearchHistoryVisible }"
       >
-        <!--
         <li class="autocomplete-resultTitle">
-          <span>search recently</span>
+          <span [innerHtml]="sanitizer.bypassSecurityTrustHtml(historyHeading)"></span>
           <span
             (click)="onClickResetHistory()"
             class="autocomplete-historyTrash"
@@ -115,7 +114,6 @@ export interface AutoCompleteResult {
             <i class="fa fa-trash-o"></i>
           </span>
         </li>
-        -->
         <li
           *ngFor="let result of searchHistory;let i = index"
           class="autocomplete-item"
@@ -253,8 +251,8 @@ export interface AutoCompleteResult {
 
     .autocomplete-resultTitle {
       padding: 5px 8px;
-      font-size: 0.9em;
-      font-weight: bold;
+      font-size: 0.85em;
+      opacity: 0.8;
       border-bottom: 1px solid rgba(230, 230, 230, 0.7);
     }
 
@@ -325,9 +323,10 @@ export class Ng2SimpleAutocomplete implements OnInit {
   @Input() placeholder = 'placeholder';
   @Input() isLoading: Boolean;                  // 목록 비동기 로드중 여부
   @Input() historyId: String;                   // 검색 히스토리 아이디. 명시되면 최근 검색 키워드를 표시한다.
+  @Input() historyHeading = 'recently selected'; // 검색 히스토리 아이디. 명시되면 최근 검색 키워드를 표시한다.
   @Input() searchResultsTotal: Number;          // 전체 검색 결과 수
   @Input() autoFocusOnFirst = true;             // 첫번째 항목에 자동 포커스
-  @Input() resetOnDelete = false;               // 검색 텍스트 삭제시 onReset 이벤트 호출
+  @Input() resetOnDelete = true;               // 검색 텍스트 삭제시 onReset 이벤트 호출
   @Input() resetOnFocusOut = false;               // 검색 텍스트 삭제시 onReset 이벤트 호출
   @Input() saveHistoryOnChange = false;
   @Input() noResultText = 'There is no results';
@@ -362,9 +361,9 @@ export class Ng2SimpleAutocomplete implements OnInit {
   // 결과 목록 표시 여부
   get isResultVisible(): Boolean {
     return this.isFocusIn &&
+      !this.isSearchHistoryVisible && // history has higher priority
       !this.isLoading &&
-      !!this.searchResults.length &&
-      this.isInputExist;
+      !!this.searchResults.length;
   }
 
   /**
@@ -375,13 +374,11 @@ export class Ng2SimpleAutocomplete implements OnInit {
    * @memberof Ng2SimpleAutocomplete
    */
   get isSearchHistoryVisible(): Boolean {
-    // return true;
-    return this.searchHistory.length &&
-      this.isFocusIn &&
+    return this.isFocusIn &&
+      !!this.historyId && // history id is required
+      this.searchHistory.length &&
       !this.isInputExist &&
       !this.isLoading &&
-      // !this.searchResults.length &&
-      !!this.historyId &&
       !this.isNoResults;
   }
 
@@ -522,7 +519,10 @@ export class Ng2SimpleAutocomplete implements OnInit {
     this.isFocusIn = true;
     this.isNoResults = false; // 입력중 검색결과는 알 수 없음
     this.search = e.target.value; // 2 way binding된 검색 키워드 업데이트
-    this.onChangeInput.emit(e.target.value); // 검색 키워드 변경시 상위 컴포넌트에서 콜백 실행
+
+    if (!isEmptyString(this.search)) {
+      this.onChangeInput.emit(e.target.value); // 검색 키워드 변경시 상위 컴포넌트에서 콜백 실행
+    }
 
     if (this.saveHistoryOnChange && !isEmptyString(this.search)) {
       this.saveHistory({ text: this.search, value: null });
