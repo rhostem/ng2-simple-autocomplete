@@ -1,11 +1,24 @@
 /*styles for home content only*/
 
+hr {
+  background: palevioletred;
+  height: 2px;
+  margin: 2rem 0;
+  width: 400px;
+}
+
 .autocomplete-wrapper {
-  /*width: 300px;*/
+  width: 400px;
 }
 
 .autocomplete-wrapper input {
   font-weight: bold;
   height: 35px;
   line-height: 35px;
+}
+
+.code--remoteData {
+  padding: 10px;
+  border-radius: 3px;
+  background-color: #efefef;
 }

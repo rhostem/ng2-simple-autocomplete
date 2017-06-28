@@ -1,18 +1,62 @@
 <div>
   <div class="autocomplete-wrapper">
+    <h2>async result with history</h2>
     <ng2-simple-autocomplete
-      [(search)]="search"
-      [searchResults]="results"
-      [inputStyle]="inputStyle"
-      historyId="static"
-      (onSelect)="onSelect($event)"
+      [(search)]="searchAsync"
+      [searchResults]="asyncResults"
+      historyId="async"
+      placeholder="lorem"
+      (onSelect)="onSelectAsync($event)"
+      (onChangeInput)="onChangeSearchAsync($event)"
     ></ng2-simple-autocomplete>
-    <h2>Selected Item</h2>
-    <ul>
-      <li>text or markup = {{selected.text || selected.markup}}</li>
-      <li>value = {{selected.value}}</li>
-    </ul>
+    <h3>remote data</h3>
+    <div class="code--remoteData">
+      <code >
+        &#123; _id: &#39;1&#39;, name: &#39;lorem&#39;, &#125;,<br>
+        &#123; _id: &#39;2&#39;, name: &#39;ipsum&#39;, &#125;,<br>
+        &#123; _id: &#39;3&#39;, name: &#39;pixel&#39;, &#125;,<br>
+      </code>
+    </div>
 
+    <h3>Selected Item</h3>
+    <ul>
+      <li>text or markup: {{!!selectedAsync && (selectedAsync.text || selectedAsync && selectedAsync.markup) || ''}}</li>
+      <li>value: {{selectedAsync && selectedAsync.value}}</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="autocomplete-wrapper">
+    <h2>static result</h2>
+    <ng2-simple-autocomplete
+      [(search)]="searchStatic"
+      [searchResults]="staticResults"
+      (onSelect)="onSelectStatic($event)"
+    ></ng2-simple-autocomplete>
+    <h3>Selected Item</h3>
+    <ul>
+      <li>text or markup: {{!!selectedStatic && (selectedStatic.text || selectedStatic && selectedStatic.markup) || ''}}</li>
+      <li>value: {{selectedStatic && selectedStatic.value}}</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="autocomplete-wrapper">
+    <h2>static result with history</h2>
+    <ng2-simple-autocomplete
+      [(search)]="searchStaticHistory"
+      [searchResults]="staticResults"
+      historyId="static"
+      historyHeading="Recently selected items"
+      (onSelect)="onSelectStaticWithHistory($event)"
+    ></ng2-simple-autocomplete>
+    <h3>Selected Item</h3>
+    <ul>
+      <li>text or markup: {{!!selectedStaticHistory && (selectedStaticHistory.text || selectedStaticHistory.markup || '')}}</li>
+      <li>value: {{selectedStaticHistory && selectedStaticHistory.value}}</li>
+    </ul>
   </div>
 
 </div>

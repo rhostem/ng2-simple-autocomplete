@@ -19,10 +19,10 @@ import { AppState } from './app.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  // constructor(
-  // ) {}
+  constructor(
+  ) {}
 
-  // public ngOnInit() {}
+  public ngOnInit() {}
 }
 
 /**
