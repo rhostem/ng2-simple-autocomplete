@@ -121,7 +121,7 @@ export interface AutoCompleteResult {
           <div
             (click)="onClickResult(i, $event)"
             (mouseover)="onMouseOverResultItem(i)"
-            [innerHtml]="(sanitizer.bypassSecurityTrustHtml(result.markup) || result.text)"
+            [innerHtml]="result.text || sanitizer.bypassSecurityTrustHtml(result.markup)"
           >
           </div>
           <span class="autocomplete-deleteHistoryItemBtn" (click)="onDeleteHistoryItem(i)">
@@ -357,7 +357,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
     return this.isFocusIn &&
       !this.isInputExist &&
       !this.isLoading &&
-      !this.searchResults.length &&
+      // !this.searchResults.length &&
       !!this.historyId &&
       !this.isNoResults;
   }
@@ -389,7 +389,6 @@ export class Ng2SimpleAutocomplete implements OnInit {
     if (this.historyId) {
       this.initSearchHistory();
     }
-
 
     this.fontSize = Object.assign({}, {
       'font-size': this.inputStyle['font-size'] || 'inherit',
@@ -638,7 +637,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
     const isValidText = R.compose(
       R.not,
       R.both(isEmptyString, R.isNil)
-    )(selected.text);
+    )(selected.text || selected.markup);
 
     const isValidHistoryId = R.identity(this.historyId);
 

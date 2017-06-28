@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit {
     'line-height': '40px',
     'border': '2px solid #eee',
     'border-radius': '4px',
-
   };
+  search = '';
 
   // constructor(
   // ) {
