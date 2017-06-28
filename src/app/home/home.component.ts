@@ -11,6 +11,16 @@ import { AutoCompleteResult } from '../../ng2-simple-autocomplete';
 })
 export class HomeComponent implements OnInit {
   results: AutoCompleteResult[] = [];
+  inputStyle = {
+    'width': '300px',
+    'font-weight': 'normal',
+    'font-size': '24px',
+    'height': '40px',
+    'line-height': '40px',
+    'border': '2px solid #eee',
+    'border-radius': '4px',
+
+  };
 
   // constructor(
   // ) {

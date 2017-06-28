@@ -2369,14 +2369,6 @@ gulp-clean@^0.3.2:
     rimraf "^2.2.8"
     through2 "^0.4.2"
 
-gulp-copy@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/gulp-copy/-/gulp-copy-1.0.0.tgz#3d4aca4e1a6deb4aa2b2f36c38c853f295c8baca"
-  dependencies:
-    gulp "^3.9.0"
-    gulp-util "^3.0.0"
-    through2 "^2.0.0"
-
 gulp-jasmine@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/gulp-jasmine/-/gulp-jasmine-2.4.2.tgz#5a7f47e27370c3619ac0a2a442be399671409db3"
@@ -2465,7 +2457,7 @@ gulp-util@^2.2.14:
     through2 "^0.5.0"
     vinyl "^0.2.1"
 
-gulp@^3.9.0, gulp@^3.9.1:
+gulp@^3.9.1:
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/gulp/-/gulp-3.9.1.tgz#571ce45928dd40af6514fc4011866016c13845b4"
   dependencies:

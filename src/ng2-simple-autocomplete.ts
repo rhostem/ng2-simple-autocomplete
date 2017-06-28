@@ -49,6 +49,7 @@ export interface AutoCompleteResult {
   template: `
     <div
       class="autocomplete"
+      [ngStyle]="inputStyle"
     >
       <input
         #searchInput
@@ -61,19 +62,23 @@ export interface AutoCompleteResult {
         (focus)="onFocusin()"
         (focusout)="onFocusout($event)"
         [placeholder]="placeholder"
-      >
+      />
       <div
-        [ngClass]="{ 'autocomplete-iconWrapper': true, 'is-visible': isResetButtonVisible}"
+        class="autocomplete-iconWrapper"
+        [ngClass]="{ 'is-visible': isResetButtonVisible}"
         (click)="onResetSearchText()"
       >
-        <i class="fa fa-close autocomplete-closeBtn"></i>
+        <span class="resetIcon" [ngStyle]="fontSize">✕</span>
       </div>
+
+      <!--
       <div
         [ngClass]="{ 'autocomplete-iconWrapper': true, 'is-visible': isLoading}"
         (click)="onResetSearchText()"
       >
-        <i class="fa fa-refresh fa-spin"></i>
+        <i class="icon--refresh">↻</i>
       </div>
+      -->
 
       <div [ngClass]="{ 'is-visible': isNoResultsVisible }" class="autocomplete-result">
         {{ noResultText }}
@@ -134,19 +139,30 @@ export interface AutoCompleteResult {
   styles: [`
     .autocomplete {
       position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 1.5em 0 0.5em;
+      height: 35px;
+      line-height: 35px;
+      border: 1px solid #ddd;
     }
 
     .autocomplete-input {
-      display: block;
       box-sizing: border-box;
-      width: 100%;
-      padding: 0 30px 0 15px;
-
-      /*
-      font-weight: bold;
-      height: 35px;
-      line-height: 35px;
-      */
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: inherit;
+      height: inherit;
+      line-height: inherit;
+      padding: inherit;
+      border: 0;
+      background: none;
+      font-size: inherit;
+      font-weight: inherit;
+      color: inherit;
+      outline-width: 0;
     }
 
     .autocomplete-input.is-selected {
@@ -161,15 +177,14 @@ export interface AutoCompleteResult {
       top: 100%;
       left: 0;
       width: 100%;
-      margin: 0;
-      max-height: 360px;
-      overflow: auto;
-      border: 1px solid #eee;
-      border-top: none;
       padding: 8px;
+      margin: 0;
+      max-height: 400px;
+      overflow: auto;
+      border: inherit;
       background-color: #fff;
       list-style: none;
-      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
     }
 
     .autocomplete-result.is-visible {
@@ -203,13 +218,19 @@ export interface AutoCompleteResult {
       transform: translateY(-50%);
       display: none;
       width: 30px;
-      padding-right: 12px;
+      height: 100%;
+      padding: 0 5px;
       font-size: 14px;
-      text-align: right;
+      text-align: center;
+      background: white;
     }
 
     .autocomplete-iconWrapper.is-visible {
       display: block;
+    }
+
+    .autocomplete-iconWrapper:hover {
+      cursor: pointer;
     }
 
     .autocomplete-isLoading {
@@ -298,20 +319,24 @@ export class Ng2SimpleAutocomplete implements OnInit {
   @Input() resetOnFocusOut = false;               // 검색 텍스트 삭제시 onReset 이벤트 호출
   @Input() saveHistoryOnChange = false;
   @Input() noResultText = 'There is no results';
+  @Input() inputStyle = {
+    'font-size': 'inherit',
+  };
 
   // 컴포넌트 변수
   _search = ''; // 검색 입력 텍스트
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild('searchResultsEl') searchResultsEl: ElementRef;
   @ViewChild('searchHistoryEl') searchHistoryEl: ElementRef;
-  inputKeyUp$: Observable<any>;         // 검색 입력 이벤트
-  inputKeyDown$: Observable<any>;       // 검색 입력 이벤트
+  inputKeyUp$: Observable<any>;               // 검색 입력 이벤트
+  inputKeyDown$: Observable<any>;             // 검색 입력 이벤트
   isFocusIn: Boolean;
   searchHistory: AutoCompleteResult[] = [];   // 검색 히스토리
   HISTORY_MAX_LENGTH = 15;
-  isNoResults = false;                  // 검색 결과 존재 여부. 알 수 없는 경우도 false로 할당한다.
-  isResultSelected = false;              // 검색 결과 선택 여부
-  maintainFocus: boolean; // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
+  isNoResults = false;                        // 검색 결과 존재 여부. 알 수 없는 경우도 false로 할당한다.
+  isResultSelected = false;                   // 검색 결과 선택 여부
+  maintainFocus: boolean;                     // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
+  fontSize = <any>{};
 
   // 초기화 버튼 표시 여부
   get isResetButtonVisible(): Boolean {
@@ -359,12 +384,17 @@ export class Ng2SimpleAutocomplete implements OnInit {
 
   ngOnInit() {
     this.searchResults = this.searchResults || [];
-
     this.initEventStream();
 
     if (this.historyId) {
       this.initSearchHistory();
     }
+
+
+    this.fontSize = Object.assign({}, {
+      'font-size': this.inputStyle['font-size'] || 'inherit',
+    });
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
