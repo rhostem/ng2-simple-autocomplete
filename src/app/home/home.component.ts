@@ -2,7 +2,7 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { AutoCompleteResult } from '../../ng2-simple-autocomplete';
+import { AutoCompleteItem } from '../../ng2-simple-autocomplete';
 
 const remoteData = [
   { _id: '1', name: 'lorem', },
@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
       value: '[value]',
     },
     {
+      text: 'bold text by html tag',
       markup: '<b>bold text</b> by html tag',
       value: '[value]',
     },
@@ -49,9 +50,9 @@ export class HomeComponent implements OnInit {
   searchStatic = '';
   searchStaticHistory = '';
   searchAsync = '';
-  selectedStatic: AutoCompleteResult;
-  selectedStaticHistory: AutoCompleteResult;
-  selectedAsync: AutoCompleteResult;
+  selectedStatic: AutoCompleteItem;
+  selectedStaticHistory: AutoCompleteItem;
+  selectedAsync: AutoCompleteItem;
 
   // constructor(
   // ) {
@@ -60,15 +61,15 @@ export class HomeComponent implements OnInit {
   public ngOnInit() {
   }
 
-  onSelectStatic(v: AutoCompleteResult) {
+  onSelectStatic(v: AutoCompleteItem) {
     this.selectedStatic = v;
   }
 
-  onSelectStaticWithHistory(v: AutoCompleteResult) {
+  onSelectStaticWithHistory(v: AutoCompleteItem) {
     this.selectedStaticHistory = v;
   }
 
-  onSelectAsync(v: AutoCompleteResult) {
+  onSelectAsync(v: AutoCompleteItem) {
     this.selectedAsync = v;
   }
 

@@ -11,7 +11,7 @@ import {
   Sanitizer,
   SecurityContext,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
@@ -37,11 +37,11 @@ const removeSpace = (str = '') => {
   return str;
 };
 
-export interface AutoCompleteResult {
-  value: any;         // 값
-  text?: string;       // 표시 텍스트
-  markup?: string;    // 표시 텍스트 마크업.
-  isFocus?: boolean;  // 포커스 여부
+export interface AutoCompleteItem {
+  value: any;         // real value
+  text: string;       // text for view
+  markup?: string;    // markup for view
+  isFocus?: boolean;  // does item have focus(highlighted) or not
 }
 
 @Component({
@@ -96,7 +96,7 @@ export interface AutoCompleteResult {
           [ngClass]="{ 'is-focus': result.isFocus === true }"
           (click)="onClickResult(i)"
           (mouseover)="onMouseOverResultItem(i)"
-          [innerHtml]="result.text || sanitizer.bypassSecurityTrustHtml(result.markup)"
+          [innerHtml]="result.text || sanitize(result.markup)"
         ></li>
       </ul>
 
@@ -105,14 +105,14 @@ export interface AutoCompleteResult {
         class="autocomplete-result"
         [ngClass]="{ 'is-visible': isSearchHistoryVisible }"
       >
-        <li class="autocomplete-resultTitle">
-          <span [innerHtml]="sanitizer.bypassSecurityTrustHtml(historyHeading)"></span>
+        <li *ngIf="!!historyHeading" class="autocomplete-resultTitle">
+          <span [innerHtml]="sanitize(historyHeading)"></span>
+          <!--
           <span
             (click)="onClickResetHistory()"
             class="autocomplete-historyTrash"
-          >
-            <i class="fa fa-trash-o"></i>
-          </span>
+          ></span>
+          -->
         </li>
         <li
           *ngFor="let result of searchHistory;let i = index"
@@ -122,7 +122,7 @@ export interface AutoCompleteResult {
           <div
             (click)="onClickResult(i, $event)"
             (mouseover)="onMouseOverResultItem(i)"
-            [innerHtml]="result.text || sanitizer.bypassSecurityTrustHtml(result.markup)"
+            [innerHtml]="result.text || sanitize(result.markup)"
           >
           </div>
           <span class="autocomplete-deleteHistoryItemBtn" (click)="onDeleteHistoryItem(i)">
@@ -222,7 +222,7 @@ export interface AutoCompleteResult {
       transform: translateY(-50%);
       display: none;
       width: 1.5em;
-      height: 100%;
+      height: calc(100% - 2px);
       padding: 0 5px;
       text-align: center;
       background: white;
@@ -314,23 +314,22 @@ export class Ng2SimpleAutocomplete implements OnInit {
   @Output() searchChange = new EventEmitter();  // search 2-way binding
 
   // required input
-  @Input() searchResults: AutoCompleteResult[] = [];  // 검색 결과 리스트
-  @Output() onChangeInput = new EventEmitter(); // 검색어 입력 변경
-  @Output() onSelect = new EventEmitter();      // 검색 결과 항목 선택 콜백
+  @Input() searchResults: AutoCompleteItem[] = [];  // 검색 결과 리스트
+  @Output() onChangeInput = new EventEmitter();       // 검색어 입력 변경
+  @Output() onSelect = new EventEmitter();            // 검색 결과 항목 선택 콜백
 
   // optional
-  @Output() onReset = new EventEmitter();       // 입력 값 초기화 콜백
+  @Output() onReset = new EventEmitter();             // 입력 값 초기화 콜백
+  @Input() isStaticResult = false;                    // is search result is static list
   @Input() placeholder = 'placeholder';
-  @Input() isLoading: Boolean;                  // 목록 비동기 로드중 여부
-  @Input() historyId: String;                   // 검색 히스토리 아이디. 명시되면 최근 검색 키워드를 표시한다.
-  @Input() historyHeading = 'recently selected'; // 검색 히스토리 아이디. 명시되면 최근 검색 키워드를 표시한다.
-  @Input() searchResultsTotal: Number;          // 전체 검색 결과 수
-  @Input() autoFocusOnFirst = true;             // 첫번째 항목에 자동 포커스
-  @Input() resetOnDelete = true;               // 검색 텍스트 삭제시 onReset 이벤트 호출
-  @Input() resetOnFocusOut = false;               // 검색 텍스트 삭제시 onReset 이벤트 호출
-  @Input() saveHistoryOnChange = false;
+  @Input() isLoading: Boolean;                        // 목록 비동기 로드중 여부
+  @Input() historyId: String;                         // 검색 히스토리 아이디. 명시되면 최근 검색 키워드를 표시한다.
+  @Input() historyHeading = 'recently selected';      //
+  @Input() autoFocusOnFirst = true;                   // 첫번째 항목에 자동 포커스
+  @Input() resetOnDelete = false;                     // 검색 텍스트 삭제시 onReset 이벤트 호출
+  @Input() resetOnFocusOut = false;                   // 검색 텍스트 삭제시 onReset 이벤트 호출
   @Input() noResultText = 'There is no results';
-  @Input() inputStyle = {
+  @Input() inputStyle = {                             // for styling input box
     'font-size': 'inherit',
   };
 
@@ -342,12 +341,13 @@ export class Ng2SimpleAutocomplete implements OnInit {
   inputKeyUp$: Observable<any>;               // 검색 입력 이벤트
   inputKeyDown$: Observable<any>;             // 검색 입력 이벤트
   isFocusIn: Boolean;
-  searchHistory: AutoCompleteResult[] = [];   // 검색 히스토리
+  searchHistory: AutoCompleteItem[] = [];   // 검색 히스토리
   HISTORY_MAX_LENGTH = 15;
   isNoResults = false;                        // 검색 결과 존재 여부. 알 수 없는 경우도 false로 할당한다.
   isResultSelected = false;                   // 검색 결과 선택 여부
   maintainFocus: boolean;                     // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
-  fontSize = <any>{}; // font-size style extracted from inputStyle
+  fontSize = <any> {}; // font-size style extracted from inputStyle
+  filteredResults: AutoCompleteItem[] = [];
 
   // 초기화 버튼 표시 여부
   get isResetButtonVisible(): Boolean {
@@ -383,7 +383,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
   }
 
   // 검색 결과와 히스토리 중에서 표시된 목록 선택
-  get searchResultsOnVisble(): AutoCompleteResult[] {
+  get searchResultsOnVisble(): AutoCompleteItem[] {
     if (this.isResultVisible) {
       return this.searchResults;
     }
@@ -514,6 +514,10 @@ export class Ng2SimpleAutocomplete implements OnInit {
       });
   }
 
+  /**
+   * on keyup == when input changed
+   * @param e event
+   */
   onKeyUp(e) {
     this.isResultSelected = false;
     this.isFocusIn = true;
@@ -522,9 +526,6 @@ export class Ng2SimpleAutocomplete implements OnInit {
 
     if (!isEmptyString(this.search)) {
       this.onChangeInput.emit(e.target.value); // 검색 키워드 변경시 상위 컴포넌트에서 콜백 실행
-    }
-
-    if (this.saveHistoryOnChange && !isEmptyString(this.search)) {
       this.saveHistory({ text: this.search, value: null });
     }
   }
@@ -533,11 +534,10 @@ export class Ng2SimpleAutocomplete implements OnInit {
    * 키보드 상하 입력
    */
   onFocusNextResult(e) {
-    const results = this.searchResultsOnVisble;
-
     this.isFocusIn = true;
+    const results = this.searchResultsOnVisble;
     const resultLength = results.length;
-    const focusIdx = results.findIndex((result: AutoCompleteResult) => result.isFocus);
+    const focusIdx = results.findIndex((result: AutoCompleteItem) => result.isFocus);
     let nextIdx = isArrowUp(e.keyCode) ? focusIdx - 1 : focusIdx + 1;
 
     nextIdx = nextIdx % resultLength;
@@ -628,7 +628,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
     }
 
     const results = this.searchResultsOnVisble;
-    const focusedIdx = results.findIndex((result: AutoCompleteResult) => result.isFocus);
+    const focusedIdx = results.findIndex((result: AutoCompleteItem) => result.isFocus);
     const focused = results[focusedIdx];
     const unselected = (!this.autoFocusOnFirst || !this.search) ?
       { text: this.search, value: null } : null;
@@ -652,7 +652,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
    * onSelect 콜백 호출
    * @param selected
    */
-  emitResult(selected: AutoCompleteResult) {
+  emitResult(selected: AutoCompleteItem) {
     this.isResultSelected = true;
     this.search = selected.text; // 입력 텍스트 변경
     this.searchChange.emit(selected.text); // 2-way binding
@@ -725,7 +725,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
   /**
    * 검색 기록을 local storage에 저장
    */
-  saveHistory(selected: AutoCompleteResult) {
+  saveHistory(selected: AutoCompleteItem) {
     this.searchHistory = R.pipe(
       R.map(v => Object.assign(v, { isFocus: false })),
       R.uniqWith(R.equals),
@@ -749,5 +749,9 @@ export class Ng2SimpleAutocomplete implements OnInit {
   saveHistoryToLocalStorage(history) {
     window.localStorage.setItem(`ng2_simple_autocomplete_history_${this.historyId}`,
       JSON.stringify(history));
+  }
+
+  sanitize(markup: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(markup);
   }
 }

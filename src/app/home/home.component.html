@@ -49,7 +49,7 @@
       [(search)]="searchStaticHistory"
       [searchResults]="staticResults"
       historyId="static"
-      historyHeading="Recently selected items"
+      [historyHeading]="null"
       (onSelect)="onSelectStaticWithHistory($event)"
     ></ng2-simple-autocomplete>
     <h3>Selected Item</h3>
