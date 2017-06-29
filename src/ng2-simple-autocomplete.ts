@@ -324,6 +324,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
   }
   @Output() searchChange = new EventEmitter();  // search 2-way binding
 
+
   // required input
   // ------------------------------------------------------------------------
   @Input() searchResults: AutoCompleteItem[] = [];
@@ -343,7 +344,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
    *
    * @memberof Ng2SimpleAutocomplete
    */
-  @Input() placeholder = 'placeholder';
+  @Input() placeholder = 'search keyword';
   /**
    * shows loading spinner when this is true value.
    *
@@ -367,7 +368,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
    *
    * @memberof Ng2SimpleAutocomplete
    */
-  @Input() historyHeading = 'recently selected';
+  @Input() historyHeading = 'Recently selected';
   @Input() autoFocusOnFirst = true;                   // autofocus on first result item
   @Input() resetOnDelete = false;                     // invoke onReset event binding on delete
   @Input() resetOnFocusOut = false;                   // invoke onReset event binding on focusout
