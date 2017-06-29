@@ -33,6 +33,8 @@
       [(search)]="searchStatic"
       [searchResults]="staticResults"
       (onSelect)="onSelectStatic($event)"
+      [isStatic]="true"
+      [inputStyle]="inputStyle"
     ></ng2-simple-autocomplete>
     <h3>Selected Item</h3>
     <ul>
@@ -50,6 +52,7 @@
       [searchResults]="staticResults"
       historyId="static"
       [historyHeading]="null"
+      [isStatic]="true"
       (onSelect)="onSelectStaticWithHistory($event)"
     ></ng2-simple-autocomplete>
     <h3>Selected Item</h3>

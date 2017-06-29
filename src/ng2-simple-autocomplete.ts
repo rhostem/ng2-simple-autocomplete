@@ -69,19 +69,23 @@ export interface AutoCompleteItem {
         [ngStyle]="fontSize"
         (click)="onResetSearchText()"
       >
-        <span class="resetIcon">✕</span>
+        <span class="autocomplete-icon resetIcon">✕</span>
       </div>
 
       <!--
       <div
-        [ngClass]="{ 'autocomplete-iconWrapper': true, 'is-visible': isLoading}"
+        [ngClass]="{
+          'autocomplete-iconWrapper': true, 'is-visible': isLoading
+        }"
         (click)="onResetSearchText()"
       >
-        <i class="icon--refresh">↻</i>
+        <i class="autocomplete-icon icon--refresh">↻</i>
       </div>
       -->
 
-      <div [ngClass]="{ 'is-visible': isNoResultsVisible }" class="autocomplete-result">
+      <div
+        [ngClass]="{ 'is-visible': isNoResultsVisible }" class="autocomplete-result"
+      >
         {{ noResultText }}
       </div>
 
@@ -92,7 +96,7 @@ export interface AutoCompleteItem {
       >
         <li
           class="autocomplete-item"
-          *ngFor="let result of searchResults;let i = index"
+          *ngFor="let result of searchResultsOnVisble;let i = index"
           [ngClass]="{ 'is-focus': result.isFocus === true }"
           (click)="onClickResult(i)"
           (mouseover)="onMouseOverResultItem(i)"
@@ -145,7 +149,7 @@ export interface AutoCompleteItem {
       display: inline-block;
       box-sizing: border-box;
       width: 100%;
-      padding: 0 16px;
+      padding: 0 0.75em;
       height: 35px;
       line-height: 35px;
       border: 1px solid #ddd;
@@ -178,17 +182,18 @@ export interface AutoCompleteItem {
       display: none;
       position: absolute;
       z-index: 100;
-      top: 100%;
+      top: 101%;
       left: 0;
       width: 100%;
-      padding: 8px;
+      padding: 0.5em 0.75em;
       margin: 0;
-      max-height: 400px;
+      max-height: 25em;
       overflow: auto;
-      border: inherit;
+      border: 1px solid #eee;
       background-color: #fff;
       list-style: none;
-      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      font-size: inherit;
     }
 
     .autocomplete-result.is-visible {
@@ -215,21 +220,36 @@ export interface AutoCompleteItem {
     }
 
     .autocomplete-iconWrapper {
+      display: none;
       position: absolute;
       z-index: 10;
-      top: 50%;
+      top: 0%;
       right: 0;
-      transform: translateY(-50%);
-      display: none;
       width: 1.5em;
-      height: calc(100% - 2px);
-      padding: 0 5px;
+      height: 100%;
+      padding: 0 0.3em;
       text-align: center;
       background: white;
     }
 
     .autocomplete-iconWrapper.is-visible {
       display: block;
+    }
+
+    .autocomplete-icon {
+      position: absolute;
+      top: 50%;
+      left: 50;
+      transform: translate(-50%, -50%);
+    }
+
+    .autocomplete-icon.resetIcon {
+      opacity: 0.3;
+    }
+
+    .autocomplete-icon.resetIcon:hover {
+      opacity: 1;
+      cursor: pointer;
     }
 
     .autocomplete-iconWrapper:hover {
@@ -289,15 +309,6 @@ export interface AutoCompleteItem {
     .autocomplete-deleteHistoryItemBtn:hover > i {
       transform: scale(1.5);
     }
-
-    .resetIcon {
-      opacity: 0.3;
-    }
-
-    .resetIcon:hover {
-      opacity: 1;
-      cursor: pointer;
-    }
   `],
 })
 export class Ng2SimpleAutocomplete implements OnInit {
@@ -314,27 +325,71 @@ export class Ng2SimpleAutocomplete implements OnInit {
   @Output() searchChange = new EventEmitter();  // search 2-way binding
 
   // required input
-  @Input() searchResults: AutoCompleteItem[] = [];  // 검색 결과 리스트
+  // ------------------------------------------------------------------------
+  @Input() searchResults: AutoCompleteItem[] = [];
   @Output() onChangeInput = new EventEmitter();       // 검색어 입력 변경
   @Output() onSelect = new EventEmitter();            // 검색 결과 항목 선택 콜백
 
   // optional
+  // ------------------------------------------------------------------------
   @Output() onReset = new EventEmitter();             // 입력 값 초기화 콜백
-  @Input() isStaticResult = false;                    // is search result is static list
+  /**
+   * if searchResult is static list, list will be filtered when input changes
+   * @memberof Ng2SimpleAutocomplete
+   */
+  @Input() isStatic = false;
+  /**
+   * input placeholder
+   *
+   * @memberof Ng2SimpleAutocomplete
+   */
   @Input() placeholder = 'placeholder';
-  @Input() isLoading: Boolean;                        // 목록 비동기 로드중 여부
-  @Input() historyId: String;                         // 검색 히스토리 아이디. 명시되면 최근 검색 키워드를 표시한다.
-  @Input() historyHeading = 'recently selected';      //
-  @Input() autoFocusOnFirst = true;                   // 첫번째 항목에 자동 포커스
-  @Input() resetOnDelete = false;                     // 검색 텍스트 삭제시 onReset 이벤트 호출
-  @Input() resetOnFocusOut = false;                   // 검색 텍스트 삭제시 onReset 이벤트 호출
-  @Input() noResultText = 'There is no results';
-  @Input() inputStyle = {                             // for styling input box
-    'font-size': 'inherit',
-  };
+  /**
+   * shows loading spinner when this is true value.
+   *
+   * @type {Boolean}
+   * @memberof Ng2SimpleAutocomplete
+   */
+  @Input() isLoading: Boolean;
+
+  /**
+   * When valid historyId is given, then component stores selected item.
+   * History result is visible at least 1 history item is stored.
+   *
+   * @type {String}
+   * @memberof Ng2SimpleAutocomplete
+   */
+  @Input() historyId: String;
+
+  /**
+   * heading text of history result.
+   * if it is null then history heading will be hide.
+   *
+   * @memberof Ng2SimpleAutocomplete
+   */
+  @Input() historyHeading = 'recently selected';
+  @Input() autoFocusOnFirst = true;                   // autofocus on first result item
+  @Input() resetOnDelete = false;                     // invoke onReset event binding on delete
+  @Input() resetOnFocusOut = false;                   // invoke onReset event binding on focusout
+  @Input() noResultText = 'There is no results';      // text when there is no search result.
+
+  /**
+   * style object. it overwrites basic style of input element by [ngStyle] binding.
+   *
+   * ex)
+   * const inputStyle = {
+   *  'width': '300px',
+   *  'font-size': '20px',
+   *  'padding': '0 20px'
+   * }
+   * @memberof Ng2SimpleAutocomplete
+   */
+  @Input() inputStyle = <any> {};
 
   // 컴포넌트 변수
+  // ------------------------------------------------------------------------
   _search = ''; // 검색 입력 텍스트
+  _searchResults: AutoCompleteItem[] = [];
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild('searchResultsEl') searchResultsEl: ElementRef;
   @ViewChild('searchHistoryEl') searchHistoryEl: ElementRef;
@@ -358,12 +413,18 @@ export class Ng2SimpleAutocomplete implements OnInit {
     return this.isFocusIn && !!removeSpace(this.search);
   }
 
+  get isResultExists() {
+    const result = R.not(this.isStatic) ? this.searchResults.length : this.filteredResults.length;
+    return !!result;
+  }
+
   // 결과 목록 표시 여부
   get isResultVisible(): Boolean {
+    // return true;
     return this.isFocusIn &&
       !this.isSearchHistoryVisible && // history has higher priority
       !this.isLoading &&
-      !!this.searchResults.length;
+      this.isResultExists;
   }
 
   /**
@@ -385,8 +446,9 @@ export class Ng2SimpleAutocomplete implements OnInit {
   // 검색 결과와 히스토리 중에서 표시된 목록 선택
   get searchResultsOnVisble(): AutoCompleteItem[] {
     if (this.isResultVisible) {
-      return this.searchResults;
+      return R.not(this.isStatic) ? this.searchResults : this.filteredResults;
     }
+
     if (this.isSearchHistoryVisible) {
       return this.searchHistory;
     }
@@ -414,7 +476,6 @@ export class Ng2SimpleAutocomplete implements OnInit {
     this.fontSize = Object.assign({}, {
       'font-size': this.inputStyle['font-size'] || 'inherit',
     });
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -428,27 +489,13 @@ export class Ng2SimpleAutocomplete implements OnInit {
         return (this.autoFocusOnFirst && index === 0) ?
           Object.assign(v, { isFocus: true }) : v;
       });
-    }
 
-    // 검색 키워드 없을 경우 결과 초기화
-    // if (changes['search']) {
-    //   if (!changes['search'].currentValue) {
-    //     this.searchResults = [];
-    //   }
-    // }
+      // check if result has no items
+      this.isNoResults = !this.searchResults.length;
 
-    // 검색 결과 확인
-    if (changes['isLoading']) {
-      this.isNoResults = false; // 기본적으로 결과는 알수없음
-      const isLoadingChange = changes['isLoading'];
-
-      // 비동기 목록 호출 완료
-      if (isLoadingChange.previousValue && !isLoadingChange.currentValue) {
-        if (!this.searchResults.length) {
-          this.isNoResults = true;
-        } else {
-          this.isNoResults = false;
-        }
+      // save result as filteredResult for filtering
+      if (this.isStatic) {
+        this.filteredResults = this.searchResults.slice();
       }
     }
   }
@@ -524,9 +571,27 @@ export class Ng2SimpleAutocomplete implements OnInit {
     this.isNoResults = false; // 입력중 검색결과는 알 수 없음
     this.search = e.target.value; // 2 way binding된 검색 키워드 업데이트
 
+    // if static result, filter result by input text
+    if (!this.isStatic) {
+      this.searchResults = []; // reset search results
+    } else {
+      this.filterStaticResult(this.search);
+    }
+
     if (!isEmptyString(this.search)) {
       this.onChangeInput.emit(e.target.value); // 검색 키워드 변경시 상위 컴포넌트에서 콜백 실행
-      this.saveHistory({ text: this.search, value: null });
+    }
+  }
+
+  filterStaticResult(search) {
+    if (isEmptyString(search)) {
+      this.filteredResults = this.searchResults.slice();
+      return;
+    }
+
+    this.filteredResults = this.searchResults.filter(v => v.text.indexOf(search) > -1);
+    if (R.not(this.filteredResults.length)) {
+      this.isNoResults = true;
     }
   }
 

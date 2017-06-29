@@ -18,15 +18,15 @@ const remoteData = [
 export class HomeComponent implements OnInit {
   staticResults = [
     {
-      text: 'Ng2',
+      text: 'ng2',
       value: '[value]',
     },
     {
-      text: 'Simple',
+      text: 'simple',
       value: '[value]',
     },
     {
-      text: 'Autocomplete',
+      text: 'autocomplete',
       value: '[value]',
     },
     {
@@ -41,11 +41,11 @@ export class HomeComponent implements OnInit {
   inputStyle = {
     'width': '300px',
     'font-weight': 'normal',
-    // 'font-size': '20px',
+    'font-size': '24px',
     'height': '40px',
     'line-height': '40px',
-    'border': '2px solid #eee',
-    'border-radius': '4px',
+    'border': '1px solid #eee',
+    'border-radius': '3px',
   };
   searchStatic = '';
   searchStaticHistory = '';
