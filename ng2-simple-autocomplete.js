@@ -34,28 +34,65 @@ var Ng2SimpleAutocomplete = (function () {
         this.sanitizer = sanitizer;
         this.searchChange = new core_1.EventEmitter(); // search 2-way binding
         // required input
-        this.searchResults = []; // 검색 결과 리스트
+        // ------------------------------------------------------------------------
+        this.searchResults = [];
         this.onChangeInput = new core_1.EventEmitter(); // 검색어 입력 변경
         this.onSelect = new core_1.EventEmitter(); // 검색 결과 항목 선택 콜백
         // optional
+        // ------------------------------------------------------------------------
         this.onReset = new core_1.EventEmitter(); // 입력 값 초기화 콜백
-        this.placeholder = 'placeholder';
-        this.historyHeading = 'recently selected'; // 검색 히스토리 아이디. 명시되면 최근 검색 키워드를 표시한다.
-        this.autoFocusOnFirst = true; // 첫번째 항목에 자동 포커스
-        this.resetOnDelete = true; // 검색 텍스트 삭제시 onReset 이벤트 호출
-        this.resetOnFocusOut = false; // 검색 텍스트 삭제시 onReset 이벤트 호출
-        this.saveHistoryOnChange = false;
-        this.noResultText = 'There is no results';
-        this.inputStyle = {
+        /**
+         * if searchResult is static list, list will be filtered when input changes
+         * @memberof Ng2SimpleAutocomplete
+         */
+        this.isStatic = false;
+        /**
+         * input placeholder
+         *
+         * @memberof Ng2SimpleAutocomplete
+         */
+        this.placeholder = 'search keyword';
+        /**
+         * heading text of history result.
+         * if it is null then history heading will be hide.
+         *
+         * @memberof Ng2SimpleAutocomplete
+         */
+        this.historyHeading = 'Recently selected';
+        this.autoFocusOnFirst = true; // autofocus on first result item
+        this.resetOnDelete = false; // invoke onReset event binding on delete
+        this.resetOnFocusOut = false; // invoke onReset event binding on focusout
+        this.noResultText = 'There is no results'; // text when there is no search result.
+        /**
+         * style object. it overwrites basic style of input element by [ngStyle] binding.
+         *
+         * ex)
+         * const inputStyle = {
+         *  'width': '300px',
+         *  'font-size': '20px',
+         *  'padding': '0 20px'
+         * }
+         * @memberof Ng2SimpleAutocomplete
+         */
+        this.style = {
+            'width': '100%',
+            'color': 'inherit',
             'font-size': 'inherit',
+            'border-radius': '2px',
+            'border-color': '#ddd',
+            'height': '35px',
+            'line-height': '35px',
         };
         // 컴포넌트 변수
+        // ------------------------------------------------------------------------
         this._search = ''; // 검색 입력 텍스트
+        this._searchResults = [];
         this.searchHistory = []; // 검색 히스토리
         this.HISTORY_MAX_LENGTH = 15;
         this.isNoResults = false; // 검색 결과 존재 여부. 알 수 없는 경우도 false로 할당한다.
         this.isResultSelected = false; // 검색 결과 선택 여부
         this.fontSize = {}; // font-size style extracted from inputStyle
+        this.filteredResults = [];
     }
     Object.defineProperty(Ng2SimpleAutocomplete.prototype, "search", {
         // 검색 입력 텍스트. 부모 컴포넌트에서 banana-in-box ([]) 표기법 사용해서 연결
@@ -85,13 +122,22 @@ var Ng2SimpleAutocomplete = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Ng2SimpleAutocomplete.prototype, "isResultExists", {
+        get: function () {
+            var result = ramda_1.default.not(this.isStatic) ? this.searchResults.length : this.filteredResults.length;
+            return !!result;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Ng2SimpleAutocomplete.prototype, "isResultVisible", {
         // 결과 목록 표시 여부
         get: function () {
+            // return true;
             return this.isFocusIn &&
                 !this.isSearchHistoryVisible &&
                 !this.isLoading &&
-                !!this.searchResults.length;
+                this.isResultExists;
         },
         enumerable: true,
         configurable: true
@@ -119,7 +165,7 @@ var Ng2SimpleAutocomplete = (function () {
         // 검색 결과와 히스토리 중에서 표시된 목록 선택
         get: function () {
             if (this.isResultVisible) {
-                return this.searchResults;
+                return ramda_1.default.not(this.isStatic) ? this.searchResults : this.filteredResults;
             }
             if (this.isSearchHistoryVisible) {
                 return this.searchHistory;
@@ -142,10 +188,7 @@ var Ng2SimpleAutocomplete = (function () {
         if (this.historyId) {
             this.initSearchHistory();
         }
-        // extract fontSize style
-        this.fontSize = Object.assign({}, {
-            'font-size': this.inputStyle['font-size'] || 'inherit',
-        });
+        this.extractStyle(this.style);
     };
     Ng2SimpleAutocomplete.prototype.ngOnChanges = function (changes) {
         var _this = this;
@@ -158,27 +201,27 @@ var Ng2SimpleAutocomplete = (function () {
                 return (_this.autoFocusOnFirst && index === 0) ?
                     Object.assign(v, { isFocus: true }) : v;
             });
-        }
-        // 검색 키워드 없을 경우 결과 초기화
-        // if (changes['search']) {
-        //   if (!changes['search'].currentValue) {
-        //     this.searchResults = [];
-        //   }
-        // }
-        // 검색 결과 확인
-        if (changes['isLoading']) {
-            this.isNoResults = false; // 기본적으로 결과는 알수없음
-            var isLoadingChange = changes['isLoading'];
-            // 비동기 목록 호출 완료
-            if (isLoadingChange.previousValue && !isLoadingChange.currentValue) {
-                if (!this.searchResults.length) {
-                    this.isNoResults = true;
-                }
-                else {
-                    this.isNoResults = false;
-                }
+            if (!changes.searchResults.firstChange) {
+                this.isNoResults = !this.searchResults.length;
+            }
+            // save result as filteredResult for filtering
+            if (this.isStatic) {
+                this.filteredResults = this.searchResults.slice();
             }
         }
+    };
+    Ng2SimpleAutocomplete.prototype.extractStyle = function (style) {
+        if (style === void 0) { style = {}; }
+        var inputStyle = Object.assign({}, style);
+        this.style = {
+            'width': inputStyle['width'],
+            'color': inputStyle['color'],
+            'font-size': inputStyle['font-size'],
+            'border-radius': inputStyle['border-radius'],
+            'border-color': inputStyle['border-color'],
+            'height': inputStyle['height'],
+            'line-height': inputStyle['line-height'],
+        };
     };
     Ng2SimpleAutocomplete.prototype.initSearchHistory = function () {
         var history = window.localStorage
@@ -233,24 +276,42 @@ var Ng2SimpleAutocomplete = (function () {
             _this.onDeleteSearchText();
         });
     };
+    /**
+     * on keyup == when input changed
+     * @param e event
+     */
     Ng2SimpleAutocomplete.prototype.onKeyUp = function (e) {
         this.isResultSelected = false;
         this.isFocusIn = true;
         this.isNoResults = false; // 입력중 검색결과는 알 수 없음
         this.search = e.target.value; // 2 way binding된 검색 키워드 업데이트
+        // if static result, filter result by input text
+        if (!this.isStatic) {
+            this.searchResults = []; // reset search results
+        }
+        else {
+            this.filterStaticResult(this.search);
+        }
         if (!isEmptyString(this.search)) {
             this.onChangeInput.emit(e.target.value); // 검색 키워드 변경시 상위 컴포넌트에서 콜백 실행
         }
-        if (this.saveHistoryOnChange && !isEmptyString(this.search)) {
-            this.saveHistory({ text: this.search, value: null });
+    };
+    Ng2SimpleAutocomplete.prototype.filterStaticResult = function (search) {
+        if (isEmptyString(search)) {
+            this.filteredResults = this.searchResults.slice();
+            return;
+        }
+        this.filteredResults = this.searchResults.filter(function (v) { return v.text.indexOf(search) > -1; });
+        if (ramda_1.default.not(this.filteredResults.length)) {
+            this.isNoResults = true;
         }
     };
     /**
      * 키보드 상하 입력
      */
     Ng2SimpleAutocomplete.prototype.onFocusNextResult = function (e) {
-        var results = this.searchResultsOnVisble;
         this.isFocusIn = true;
+        var results = this.searchResultsOnVisble;
         var resultLength = results.length;
         var focusIdx = results.findIndex(function (result) { return result.isFocus; });
         var nextIdx = isArrowUp(e.keyCode) ? focusIdx - 1 : focusIdx + 1;
@@ -431,6 +492,9 @@ var Ng2SimpleAutocomplete = (function () {
     Ng2SimpleAutocomplete.prototype.saveHistoryToLocalStorage = function (history) {
         window.localStorage.setItem("ng2_simple_autocomplete_history_" + this.historyId, JSON.stringify(history));
     };
+    Ng2SimpleAutocomplete.prototype.sanitize = function (markup) {
+        return this.sanitizer.bypassSecurityTrustHtml(markup);
+    };
     return Ng2SimpleAutocomplete;
 }());
 tslib_1.__decorate([
@@ -461,6 +525,10 @@ tslib_1.__decorate([
 tslib_1.__decorate([
     core_1.Input(),
     tslib_1.__metadata("design:type", Object)
+], Ng2SimpleAutocomplete.prototype, "isStatic", void 0);
+tslib_1.__decorate([
+    core_1.Input(),
+    tslib_1.__metadata("design:type", Object)
 ], Ng2SimpleAutocomplete.prototype, "placeholder", void 0);
 tslib_1.__decorate([
     core_1.Input(),
@@ -476,10 +544,6 @@ tslib_1.__decorate([
 ], Ng2SimpleAutocomplete.prototype, "historyHeading", void 0);
 tslib_1.__decorate([
     core_1.Input(),
-    tslib_1.__metadata("design:type", Number)
-], Ng2SimpleAutocomplete.prototype, "searchResultsTotal", void 0);
-tslib_1.__decorate([
-    core_1.Input(),
     tslib_1.__metadata("design:type", Object)
 ], Ng2SimpleAutocomplete.prototype, "autoFocusOnFirst", void 0);
 tslib_1.__decorate([
@@ -493,15 +557,11 @@ tslib_1.__decorate([
 tslib_1.__decorate([
     core_1.Input(),
     tslib_1.__metadata("design:type", Object)
-], Ng2SimpleAutocomplete.prototype, "saveHistoryOnChange", void 0);
-tslib_1.__decorate([
-    core_1.Input(),
-    tslib_1.__metadata("design:type", Object)
 ], Ng2SimpleAutocomplete.prototype, "noResultText", void 0);
 tslib_1.__decorate([
     core_1.Input(),
     tslib_1.__metadata("design:type", Object)
-], Ng2SimpleAutocomplete.prototype, "inputStyle", void 0);
+], Ng2SimpleAutocomplete.prototype, "style", void 0);
 tslib_1.__decorate([
     core_1.ViewChild('searchInput'),
     tslib_1.__metadata("design:type", core_1.ElementRef)
@@ -517,8 +577,8 @@ tslib_1.__decorate([
 Ng2SimpleAutocomplete = tslib_1.__decorate([
     core_1.Component({
         selector: 'ng2-simple-autocomplete',
-        template: "\n    <div\n      class=\"autocomplete\"\n      [ngStyle]=\"inputStyle\"\n    >\n      <input\n        #searchInput\n        [(ngModel)]=\"_search\"\n        class=\"autocomplete-input\"\n        [ngClass]=\"isResultSelected && 'is-selected'\"\n        type=\"text\"\n        autocomplete=\"off\"\n        (keydown)=\"preventCursorPosition($event)\"\n        (focus)=\"onFocusin()\"\n        (focusout)=\"onFocusout($event)\"\n        [placeholder]=\"placeholder\"\n      />\n      <div\n        class=\"autocomplete-iconWrapper\"\n        [ngClass]=\"{ 'is-visible': isResetButtonVisible}\"\n        [ngStyle]=\"fontSize\"\n        (click)=\"onResetSearchText()\"\n      >\n        <span class=\"resetIcon\">\u2715</span>\n      </div>\n\n      <!--\n      <div\n        [ngClass]=\"{ 'autocomplete-iconWrapper': true, 'is-visible': isLoading}\"\n        (click)=\"onResetSearchText()\"\n      >\n        <i class=\"icon--refresh\">\u21BB</i>\n      </div>\n      -->\n\n      <div [ngClass]=\"{ 'is-visible': isNoResultsVisible }\" class=\"autocomplete-result\">\n        {{ noResultText }}\n      </div>\n\n      <ul\n        #searchResultsEl\n        [ngClass]=\"{ 'is-visible': isResultVisible }\"\n        class=\"autocomplete-result\"\n      >\n        <li\n          class=\"autocomplete-item\"\n          *ngFor=\"let result of searchResults;let i = index\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n          (click)=\"onClickResult(i)\"\n          (mouseover)=\"onMouseOverResultItem(i)\"\n          [innerHtml]=\"result.text || sanitizer.bypassSecurityTrustHtml(result.markup)\"\n        ></li>\n      </ul>\n\n      <ul\n        #searchHistoryEl\n        class=\"autocomplete-result\"\n        [ngClass]=\"{ 'is-visible': isSearchHistoryVisible }\"\n      >\n        <li class=\"autocomplete-resultTitle\">\n          <span [innerHtml]=\"sanitizer.bypassSecurityTrustHtml(historyHeading)\"></span>\n          <span\n            (click)=\"onClickResetHistory()\"\n            class=\"autocomplete-historyTrash\"\n          >\n            <i class=\"fa fa-trash-o\"></i>\n          </span>\n        </li>\n        <li\n          *ngFor=\"let result of searchHistory;let i = index\"\n          class=\"autocomplete-item\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n        >\n          <div\n            (click)=\"onClickResult(i, $event)\"\n            (mouseover)=\"onMouseOverResultItem(i)\"\n            [innerHtml]=\"result.text || sanitizer.bypassSecurityTrustHtml(result.markup)\"\n          >\n          </div>\n          <span class=\"autocomplete-deleteHistoryItemBtn\" (click)=\"onDeleteHistoryItem(i)\">\n            <span class=\"resetIcon sizeInherit\">\u2715</span>\n          </span>\n        </li>\n\n        <!--\n        <li\n          *ngIf=\"!searchHistory.length\"\n          class=\"autocomplete-item\"\n        >no search history</li>\n        -->\n      </ul>\n    </div>\n  ",
-        styles: ["\n    .autocomplete {\n      position: relative;\n      display: inline-block;\n      box-sizing: border-box;\n      width: 100%;\n      padding: 0 16px;\n      height: 35px;\n      line-height: 35px;\n      border: 1px solid #ddd;\n    }\n\n    .autocomplete-input {\n      box-sizing: border-box;\n      position: absolute;\n      top: 0;\n      left: 0;\n      display: block;\n      width: inherit;\n      height: inherit;\n      line-height: inherit;\n      padding: inherit;\n      border: 0;\n      background: none;\n      font-size: inherit;\n      font-weight: inherit;\n      color: inherit;\n      outline-width: 0;\n    }\n\n    .autocomplete-input.is-selected {\n      display: block;\n    }\n\n    .autocomplete-result {\n      box-sizing: border-box;\n      display: none;\n      position: absolute;\n      z-index: 100;\n      top: 100%;\n      left: 0;\n      width: 100%;\n      padding: 8px;\n      margin: 0;\n      max-height: 400px;\n      overflow: auto;\n      border: inherit;\n      background-color: #fff;\n      list-style: none;\n      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);\n    }\n\n    .autocomplete-result.is-visible {\n      display: block;\n    }\n\n    .autocomplete-result > li {\n      line-height: 1.4 !important;\n    }\n\n    .autocomplete-item {\n      position: relative;\n      padding: 0.5em;\n      padding-right: 1.5em;\n      max-height: 200px;\n    }\n\n    .autocomplete-item.is-focus {\n      background-color: #eee;\n    }\n\n    .autocomplete-item:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-iconWrapper {\n      position: absolute;\n      z-index: 10;\n      top: 50%;\n      right: 0;\n      transform: translateY(-50%);\n      display: none;\n      width: 1.5em;\n      height: 100%;\n      padding: 0 5px;\n      text-align: center;\n      background: white;\n    }\n\n    .autocomplete-iconWrapper.is-visible {\n      display: block;\n    }\n\n    .autocomplete-iconWrapper:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-isLoading {\n      z-index: 20;\n    }\n\n    .autocomplete-closeBtn {\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-closeBtn:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-resultTitle {\n      padding: 5px 8px;\n      font-size: 0.85em;\n      opacity: 0.8;\n      border-bottom: 1px solid rgba(230, 230, 230, 0.7);\n    }\n\n    .autocomplete-historyTrash {\n      float: right;\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-historyTrash:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-deleteHistoryItemBtn {\n      z-index: 10;\n      position: absolute;\n      top: 50%;\n      right: 0;\n      transform: translateY(-50%);\n      width: 1.5em;\n      display: block;\n      color: #3b4752;\n      opacity: 0.3;\n      transition: all 0.2s ease-in-out;\n      font-size: 1em;\n      text-align: center;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover > i {\n      transform: scale(1.5);\n    }\n\n    .resetIcon {\n      opacity: 0.3;\n    }\n\n    .resetIcon:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n  "],
+        template: "\n    <div\n      class=\"autocomplete\"\n      [ngStyle]=\"style\"\n    >\n      <input\n        #searchInput\n        [(ngModel)]=\"_search\"\n        class=\"autocomplete-input\"\n        [ngClass]=\"isResultSelected && 'is-selected'\"\n        type=\"text\"\n        autocomplete=\"off\"\n        (keydown)=\"preventCursorPosition($event)\"\n        (focus)=\"onFocusin()\"\n        (focusout)=\"onFocusout($event)\"\n        [placeholder]=\"placeholder\"\n      />\n      <div\n        class=\"autocomplete-iconWrapper\"\n        [ngClass]=\"{ 'is-visible': isResetButtonVisible}\"\n        [ngStyle]=\"{ 'font-size': style['font-size']}\"\n        (click)=\"onResetSearchText()\"\n      >\n        <span class=\"autocomplete-icon deleteIcon\">\u2715</span>\n      </div>\n\n      <!--\n      <div\n        [ngClass]=\"{\n          'autocomplete-iconWrapper': true, 'is-visible': isLoading\n        }\"\n        (click)=\"onResetSearchText()\"\n      >\n        <i class=\"autocomplete-icon icon--refresh\">\u21BB</i>\n      </div>\n      -->\n\n      <div\n        [ngClass]=\"{ 'is-visible': isNoResultsVisible }\" class=\"autocomplete-result\"\n      >\n        {{ noResultText }}\n      </div>\n\n      <ul\n        #searchResultsEl\n        [ngClass]=\"{ 'is-visible': isResultVisible }\"\n        class=\"autocomplete-result\"\n      >\n        <li\n          class=\"autocomplete-item\"\n          *ngFor=\"let result of searchResultsOnVisble;let i = index\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n          (click)=\"onClickResult(i)\"\n          (mouseover)=\"onMouseOverResultItem(i)\"\n          [innerHtml]=\"result.text || sanitize(result.markup)\"\n        ></li>\n      </ul>\n\n      <ul\n        #searchHistoryEl\n        class=\"autocomplete-result\"\n        [ngClass]=\"{ 'is-visible': isSearchHistoryVisible }\"\n      >\n        <li *ngIf=\"!!historyHeading\" class=\"autocomplete-resultTitle\">\n          <span [innerHtml]=\"sanitize(historyHeading)\"></span>\n          <!--\n          <span\n            (click)=\"onClickResetHistory()\"\n            class=\"autocomplete-historyTrash\"\n          ></span>\n          -->\n        </li>\n        <li\n          *ngFor=\"let result of searchHistory;let i = index\"\n          class=\"autocomplete-item\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n        >\n          <div\n            (click)=\"onClickResult(i, $event)\"\n            (mouseover)=\"onMouseOverResultItem(i)\"\n            [innerHtml]=\"result.text || sanitize(result.markup)\"\n          >\n          </div>\n          <span class=\"autocomplete-iconWrapper is-visible\" (click)=\"onDeleteHistoryItem(i)\">\n            <span class=\"autocomplete-icon deleteIcon\">\u2715</span>\n          </span>\n        </li>\n\n        <!--\n        <li\n          *ngIf=\"!searchHistory.length\"\n          class=\"autocomplete-item\"\n        >no search history</li>\n        -->\n      </ul>\n    </div>\n  ",
+        styles: ["\n    .autocomplete {\n      position: relative;\n      display: inline-block;\n      box-sizing: border-box;\n      padding: 0 0.75em;\n      width: 100%;\n      height: 35px;\n      line-height: 35px;\n      color: inherit;\n      font-size: inherit;\n      border-width: 1px;\n      border-style: solid;\n      border-radius: 2px;\n      border-color: #ddd;\n    }\n\n    .autocomplete-input {\n      box-sizing: border-box;\n      position: absolute;\n      top: 0;\n      left: 0;\n      display: block;\n      width: calc(100% - 2px);\n      height: calc(100$ - 2px);\n      line-height: inherit;\n      padding: inherit;\n      border: 0;\n      background: none;\n      font-size: inherit;\n      font-weight: inherit;\n      color: inherit;\n      outline-width: 0;\n    }\n\n    .autocomplete-input.is-selected {\n      display: block;\n    }\n\n    .autocomplete-result {\n      box-sizing: border-box;\n      display: none;\n      position: absolute;\n      z-index: 100;\n      top: 100%;\n      left: -1px;\n      width: calc(100% + 2px);\n      padding: 0.5em 0.75em;\n      margin: 0;\n      max-height: 25em;\n      overflow: auto;\n      border-style: solid;\n      border-width: 1px;\n      border-radius: inherit;\n      border-color: inherit;\n      background-color: #fff;\n      list-style: none;\n      box-shadow: 0 2px 0px rgba(0, 0, 0, 0.1);\n      font-size: inherit;\n    }\n\n    .autocomplete-result.is-visible {\n      display: block;\n    }\n\n    .autocomplete-result > li {\n      line-height: 1.4 !important;\n    }\n\n    .autocomplete-item {\n      position: relative;\n      padding: 0.5em;\n      padding-right: 1.5em;\n      max-height: 200px;\n    }\n\n    .autocomplete-item.is-focus {\n      background-color: #eee;\n    }\n\n    .autocomplete-item:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-iconWrapper {\n      display: none;\n      position: absolute;\n      z-index: 10;\n      top: 0%;\n      right: 0;\n      width: 1.5em;\n      height: 100%;\n      padding: 0 0.3em;\n      text-align: center;\n      background: white;\n      border-radius: inherit;\n    }\n\n    .autocomplete-iconWrapper.is-visible {\n      display: block;\n    }\n\n    .autocomplete-icon {\n      position: absolute;\n      top: 50%;\n      left: 50;\n      transform: translate(-50%, -47%);\n      opacity: 0.3;\n    }\n\n    .autocomplete-icon.deleteIcon:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n\n    .autocomplete-iconWrapper:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-isLoading {\n      z-index: 20;\n    }\n\n    .autocomplete-closeBtn {\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-closeBtn:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-resultTitle {\n      padding: 5px 8px;\n      font-size: 0.85em;\n      opacity: 0.8;\n      border-bottom: 1px solid rgba(230, 230, 230, 0.7);\n    }\n\n    .autocomplete-historyTrash {\n      float: right;\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-historyTrash:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-deleteHistoryItemBtn {\n      z-index: 10;\n      position: absolute;\n      top: 50%;\n      right: 0;\n      transform: translateY(-50%);\n      width: 1.5em;\n      display: block;\n      color: #3b4752;\n      opacity: 0.3;\n      transition: all 0.2s ease-in-out;\n      font-size: 1em;\n      text-align: center;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover > i {\n      transform: scale(1.5);\n    }\n  "],
     }),
     tslib_1.__metadata("design:paramtypes", [platform_browser_1.DomSanitizer])
 ], Ng2SimpleAutocomplete);
