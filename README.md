@@ -22,7 +22,7 @@ yarn add ng2-simple-autocomplete
 
 And add it to your Angular Module for use.
 
-```typescript
+```javascript
 import { Ng2SimpleAutocomplete } from 'ng2-simple-autocomplete';
 
 @NgModule({
@@ -48,7 +48,7 @@ export class AppModule {
 ></ng2-simple-autocomplete>
 ```
 
-```typescript
+```javascript
 import { AutoCompleteItem } from 'ng2-simple-autocomplete';
 
 class TestComponent {
@@ -78,7 +78,7 @@ Basically, a dataset binded to the autocomplete component does not change unless
 ></ng2-simple-autocomplete>
 ```
 
-```typescript
+```javascript
 import { AutoCompleteItem } from 'ng2-simple-autocomplete';
 
 class TestComponent {
@@ -106,7 +106,7 @@ If `isStatic` property is set as `true`, then the dataset is automatically filte
 
 Shape of object in `searchResults` array. 
 
-```typescript
+```javascript
 export interface AutoCompleteItem {
   value: any;         
   text: string;       
@@ -122,7 +122,7 @@ export interface AutoCompleteItem {
 
 Shape of object for style customizing.
 
-```typescript
+```javascript
 interface AutocompleteStyle {
   'width'?: string;
   'color'?: string;
@@ -153,10 +153,9 @@ List of autocomplete item.
 
 #### `style`
 
-Style object for customizing input box style. Customizable CSS property is predefined and another property will be ignored. Property and default value is like below.
+Style object for customizing input box style. Customizable CSS property is predefined and *another property will be ignored*. Property and default value is like below.
 
-```typescript
-
+```javascript
 @Input() style: AutocompleteStyle = {
   'width': '100%',
   'color': 'inherit',
@@ -190,7 +189,7 @@ default: `false`
 If want to bind static list for `searchResults` property, then set is as true. Then component will automatically filter the list when input changes.
 
 
-#### `placeholder: string` '';
+#### `placeholder: string`
 
 default: `search keyword`
 
