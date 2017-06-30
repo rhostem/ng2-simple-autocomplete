@@ -44,6 +44,16 @@ export interface AutoCompleteItem {
   isFocus?: boolean;  // does item have focus(highlighted) or not
 }
 
+export interface AutocompleteStyle {
+  'width'?: string;
+  'color'?: string;
+  'font-size'?: string;
+  'border-radius'?: string;
+  'border-color'?: string;
+  'height'?: string;
+  'line-height'?: string;
+}
+
 @Component({
   selector: 'ng2-simple-autocomplete',
   template: `
@@ -196,7 +206,7 @@ export interface AutoCompleteItem {
       overflow: auto;
       border-style: solid;
       border-width: 1px;
-      border-radius: 0 0 2px 2px;
+      border-radius: inherit;
       border-color: inherit;
       background-color: #fff;
       list-style: none;
@@ -238,6 +248,7 @@ export interface AutoCompleteItem {
       padding: 0 0.3em;
       text-align: center;
       background: white;
+      border-radius: inherit;
     }
 
     .autocomplete-iconWrapper.is-visible {
@@ -390,7 +401,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
    * }
    * @memberof Ng2SimpleAutocomplete
    */
-  @Input() style = {
+  @Input() style: AutocompleteStyle = {
     'width': '100%',
     'color': 'inherit',
     'font-size': 'inherit',
@@ -417,7 +428,6 @@ export class Ng2SimpleAutocomplete implements OnInit {
   maintainFocus: boolean;                     // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
   fontSize = <any> {}; // font-size style extracted from inputStyle
   filteredResults: AutoCompleteItem[] = [];
-  computedStyle = <any> {}; // extracted style unit from @Input style
 
   // 초기화 버튼 표시 여부
   get isResetButtonVisible(): Boolean {

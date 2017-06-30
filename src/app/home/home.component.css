@@ -1,4 +1,7 @@
 /*styles for home content only*/
+.wrap {
+  margin-bottom: 10rem;
+}
 
 hr {
   background: palevioletred;

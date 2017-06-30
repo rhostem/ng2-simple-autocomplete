@@ -3,6 +3,7 @@ import {
   OnInit
 } from '@angular/core';
 import { AutoCompleteItem } from '../../ng2-simple-autocomplete';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 const remoteData = [
   { _id: '1', name: 'lorem', },
@@ -39,11 +40,10 @@ export class HomeComponent implements OnInit {
   asyncResults = [];
 
   inputStyle = {
-    'width': '400px',
-    'padding': '0 0.75em',
+    'width': '300px',
     'color': 'blue',
-    'font-size': '14px',
-    'border-radius': '2px',
+    'font-size': '24px',
+    'border-radius': '10px',
     'border-color': 'purple',
     'height': '50px',
     'line-height': '50px',
@@ -55,9 +55,10 @@ export class HomeComponent implements OnInit {
   selectedStaticHistory: AutoCompleteItem;
   selectedAsync: AutoCompleteItem;
 
-  // constructor(
-  // ) {
-  // }
+  constructor(
+    public sanitizer: DomSanitizer,
+  ) {
+  }
 
   public ngOnInit() {
   }

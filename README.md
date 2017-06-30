@@ -128,12 +128,24 @@ Text of input field. Use 'banana-in-box' notation for 2-way binding.
 List of autocomplete item. 
 
 
-#### `style: object`
+#### `style`
 
 Style object for customizing input box style. Customizable CSS property is predefined and another property will be ignored. Property and default value is like below.
 
+
+
 ```typescript
-@Input() style = {
+interface AutocompleteStyle {
+  'width'?: string;
+  'color'?: string;
+  'font-size'?: string;
+  'border-radius'?: string;
+  'border-color'?: string;
+  'height'?: string;
+  'line-height'?: string;
+}
+
+@Input() style: AutocompleteStyle = {
   'width': '100%',
   'color': 'inherit',
   'font-size': 'inherit',
@@ -143,7 +155,6 @@ Style object for customizing input box style. Customizable CSS property is prede
   'line-height': '35px',
 };
 ```
-
 
 #### `onChangeInput: EventEmitter`
 
@@ -167,7 +178,7 @@ default: `false`
 If want to bind static list for `searchResults` property, then set is as true. Then component will automatically filter the list when input changes.
 
 
-### `placeholder: string` '';
+#### `placeholder: string` '';
 
 default: `search keyword`
 
@@ -227,4 +238,5 @@ Invoke `onReset` event when input element losts focus.
 default: `There is no results`
 
 This is visible when there is no items in `searchResults`.
+
 
