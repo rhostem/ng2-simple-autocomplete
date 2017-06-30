@@ -184,7 +184,7 @@ module.exports = function _curry3(fn) {
 
 "use strict";
 
-var root_1 = __webpack_require__(48);
+var root_1 = __webpack_require__(49);
 var toSubscriber_1 = __webpack_require__(688);
 var observable_1 = __webpack_require__(160);
 /**
@@ -317,7 +317,7 @@ exports.Observable = Observable;
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _isArray = __webpack_require__(46);
+var _isArray = __webpack_require__(47);
 var _isTransformer = __webpack_require__(146);
 
 
@@ -15465,68 +15465,7 @@ module.exports = _curry3(_reduce);
 /* 38 */,
 /* 39 */,
 /* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */
-/***/ (function(module, exports) {
-
-/**
- * Tests whether or not an object is an array.
- *
- * @private
- * @param {*} val The object to test.
- * @return {Boolean} `true` if `val` is an array, `false` otherwise.
- * @example
- *
- *      _isArray([]); //=> true
- *      _isArray(null); //=> false
- *      _isArray({}); //=> false
- */
-module.exports = Array.isArray || function _isArray(val) {
-  return (val != null &&
-          val.length >= 0 &&
-          Object.prototype.toString.call(val) === '[object Array]');
-};
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports) {
-
-module.exports = function _reduced(x) {
-  return x && x['@@transducer/reduced'] ? x :
-    {
-      '@@transducer/value': x,
-      '@@transducer/reduced': true
-    };
-};
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-/**
- * window: browser in DOM main thread
- * self: browser in WebWorker
- * global: Node.js/other
- */
-exports.root = (typeof window == 'object' && window.window === window && window
-    || typeof self == 'object' && self.self === self && self
-    || typeof global == 'object' && global.global === global && global);
-if (!exports.root) {
-    throw new Error('RxJS could not find any global context (window, self, global)');
-}
-//# sourceMappingURL=root.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(80)))
-
-/***/ }),
-/* 49 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20037,6 +19976,67 @@ var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["D" /* Version */]
 
 
 /***/ }),
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */
+/***/ (function(module, exports) {
+
+/**
+ * Tests whether or not an object is an array.
+ *
+ * @private
+ * @param {*} val The object to test.
+ * @return {Boolean} `true` if `val` is an array, `false` otherwise.
+ * @example
+ *
+ *      _isArray([]); //=> true
+ *      _isArray(null); //=> false
+ *      _isArray({}); //=> false
+ */
+module.exports = Array.isArray || function _isArray(val) {
+  return (val != null &&
+          val.length >= 0 &&
+          Object.prototype.toString.call(val) === '[object Array]');
+};
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports) {
+
+module.exports = function _reduced(x) {
+  return x && x['@@transducer/reduced'] ? x :
+    {
+      '@@transducer/value': x,
+      '@@transducer/reduced': true
+    };
+};
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+/**
+ * window: browser in DOM main thread
+ * self: browser in WebWorker
+ * global: Node.js/other
+ */
+exports.root = (typeof window == 'object' && window.window === window && window
+    || typeof self == 'object' && self.self === self && self
+    || typeof global == 'object' && global.global === global && global);
+if (!exports.root) {
+    throw new Error('RxJS could not find any global context (window, self, global)');
+}
+//# sourceMappingURL=root.js.map
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(80)))
+
+/***/ }),
 /* 50 */,
 /* 51 */,
 /* 52 */,
@@ -20349,7 +20349,7 @@ function flattenUnsubscriptionErrors(errors) {
 /* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _isArray = __webpack_require__(46);
+var _isArray = __webpack_require__(47);
 
 
 /**
@@ -21211,7 +21211,7 @@ module.exports = function _curryN(length, received, fn) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curry1 = __webpack_require__(2);
-var _isArray = __webpack_require__(46);
+var _isArray = __webpack_require__(47);
 var _isString = __webpack_require__(72);
 
 
@@ -21657,7 +21657,7 @@ exports.isArray = Array.isArray || (function (x) { return x && typeof x.length =
 
 "use strict";
 
-var root_1 = __webpack_require__(48);
+var root_1 = __webpack_require__(49);
 var isArray_1 = __webpack_require__(109);
 var isPromise_1 = __webpack_require__(266);
 var isObject_1 = __webpack_require__(265);
@@ -26181,7 +26181,7 @@ module.exports = function compose() {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curry2 = __webpack_require__(0);
-var _isArray = __webpack_require__(46);
+var _isArray = __webpack_require__(47);
 var _isFunction = __webpack_require__(98);
 var _isString = __webpack_require__(72);
 var toString = __webpack_require__(77);
@@ -27149,7 +27149,7 @@ exports.MergeAllSubscriber = MergeAllSubscriber;
 
 "use strict";
 
-var root_1 = __webpack_require__(48);
+var root_1 = __webpack_require__(49);
 function symbolIteratorPonyfill(root) {
     var Symbol = root.Symbol;
     if (typeof Symbol === 'function') {
@@ -27189,7 +27189,7 @@ exports.$$iterator = symbolIteratorPonyfill(root_1.root);
 
 "use strict";
 
-var root_1 = __webpack_require__(48);
+var root_1 = __webpack_require__(49);
 function getSymbolObservable(context) {
     var $$observable;
     var Symbol = context.Symbol;
@@ -27217,7 +27217,7 @@ exports.$$observable = getSymbolObservable(root_1.root);
 
 "use strict";
 
-var root_1 = __webpack_require__(48);
+var root_1 = __webpack_require__(49);
 var Symbol = root_1.root.Symbol;
 exports.$$rxSubscriber = (typeof Symbol === 'function' && typeof Symbol.for === 'function') ?
     Symbol.for('rxSubscriber') : '@@rxSubscriber';
@@ -27286,7 +27286,7 @@ exports.isFunction = isFunction;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return decorateModuleRef; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ENV_PROVIDERS; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(19);
 /* tslint:disable */
 /**
@@ -27548,7 +27548,7 @@ module.exports = _curry2(function apply(fn, args) {
 
 var _curry3 = __webpack_require__(3);
 var _has = __webpack_require__(18);
-var _isArray = __webpack_require__(46);
+var _isArray = __webpack_require__(47);
 var _isInteger = __webpack_require__(144);
 var assoc = __webpack_require__(92);
 var isNil = __webpack_require__(232);
@@ -28049,7 +28049,7 @@ module.exports = _curry2(_dispatchable([], _xdropRepeatsWith, function dropRepea
 
 var _curry1 = __webpack_require__(2);
 var _isArguments = __webpack_require__(225);
-var _isArray = __webpack_require__(46);
+var _isArray = __webpack_require__(47);
 var _isObject = __webpack_require__(145);
 var _isString = __webpack_require__(72);
 
@@ -28360,7 +28360,7 @@ module.exports = function _makeFlat(recursive) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curry2 = __webpack_require__(0);
-var _reduced = __webpack_require__(47);
+var _reduced = __webpack_require__(48);
 var _xfBase = __webpack_require__(13);
 
 
@@ -29479,7 +29479,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var root_1 = __webpack_require__(48);
+var root_1 = __webpack_require__(49);
 var Observable_1 = __webpack_require__(10);
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -30064,7 +30064,7 @@ webpackEmptyAsyncContext.id = 269;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_compiler__ = __webpack_require__(292);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__(41);
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -56972,7 +56972,7 @@ var ImportResolver = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_observable_fromPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_observable_fromPromise__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operator_map__ = __webpack_require__(157);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__ = __webpack_require__(41);
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -63010,7 +63010,7 @@ ReactiveFormsModule.ctorParameters = function () { return []; };
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(41);
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -65289,7 +65289,7 @@ var VERSION = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Version */]
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_rxjs_operator_last___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17_rxjs_operator_last__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_rxjs_operator_mergeAll__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_rxjs_operator_mergeAll___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18_rxjs_operator_mergeAll__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__angular_platform_browser__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__angular_platform_browser__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_rxjs_operator_filter__ = __webpack_require__(262);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_rxjs_operator_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20_rxjs_operator_filter__);
 var __extends = (this && this.__extends) || function (d, b) {
@@ -71419,7 +71419,7 @@ AppComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(293);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(294);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(19);
@@ -71516,6 +71516,8 @@ var ROUTES = [
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(41);
+
 
 
 var remoteData = [
@@ -71524,21 +71526,23 @@ var remoteData = [
     { _id: '3', name: 'pixel', },
 ];
 var HomeComponent = (function () {
-    function HomeComponent() {
+    function HomeComponent(sanitizer) {
+        this.sanitizer = sanitizer;
         this.staticResults = [
             {
-                text: 'Ng2',
+                text: 'ng2',
                 value: '[value]',
             },
             {
-                text: 'Simple',
+                text: 'simple',
                 value: '[value]',
             },
             {
-                text: 'Autocomplete',
+                text: 'autocomplete',
                 value: '[value]',
             },
             {
+                text: 'bold text by html tag',
                 markup: '<b>bold text</b> by html tag',
                 value: '[value]',
             },
@@ -71546,20 +71550,17 @@ var HomeComponent = (function () {
         this.asyncResults = [];
         this.inputStyle = {
             'width': '300px',
-            'font-weight': 'normal',
-            // 'font-size': '20px',
-            'height': '40px',
-            'line-height': '40px',
-            'border': '2px solid #eee',
-            'border-radius': '4px',
+            'color': 'blue',
+            'font-size': '24px',
+            'border-radius': '10px',
+            'border-color': 'purple',
+            'height': '50px',
+            'line-height': '50px',
         };
         this.searchStatic = '';
         this.searchStaticHistory = '';
         this.searchAsync = '';
     }
-    // constructor(
-    // ) {
-    // }
     HomeComponent.prototype.ngOnInit = function () {
     };
     HomeComponent.prototype.onSelectStatic = function (v) {
@@ -71595,7 +71596,8 @@ HomeComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
         selector: 'home',
         styles: [__webpack_require__(693)],
         template: __webpack_require__(649)
-    })
+    }),
+    __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __metadata */]("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["d" /* DomSanitizer */]])
 ], HomeComponent);
 
 
@@ -71709,7 +71711,7 @@ function _domReadyHandler() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Ng2SimpleAutocomplete; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_observable_fromEvent__ = __webpack_require__(656);
@@ -71756,28 +71758,65 @@ var Ng2SimpleAutocomplete = (function () {
         this.sanitizer = sanitizer;
         this.searchChange = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* EventEmitter */](); // search 2-way binding
         // required input
-        this.searchResults = []; // 검색 결과 리스트
+        // ------------------------------------------------------------------------
+        this.searchResults = [];
         this.onChangeInput = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* EventEmitter */](); // 검색어 입력 변경
         this.onSelect = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* EventEmitter */](); // 검색 결과 항목 선택 콜백
         // optional
+        // ------------------------------------------------------------------------
         this.onReset = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* EventEmitter */](); // 입력 값 초기화 콜백
-        this.placeholder = 'placeholder';
-        this.historyHeading = 'recently selected'; // 검색 히스토리 아이디. 명시되면 최근 검색 키워드를 표시한다.
-        this.autoFocusOnFirst = true; // 첫번째 항목에 자동 포커스
-        this.resetOnDelete = true; // 검색 텍스트 삭제시 onReset 이벤트 호출
-        this.resetOnFocusOut = false; // 검색 텍스트 삭제시 onReset 이벤트 호출
-        this.saveHistoryOnChange = false;
-        this.noResultText = 'There is no results';
-        this.inputStyle = {
+        /**
+         * if searchResult is static list, list will be filtered when input changes
+         * @memberof Ng2SimpleAutocomplete
+         */
+        this.isStatic = false;
+        /**
+         * input placeholder
+         *
+         * @memberof Ng2SimpleAutocomplete
+         */
+        this.placeholder = 'search keyword';
+        /**
+         * heading text of history result.
+         * if it is null then history heading will be hide.
+         *
+         * @memberof Ng2SimpleAutocomplete
+         */
+        this.historyHeading = 'Recently selected';
+        this.autoFocusOnFirst = true; // autofocus on first result item
+        this.resetOnDelete = false; // invoke onReset event binding on delete
+        this.resetOnFocusOut = false; // invoke onReset event binding on focusout
+        this.noResultText = 'There is no results'; // text when there is no search result.
+        /**
+         * style object. it overwrites basic style of input element by [ngStyle] binding.
+         *
+         * ex)
+         * const inputStyle = {
+         *  'width': '300px',
+         *  'font-size': '20px',
+         *  'padding': '0 20px'
+         * }
+         * @memberof Ng2SimpleAutocomplete
+         */
+        this.style = {
+            'width': '100%',
+            'color': 'inherit',
             'font-size': 'inherit',
+            'border-radius': '2px',
+            'border-color': '#ddd',
+            'height': '35px',
+            'line-height': '35px',
         };
         // 컴포넌트 변수
+        // ------------------------------------------------------------------------
         this._search = ''; // 검색 입력 텍스트
+        this._searchResults = [];
         this.searchHistory = []; // 검색 히스토리
         this.HISTORY_MAX_LENGTH = 15;
         this.isNoResults = false; // 검색 결과 존재 여부. 알 수 없는 경우도 false로 할당한다.
         this.isResultSelected = false; // 검색 결과 선택 여부
         this.fontSize = {}; // font-size style extracted from inputStyle
+        this.filteredResults = [];
     }
     Object.defineProperty(Ng2SimpleAutocomplete.prototype, "search", {
         // 검색 입력 텍스트. 부모 컴포넌트에서 banana-in-box ([]) 표기법 사용해서 연결
@@ -71807,13 +71846,22 @@ var Ng2SimpleAutocomplete = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Ng2SimpleAutocomplete.prototype, "isResultExists", {
+        get: function () {
+            var result = __WEBPACK_IMPORTED_MODULE_8_ramda___default.a.not(this.isStatic) ? this.searchResults.length : this.filteredResults.length;
+            return !!result;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Ng2SimpleAutocomplete.prototype, "isResultVisible", {
         // 결과 목록 표시 여부
         get: function () {
+            // return true;
             return this.isFocusIn &&
                 !this.isSearchHistoryVisible &&
                 !this.isLoading &&
-                !!this.searchResults.length;
+                this.isResultExists;
         },
         enumerable: true,
         configurable: true
@@ -71841,7 +71889,7 @@ var Ng2SimpleAutocomplete = (function () {
         // 검색 결과와 히스토리 중에서 표시된 목록 선택
         get: function () {
             if (this.isResultVisible) {
-                return this.searchResults;
+                return __WEBPACK_IMPORTED_MODULE_8_ramda___default.a.not(this.isStatic) ? this.searchResults : this.filteredResults;
             }
             if (this.isSearchHistoryVisible) {
                 return this.searchHistory;
@@ -71864,10 +71912,7 @@ var Ng2SimpleAutocomplete = (function () {
         if (this.historyId) {
             this.initSearchHistory();
         }
-        // extract fontSize style
-        this.fontSize = Object.assign({}, {
-            'font-size': this.inputStyle['font-size'] || 'inherit',
-        });
+        this.extractStyle(this.style);
     };
     Ng2SimpleAutocomplete.prototype.ngOnChanges = function (changes) {
         var _this = this;
@@ -71880,27 +71925,27 @@ var Ng2SimpleAutocomplete = (function () {
                 return (_this.autoFocusOnFirst && index === 0) ?
                     Object.assign(v, { isFocus: true }) : v;
             });
-        }
-        // 검색 키워드 없을 경우 결과 초기화
-        // if (changes['search']) {
-        //   if (!changes['search'].currentValue) {
-        //     this.searchResults = [];
-        //   }
-        // }
-        // 검색 결과 확인
-        if (changes['isLoading']) {
-            this.isNoResults = false; // 기본적으로 결과는 알수없음
-            var isLoadingChange = changes['isLoading'];
-            // 비동기 목록 호출 완료
-            if (isLoadingChange.previousValue && !isLoadingChange.currentValue) {
-                if (!this.searchResults.length) {
-                    this.isNoResults = true;
-                }
-                else {
-                    this.isNoResults = false;
-                }
+            if (!changes.searchResults.firstChange) {
+                this.isNoResults = !this.searchResults.length;
+            }
+            // save result as filteredResult for filtering
+            if (this.isStatic) {
+                this.filteredResults = this.searchResults.slice();
             }
         }
+    };
+    Ng2SimpleAutocomplete.prototype.extractStyle = function (style) {
+        if (style === void 0) { style = {}; }
+        var inputStyle = Object.assign({}, style);
+        this.style = {
+            'width': inputStyle['width'],
+            'color': inputStyle['color'],
+            'font-size': inputStyle['font-size'],
+            'border-radius': inputStyle['border-radius'],
+            'border-color': inputStyle['border-color'],
+            'height': inputStyle['height'],
+            'line-height': inputStyle['line-height'],
+        };
     };
     Ng2SimpleAutocomplete.prototype.initSearchHistory = function () {
         var history = window.localStorage
@@ -71955,24 +72000,42 @@ var Ng2SimpleAutocomplete = (function () {
             _this.onDeleteSearchText();
         });
     };
+    /**
+     * on keyup == when input changed
+     * @param e event
+     */
     Ng2SimpleAutocomplete.prototype.onKeyUp = function (e) {
         this.isResultSelected = false;
         this.isFocusIn = true;
         this.isNoResults = false; // 입력중 검색결과는 알 수 없음
         this.search = e.target.value; // 2 way binding된 검색 키워드 업데이트
+        // if static result, filter result by input text
+        if (!this.isStatic) {
+            this.searchResults = []; // reset search results
+        }
+        else {
+            this.filterStaticResult(this.search);
+        }
         if (!isEmptyString(this.search)) {
             this.onChangeInput.emit(e.target.value); // 검색 키워드 변경시 상위 컴포넌트에서 콜백 실행
         }
-        if (this.saveHistoryOnChange && !isEmptyString(this.search)) {
-            this.saveHistory({ text: this.search, value: null });
+    };
+    Ng2SimpleAutocomplete.prototype.filterStaticResult = function (search) {
+        if (isEmptyString(search)) {
+            this.filteredResults = this.searchResults.slice();
+            return;
+        }
+        this.filteredResults = this.searchResults.filter(function (v) { return v.text.indexOf(search) > -1; });
+        if (__WEBPACK_IMPORTED_MODULE_8_ramda___default.a.not(this.filteredResults.length)) {
+            this.isNoResults = true;
         }
     };
     /**
      * 키보드 상하 입력
      */
     Ng2SimpleAutocomplete.prototype.onFocusNextResult = function (e) {
-        var results = this.searchResultsOnVisble;
         this.isFocusIn = true;
+        var results = this.searchResultsOnVisble;
         var resultLength = results.length;
         var focusIdx = results.findIndex(function (result) { return result.isFocus; });
         var nextIdx = isArrowUp(e.keyCode) ? focusIdx - 1 : focusIdx + 1;
@@ -72153,6 +72216,9 @@ var Ng2SimpleAutocomplete = (function () {
     Ng2SimpleAutocomplete.prototype.saveHistoryToLocalStorage = function (history) {
         window.localStorage.setItem("ng2_simple_autocomplete_history_" + this.historyId, JSON.stringify(history));
     };
+    Ng2SimpleAutocomplete.prototype.sanitize = function (markup) {
+        return this.sanitizer.bypassSecurityTrustHtml(markup);
+    };
     return Ng2SimpleAutocomplete;
 }());
 __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
@@ -72183,6 +72249,10 @@ __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
 __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])(),
     __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __metadata */]("design:type", Object)
+], Ng2SimpleAutocomplete.prototype, "isStatic", void 0);
+__WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])(),
+    __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __metadata */]("design:type", Object)
 ], Ng2SimpleAutocomplete.prototype, "placeholder", void 0);
 __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])(),
@@ -72198,10 +72268,6 @@ __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
 ], Ng2SimpleAutocomplete.prototype, "historyHeading", void 0);
 __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])(),
-    __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __metadata */]("design:type", Number)
-], Ng2SimpleAutocomplete.prototype, "searchResultsTotal", void 0);
-__WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])(),
     __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __metadata */]("design:type", Object)
 ], Ng2SimpleAutocomplete.prototype, "autoFocusOnFirst", void 0);
 __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
@@ -72215,15 +72281,11 @@ __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
 __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])(),
     __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __metadata */]("design:type", Object)
-], Ng2SimpleAutocomplete.prototype, "saveHistoryOnChange", void 0);
-__WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])(),
-    __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __metadata */]("design:type", Object)
 ], Ng2SimpleAutocomplete.prototype, "noResultText", void 0);
 __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])(),
     __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __metadata */]("design:type", Object)
-], Ng2SimpleAutocomplete.prototype, "inputStyle", void 0);
+], Ng2SimpleAutocomplete.prototype, "style", void 0);
 __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_13" /* ViewChild */])('searchInput'),
     __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __metadata */]("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_core__["L" /* ElementRef */])
@@ -72239,8 +72301,8 @@ __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
 Ng2SimpleAutocomplete = __WEBPACK_IMPORTED_MODULE_0_tslib__["a" /* __decorate */]([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_14" /* Component */])({
         selector: 'ng2-simple-autocomplete',
-        template: "\n    <div\n      class=\"autocomplete\"\n      [ngStyle]=\"inputStyle\"\n    >\n      <input\n        #searchInput\n        [(ngModel)]=\"_search\"\n        class=\"autocomplete-input\"\n        [ngClass]=\"isResultSelected && 'is-selected'\"\n        type=\"text\"\n        autocomplete=\"off\"\n        (keydown)=\"preventCursorPosition($event)\"\n        (focus)=\"onFocusin()\"\n        (focusout)=\"onFocusout($event)\"\n        [placeholder]=\"placeholder\"\n      />\n      <div\n        class=\"autocomplete-iconWrapper\"\n        [ngClass]=\"{ 'is-visible': isResetButtonVisible}\"\n        [ngStyle]=\"fontSize\"\n        (click)=\"onResetSearchText()\"\n      >\n        <span class=\"resetIcon\">\u2715</span>\n      </div>\n\n      <!--\n      <div\n        [ngClass]=\"{ 'autocomplete-iconWrapper': true, 'is-visible': isLoading}\"\n        (click)=\"onResetSearchText()\"\n      >\n        <i class=\"icon--refresh\">\u21BB</i>\n      </div>\n      -->\n\n      <div [ngClass]=\"{ 'is-visible': isNoResultsVisible }\" class=\"autocomplete-result\">\n        {{ noResultText }}\n      </div>\n\n      <ul\n        #searchResultsEl\n        [ngClass]=\"{ 'is-visible': isResultVisible }\"\n        class=\"autocomplete-result\"\n      >\n        <li\n          class=\"autocomplete-item\"\n          *ngFor=\"let result of searchResults;let i = index\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n          (click)=\"onClickResult(i)\"\n          (mouseover)=\"onMouseOverResultItem(i)\"\n          [innerHtml]=\"result.text || sanitizer.bypassSecurityTrustHtml(result.markup)\"\n        ></li>\n      </ul>\n\n      <ul\n        #searchHistoryEl\n        class=\"autocomplete-result\"\n        [ngClass]=\"{ 'is-visible': isSearchHistoryVisible }\"\n      >\n        <li class=\"autocomplete-resultTitle\">\n          <span [innerHtml]=\"sanitizer.bypassSecurityTrustHtml(historyHeading)\"></span>\n          <span\n            (click)=\"onClickResetHistory()\"\n            class=\"autocomplete-historyTrash\"\n          >\n            <i class=\"fa fa-trash-o\"></i>\n          </span>\n        </li>\n        <li\n          *ngFor=\"let result of searchHistory;let i = index\"\n          class=\"autocomplete-item\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n        >\n          <div\n            (click)=\"onClickResult(i, $event)\"\n            (mouseover)=\"onMouseOverResultItem(i)\"\n            [innerHtml]=\"result.text || sanitizer.bypassSecurityTrustHtml(result.markup)\"\n          >\n          </div>\n          <span class=\"autocomplete-deleteHistoryItemBtn\" (click)=\"onDeleteHistoryItem(i)\">\n            <span class=\"resetIcon sizeInherit\">\u2715</span>\n          </span>\n        </li>\n\n        <!--\n        <li\n          *ngIf=\"!searchHistory.length\"\n          class=\"autocomplete-item\"\n        >no search history</li>\n        -->\n      </ul>\n    </div>\n  ",
-        styles: ["\n    .autocomplete {\n      position: relative;\n      display: inline-block;\n      box-sizing: border-box;\n      width: 100%;\n      padding: 0 16px;\n      height: 35px;\n      line-height: 35px;\n      border: 1px solid #ddd;\n    }\n\n    .autocomplete-input {\n      box-sizing: border-box;\n      position: absolute;\n      top: 0;\n      left: 0;\n      display: block;\n      width: inherit;\n      height: inherit;\n      line-height: inherit;\n      padding: inherit;\n      border: 0;\n      background: none;\n      font-size: inherit;\n      font-weight: inherit;\n      color: inherit;\n      outline-width: 0;\n    }\n\n    .autocomplete-input.is-selected {\n      display: block;\n    }\n\n    .autocomplete-result {\n      box-sizing: border-box;\n      display: none;\n      position: absolute;\n      z-index: 100;\n      top: 100%;\n      left: 0;\n      width: 100%;\n      padding: 8px;\n      margin: 0;\n      max-height: 400px;\n      overflow: auto;\n      border: inherit;\n      background-color: #fff;\n      list-style: none;\n      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);\n    }\n\n    .autocomplete-result.is-visible {\n      display: block;\n    }\n\n    .autocomplete-result > li {\n      line-height: 1.4 !important;\n    }\n\n    .autocomplete-item {\n      position: relative;\n      padding: 0.5em;\n      padding-right: 1.5em;\n      max-height: 200px;\n    }\n\n    .autocomplete-item.is-focus {\n      background-color: #eee;\n    }\n\n    .autocomplete-item:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-iconWrapper {\n      position: absolute;\n      z-index: 10;\n      top: 50%;\n      right: 0;\n      transform: translateY(-50%);\n      display: none;\n      width: 1.5em;\n      height: 100%;\n      padding: 0 5px;\n      text-align: center;\n      background: white;\n    }\n\n    .autocomplete-iconWrapper.is-visible {\n      display: block;\n    }\n\n    .autocomplete-iconWrapper:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-isLoading {\n      z-index: 20;\n    }\n\n    .autocomplete-closeBtn {\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-closeBtn:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-resultTitle {\n      padding: 5px 8px;\n      font-size: 0.85em;\n      opacity: 0.8;\n      border-bottom: 1px solid rgba(230, 230, 230, 0.7);\n    }\n\n    .autocomplete-historyTrash {\n      float: right;\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-historyTrash:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-deleteHistoryItemBtn {\n      z-index: 10;\n      position: absolute;\n      top: 50%;\n      right: 0;\n      transform: translateY(-50%);\n      width: 1.5em;\n      display: block;\n      color: #3b4752;\n      opacity: 0.3;\n      transition: all 0.2s ease-in-out;\n      font-size: 1em;\n      text-align: center;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover > i {\n      transform: scale(1.5);\n    }\n\n    .resetIcon {\n      opacity: 0.3;\n    }\n\n    .resetIcon:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n  "],
+        template: "\n    <div\n      class=\"autocomplete\"\n      [ngStyle]=\"style\"\n    >\n      <input\n        #searchInput\n        [(ngModel)]=\"_search\"\n        class=\"autocomplete-input\"\n        [ngClass]=\"isResultSelected && 'is-selected'\"\n        type=\"text\"\n        autocomplete=\"off\"\n        (keydown)=\"preventCursorPosition($event)\"\n        (focus)=\"onFocusin()\"\n        (focusout)=\"onFocusout($event)\"\n        [placeholder]=\"placeholder\"\n      />\n      <div\n        class=\"autocomplete-iconWrapper\"\n        [ngClass]=\"{ 'is-visible': isResetButtonVisible}\"\n        [ngStyle]=\"{ 'font-size': style['font-size']}\"\n        (click)=\"onResetSearchText()\"\n      >\n        <span class=\"autocomplete-icon deleteIcon\">\u2715</span>\n      </div>\n\n      <!--\n      <div\n        [ngClass]=\"{\n          'autocomplete-iconWrapper': true, 'is-visible': isLoading\n        }\"\n        (click)=\"onResetSearchText()\"\n      >\n        <i class=\"autocomplete-icon icon--refresh\">\u21BB</i>\n      </div>\n      -->\n\n      <div\n        [ngClass]=\"{ 'is-visible': isNoResultsVisible }\" class=\"autocomplete-result\"\n      >\n        {{ noResultText }}\n      </div>\n\n      <ul\n        #searchResultsEl\n        [ngClass]=\"{ 'is-visible': isResultVisible }\"\n        class=\"autocomplete-result\"\n      >\n        <li\n          class=\"autocomplete-item\"\n          *ngFor=\"let result of searchResultsOnVisble;let i = index\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n          (click)=\"onClickResult(i)\"\n          (mouseover)=\"onMouseOverResultItem(i)\"\n          [innerHtml]=\"result.text || sanitize(result.markup)\"\n        ></li>\n      </ul>\n\n      <ul\n        #searchHistoryEl\n        class=\"autocomplete-result\"\n        [ngClass]=\"{ 'is-visible': isSearchHistoryVisible }\"\n      >\n        <li *ngIf=\"!!historyHeading\" class=\"autocomplete-resultTitle\">\n          <span [innerHtml]=\"sanitize(historyHeading)\"></span>\n          <!--\n          <span\n            (click)=\"onClickResetHistory()\"\n            class=\"autocomplete-historyTrash\"\n          ></span>\n          -->\n        </li>\n        <li\n          *ngFor=\"let result of searchHistory;let i = index\"\n          class=\"autocomplete-item\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n        >\n          <div\n            (click)=\"onClickResult(i, $event)\"\n            (mouseover)=\"onMouseOverResultItem(i)\"\n            [innerHtml]=\"result.text || sanitize(result.markup)\"\n          >\n          </div>\n          <span class=\"autocomplete-iconWrapper is-visible\" (click)=\"onDeleteHistoryItem(i)\">\n            <span class=\"autocomplete-icon deleteIcon\">\u2715</span>\n          </span>\n        </li>\n\n        <!--\n        <li\n          *ngIf=\"!searchHistory.length\"\n          class=\"autocomplete-item\"\n        >no search history</li>\n        -->\n      </ul>\n    </div>\n  ",
+        styles: ["\n    .autocomplete {\n      position: relative;\n      display: inline-block;\n      box-sizing: border-box;\n      padding: 0 0.75em;\n      width: 100%;\n      height: 35px;\n      line-height: 35px;\n      color: inherit;\n      font-size: inherit;\n      border-width: 1px;\n      border-style: solid;\n      border-radius: 2px;\n      border-color: #ddd;\n    }\n\n    .autocomplete-input {\n      box-sizing: border-box;\n      position: absolute;\n      top: 0;\n      left: 0;\n      display: block;\n      width: calc(100% - 2px);\n      height: calc(100$ - 2px);\n      line-height: inherit;\n      padding: inherit;\n      border: 0;\n      background: none;\n      font-size: inherit;\n      font-weight: inherit;\n      color: inherit;\n      outline-width: 0;\n    }\n\n    .autocomplete-input.is-selected {\n      display: block;\n    }\n\n    .autocomplete-result {\n      box-sizing: border-box;\n      display: none;\n      position: absolute;\n      z-index: 100;\n      top: 100%;\n      left: -1px;\n      width: calc(100% + 2px);\n      padding: 0.5em 0.75em;\n      margin: 0;\n      max-height: 25em;\n      overflow: auto;\n      border-style: solid;\n      border-width: 1px;\n      border-radius: inherit;\n      border-color: inherit;\n      background-color: #fff;\n      list-style: none;\n      box-shadow: 0 2px 0px rgba(0, 0, 0, 0.1);\n      font-size: inherit;\n    }\n\n    .autocomplete-result.is-visible {\n      display: block;\n    }\n\n    .autocomplete-result > li {\n      line-height: 1.4 !important;\n    }\n\n    .autocomplete-item {\n      position: relative;\n      padding: 0.5em;\n      padding-right: 1.5em;\n      max-height: 200px;\n    }\n\n    .autocomplete-item.is-focus {\n      background-color: #eee;\n    }\n\n    .autocomplete-item:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-iconWrapper {\n      display: none;\n      position: absolute;\n      z-index: 10;\n      top: 0%;\n      right: 0;\n      width: 1.5em;\n      height: 100%;\n      padding: 0 0.3em;\n      text-align: center;\n      background: white;\n      border-radius: inherit;\n    }\n\n    .autocomplete-iconWrapper.is-visible {\n      display: block;\n    }\n\n    .autocomplete-icon {\n      position: absolute;\n      top: 50%;\n      left: 50;\n      transform: translate(-50%, -47%);\n      opacity: 0.3;\n    }\n\n    .autocomplete-icon.deleteIcon:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n\n    .autocomplete-iconWrapper:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-isLoading {\n      z-index: 20;\n    }\n\n    .autocomplete-closeBtn {\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-closeBtn:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-resultTitle {\n      padding: 5px 8px;\n      font-size: 0.85em;\n      opacity: 0.8;\n      border-bottom: 1px solid rgba(230, 230, 230, 0.7);\n    }\n\n    .autocomplete-historyTrash {\n      float: right;\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-historyTrash:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-deleteHistoryItemBtn {\n      z-index: 10;\n      position: absolute;\n      top: 50%;\n      right: 0;\n      transform: translateY(-50%);\n      width: 1.5em;\n      display: block;\n      color: #3b4752;\n      opacity: 0.3;\n      transition: all 0.2s ease-in-out;\n      font-size: 1em;\n      text-align: center;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover > i {\n      transform: scale(1.5);\n    }\n  "],
     }),
     __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __metadata */]("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["d" /* DomSanitizer */]])
 ], Ng2SimpleAutocomplete);
@@ -72427,7 +72489,7 @@ exports = module.exports = __webpack_require__(133)(undefined);
 
 
 // module
-exports.push([module.i, "/*styles for home content only*/\n\nhr {\n  background: palevioletred;\n  height: 2px;\n  margin: 2rem 0;\n  width: 400px;\n}\n\n.autocomplete-wrapper {\n  width: 400px;\n}\n\n.autocomplete-wrapper input {\n  font-weight: bold;\n  height: 35px;\n  line-height: 35px;\n}\n\n.code--remoteData {\n  padding: 10px;\n  border-radius: 3px;\n  background-color: #efefef;\n}\n", ""]);
+exports.push([module.i, "/*styles for home content only*/\n.wrap {\n  margin-bottom: 10rem;\n}\n\nhr {\n  background: palevioletred;\n  height: 2px;\n  margin: 2rem 0;\n  width: 400px;\n}\n\n.autocomplete-wrapper {\n  width: 400px;\n}\n\n.autocomplete-wrapper input {\n  font-weight: bold;\n  height: 35px;\n  line-height: 35px;\n}\n\n.code--remoteData {\n  padding: 10px;\n  border-radius: 3px;\n  background-color: #efefef;\n}\n", ""]);
 
 // exports
 
@@ -74793,7 +74855,7 @@ module.exports = reduceBy(function(acc, elem) { return elem; }, null);
 
 var _curry2 = __webpack_require__(0);
 var _indexOf = __webpack_require__(224);
-var _isArray = __webpack_require__(46);
+var _isArray = __webpack_require__(47);
 
 
 /**
@@ -75613,7 +75675,7 @@ module.exports = function _toString(x, seen) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curry2 = __webpack_require__(0);
-var _reduced = __webpack_require__(47);
+var _reduced = __webpack_require__(48);
 var _xfBase = __webpack_require__(13);
 
 
@@ -75863,7 +75925,7 @@ module.exports = (function() {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curry2 = __webpack_require__(0);
-var _reduced = __webpack_require__(47);
+var _reduced = __webpack_require__(48);
 var _xfBase = __webpack_require__(13);
 
 
@@ -75897,7 +75959,7 @@ module.exports = (function() {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curry2 = __webpack_require__(0);
-var _reduced = __webpack_require__(47);
+var _reduced = __webpack_require__(48);
 var _xfBase = __webpack_require__(13);
 
 
@@ -76061,7 +76123,7 @@ module.exports = (function() {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curry2 = __webpack_require__(0);
-var _reduced = __webpack_require__(47);
+var _reduced = __webpack_require__(48);
 var _xfBase = __webpack_require__(13);
 
 module.exports = (function() {
@@ -76087,7 +76149,7 @@ module.exports = (function() {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curry2 = __webpack_require__(0);
-var _reduced = __webpack_require__(47);
+var _reduced = __webpack_require__(48);
 var _xfBase = __webpack_require__(13);
 
 
@@ -76515,7 +76577,7 @@ module.exports = _curry1(function keysIn(obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curry2 = __webpack_require__(0);
-var _isArray = __webpack_require__(46);
+var _isArray = __webpack_require__(47);
 var equals = __webpack_require__(26);
 
 
@@ -78270,7 +78332,7 @@ module.exports = _curry2(function range(from, to) {
 
 var _curryN = __webpack_require__(96);
 var _reduce = __webpack_require__(27);
-var _reduced = __webpack_require__(47);
+var _reduced = __webpack_require__(48);
 
 
 /**
@@ -78314,7 +78376,7 @@ module.exports = _curryN(4, [], function _reduceWhile(pred, fn, a, list) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curry1 = __webpack_require__(2);
-var _reduced = __webpack_require__(47);
+var _reduced = __webpack_require__(48);
 
 /**
  * Returns a value wrapped to indicate that it is the final value of the reduce
@@ -80104,7 +80166,7 @@ module.exports = "<nav>\n  <a [routerLink]=\" ['./'] \"\n    routerLinkActive=\"
 /* 649 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <div class=\"autocomplete-wrapper\">\n    <h2>async result with history</h2>\n    <ng2-simple-autocomplete\n      [(search)]=\"searchAsync\"\n      [searchResults]=\"asyncResults\"\n      historyId=\"async\"\n      placeholder=\"lorem\"\n      (onSelect)=\"onSelectAsync($event)\"\n      (onChangeInput)=\"onChangeSearchAsync($event)\"\n    ></ng2-simple-autocomplete>\n    <h3>remote data</h3>\n    <div class=\"code--remoteData\">\n      <code >\n        &#123; _id: &#39;1&#39;, name: &#39;lorem&#39;, &#125;,<br>\n        &#123; _id: &#39;2&#39;, name: &#39;ipsum&#39;, &#125;,<br>\n        &#123; _id: &#39;3&#39;, name: &#39;pixel&#39;, &#125;,<br>\n      </code>\n    </div>\n\n    <h3>Selected Item</h3>\n    <ul>\n      <li>text or markup: {{!!selectedAsync && (selectedAsync.text || selectedAsync && selectedAsync.markup) || ''}}</li>\n      <li>value: {{selectedAsync && selectedAsync.value}}</li>\n    </ul>\n  </div>\n\n  <hr>\n\n  <div class=\"autocomplete-wrapper\">\n    <h2>static result</h2>\n    <ng2-simple-autocomplete\n      [(search)]=\"searchStatic\"\n      [searchResults]=\"staticResults\"\n      (onSelect)=\"onSelectStatic($event)\"\n    ></ng2-simple-autocomplete>\n    <h3>Selected Item</h3>\n    <ul>\n      <li>text or markup: {{!!selectedStatic && (selectedStatic.text || selectedStatic && selectedStatic.markup) || ''}}</li>\n      <li>value: {{selectedStatic && selectedStatic.value}}</li>\n    </ul>\n  </div>\n\n  <hr>\n\n  <div class=\"autocomplete-wrapper\">\n    <h2>static result with history</h2>\n    <ng2-simple-autocomplete\n      [(search)]=\"searchStaticHistory\"\n      [searchResults]=\"staticResults\"\n      historyId=\"static\"\n      historyHeading=\"Recently selected items\"\n      (onSelect)=\"onSelectStaticWithHistory($event)\"\n    ></ng2-simple-autocomplete>\n    <h3>Selected Item</h3>\n    <ul>\n      <li>text or markup: {{!!selectedStaticHistory && (selectedStaticHistory.text || selectedStaticHistory.markup || '')}}</li>\n      <li>value: {{selectedStaticHistory && selectedStaticHistory.value}}</li>\n    </ul>\n  </div>\n\n</div>\n"
+module.exports = "<div class=\"wrap\">\n  <h1>ng2-simple-autocomplete</h1>\n\n  <div class=\"autocomplete-wrapper\">\n    <h2>async result with history</h2>\n    <ng2-simple-autocomplete\n      [(search)]=\"searchAsync\"\n      [searchResults]=\"asyncResults\"\n      historyId=\"async\"\n      placeholder=\"lorem\"\n      (onSelect)=\"onSelectAsync($event)\"\n      (onChangeInput)=\"onChangeSearchAsync($event)\"\n    ></ng2-simple-autocomplete>\n    <h3>remote data</h3>\n    <div class=\"code--remoteData\">\n      <code >\n        &#123; _id: &#39;1&#39;, name: &#39;lorem&#39;, &#125;,<br>\n        &#123; _id: &#39;2&#39;, name: &#39;ipsum&#39;, &#125;,<br>\n        &#123; _id: &#39;3&#39;, name: &#39;pixel&#39;, &#125;,<br>\n      </code>\n    </div>\n\n    <h3>Selected Item</h3>\n    <ul>\n      <li><label>text or markup</label>: {{!!selectedAsync && (selectedAsync.text || selectedAsync && selectedAsync.markup) || ''}}</li>\n      <li><label>value</label>: {{selectedAsync && selectedAsync.value}}</li>\n    </ul>\n  </div>\n\n  <hr>\n\n  <div class=\"autocomplete-wrapper\">\n    <h2>static result</h2>\n    <ng2-simple-autocomplete\n      [(search)]=\"searchStatic\"\n      [searchResults]=\"staticResults\"\n      (onSelect)=\"onSelectStatic($event)\"\n      [isStatic]=\"true\"\n    ></ng2-simple-autocomplete>\n    <h3>Selected Item</h3>\n    <ul>\n      <li><label>text or markup</label>: {{!!selectedStatic && (selectedStatic.text || selectedStatic && selectedStatic.markup) || ''}}</li>\n      <li><label>value</label>: {{selectedStatic && selectedStatic.value}}</li>\n    </ul>\n  </div>\n\n  <hr>\n\n  <div class=\"autocomplete-wrapper\">\n    <h2>static result with history</h2>\n    <ng2-simple-autocomplete\n      [(search)]=\"searchStaticHistory\"\n      [searchResults]=\"staticResults\"\n      historyId=\"static\"\n      [historyHeading]=\"null\"\n      [isStatic]=\"true\"\n      (onSelect)=\"onSelectStaticWithHistory($event)\"\n    ></ng2-simple-autocomplete>\n    <h3>Selected Item</h3>\n    <ul>\n      <li><label>text or markup</label>: {{!!selectedStaticHistory && (selectedStaticHistory.text || selectedStaticHistory.markup || '')}}</li>\n      <li><label>value</label>: {{selectedStaticHistory && selectedStaticHistory.value}}</li>\n    </ul>\n  </div>\n\n  <hr>\n\n  <div class=\"autocomplete-wrapper\">\n    <h2>style customizing</h2>\n    <ng2-simple-autocomplete\n      [(search)]=\"searchStatic\"\n      [searchResults]=\"staticResults\"\n      (onSelect)=\"onSelectStatic($event)\"\n      [isStatic]=\"true\"\n      [style]=\"inputStyle\"\n    ></ng2-simple-autocomplete>\n\n    <pre [innerHtml]=\"sanitizer.bypassSecurityTrustHtml('\n  const style = {\n    \\'width\\': \\'300px\\',\n    \\'color\\': \\'blue\\',\n    \\'font-size\\': \\'24px\\',\n    \\'border-radius\\': \\'10px\\',\n    \\'border-color\\': \\'purple\\',\n    \\'height\\': \\'50px\\',\n    \\'line-height\\': \\'50px\\',\n  }\n    ')\">\n    </pre>\n  </div>\n\n</div>\n"
 
 /***/ }),
 /* 650 */
@@ -82259,7 +82321,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var root_1 = __webpack_require__(48);
+var root_1 = __webpack_require__(49);
 var Observable_1 = __webpack_require__(10);
 var iterator_1 = __webpack_require__(159);
 /**
@@ -83680,7 +83742,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var root_1 = __webpack_require__(48);
+var root_1 = __webpack_require__(49);
 var Action_1 = __webpack_require__(683);
 /**
  * We need this JSDoc comment for affecting ESDoc.
