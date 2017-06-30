@@ -512,8 +512,9 @@ export class Ng2SimpleAutocomplete implements OnInit {
           Object.assign(v, { isFocus: true }) : v;
       });
 
-      // check if result has no items
-      this.isNoResults = !this.searchResults.length;
+      if (!changes.searchResults.firstChange) {
+        this.isNoResults = !this.searchResults.length;
+      }
 
       // save result as filteredResult for filtering
       if (this.isStatic) {
