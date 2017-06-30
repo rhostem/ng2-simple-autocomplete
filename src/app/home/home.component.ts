@@ -20,20 +20,20 @@ export class HomeComponent implements OnInit {
   staticResults = [
     {
       text: 'ng2',
-      value: '[value]',
+      value: '[ng2]',
     },
     {
       text: 'simple',
-      value: '[value]',
+      value: '[simple]',
     },
     {
       text: 'autocomplete',
-      value: '[value]',
+      value: '[autocomplete]',
     },
     {
       text: 'bold text by html tag',
-      markup: '<b>bold text</b> by html tag',
-      value: '[value]',
+      markup: '<b>bold text</b> by &lt;b&gt; tag',
+      value: '[bold text by html tag]',
     },
   ];
 

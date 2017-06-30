@@ -22,7 +22,7 @@
 
     <h3>Selected Item</h3>
     <ul>
-      <li><label>text or markup</label>: {{!!selectedAsync && (selectedAsync.text || selectedAsync && selectedAsync.markup) || ''}}</li>
+      <li><label>text or markup</label>: {{!!selectedAsync && (selectedAsync.markup || selectedAsync.text) || ''}}</li>
       <li><label>value</label>: {{selectedAsync && selectedAsync.value}}</li>
     </ul>
   </div>
@@ -39,7 +39,7 @@
     ></ng2-simple-autocomplete>
     <h3>Selected Item</h3>
     <ul>
-      <li><label>text or markup</label>: {{!!selectedStatic && (selectedStatic.text || selectedStatic && selectedStatic.markup) || ''}}</li>
+      <li><label>text or markup</label>: {{!!selectedStatic && (selectedStatic.markup || selectedStatic.text) || ''}}</li>
       <li><label>value</label>: {{selectedStatic && selectedStatic.value}}</li>
     </ul>
   </div>
@@ -52,13 +52,13 @@
       [(search)]="searchStaticHistory"
       [searchResults]="staticResults"
       historyId="static"
-      [historyHeading]="null"
+      historyHeading="static result history"
       [isStatic]="true"
       (onSelect)="onSelectStaticWithHistory($event)"
     ></ng2-simple-autocomplete>
     <h3>Selected Item</h3>
     <ul>
-      <li><label>text or markup</label>: {{!!selectedStaticHistory && (selectedStaticHistory.text || selectedStaticHistory.markup || '')}}</li>
+      <li><label>text or markup</label>: {{!!selectedStaticHistory && (selectedStaticHistory.markup || selectedStaticHistory.text || '')}}</li>
       <li><label>value</label>: {{selectedStaticHistory && selectedStaticHistory.value}}</li>
     </ul>
   </div>

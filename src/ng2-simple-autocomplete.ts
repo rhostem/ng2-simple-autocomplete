@@ -110,7 +110,7 @@ export interface AutocompleteStyle {
           [ngClass]="{ 'is-focus': result.isFocus === true }"
           (click)="onClickResult(i)"
           (mouseover)="onMouseOverResultItem(i)"
-          [innerHtml]="result.text || sanitize(result.markup)"
+          [innerHtml]="sanitize(result.markup || result.text)"
         ></li>
       </ul>
 
@@ -136,7 +136,7 @@ export interface AutocompleteStyle {
           <div
             (click)="onClickResult(i, $event)"
             (mouseover)="onMouseOverResultItem(i)"
-            [innerHtml]="result.text || sanitize(result.markup)"
+            [innerHtml]="sanitize(result.markup || result.text)"
           >
           </div>
           <span class="autocomplete-iconWrapper is-visible" (click)="onDeleteHistoryItem(i)">
@@ -202,7 +202,7 @@ export interface AutocompleteStyle {
       width: calc(100% + 2px);
       padding: 0.5em 0.75em;
       margin: 0;
-      max-height: 25em;
+      max-height: 20em;
       overflow: auto;
       border-style: solid;
       border-width: 1px;
