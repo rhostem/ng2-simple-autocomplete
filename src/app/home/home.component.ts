@@ -39,13 +39,14 @@ export class HomeComponent implements OnInit {
   asyncResults = [];
 
   inputStyle = {
-    'width': '300px',
-    'font-weight': 'normal',
-    'font-size': '24px',
-    'height': '40px',
-    'line-height': '40px',
-    'border': '1px solid #eee',
-    'border-radius': '3px',
+    'width': '400px',
+    'padding': '0 0.75em',
+    'color': 'blue',
+    'font-size': '14px',
+    'border-radius': '2px',
+    'border-color': 'purple',
+    'height': '50px',
+    'line-height': '50px',
   };
   searchStatic = '';
   searchStaticHistory = '';

@@ -1,4 +1,4 @@
-import {
+  import {
   Component,
   OnInit,
   ViewChild,
@@ -49,7 +49,7 @@ export interface AutoCompleteItem {
   template: `
     <div
       class="autocomplete"
-      [ngStyle]="inputStyle"
+      [ngStyle]="style"
     >
       <input
         #searchInput
@@ -66,10 +66,10 @@ export interface AutoCompleteItem {
       <div
         class="autocomplete-iconWrapper"
         [ngClass]="{ 'is-visible': isResetButtonVisible}"
-        [ngStyle]="fontSize"
+        [ngStyle]="{ 'font-size': style['font-size']}"
         (click)="onResetSearchText()"
       >
-        <span class="autocomplete-icon resetIcon">✕</span>
+        <span class="autocomplete-icon deleteIcon">✕</span>
       </div>
 
       <!--
@@ -129,8 +129,8 @@ export interface AutoCompleteItem {
             [innerHtml]="result.text || sanitize(result.markup)"
           >
           </div>
-          <span class="autocomplete-deleteHistoryItemBtn" (click)="onDeleteHistoryItem(i)">
-            <span class="resetIcon sizeInherit">✕</span>
+          <span class="autocomplete-iconWrapper is-visible" (click)="onDeleteHistoryItem(i)">
+            <span class="autocomplete-icon deleteIcon">✕</span>
           </span>
         </li>
 
@@ -148,11 +148,16 @@ export interface AutoCompleteItem {
       position: relative;
       display: inline-block;
       box-sizing: border-box;
-      width: 100%;
       padding: 0 0.75em;
+      width: 100%;
       height: 35px;
       line-height: 35px;
-      border: 1px solid #ddd;
+      color: inherit;
+      font-size: inherit;
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 2px;
+      border-color: #ddd;
     }
 
     .autocomplete-input {
@@ -161,8 +166,8 @@ export interface AutoCompleteItem {
       top: 0;
       left: 0;
       display: block;
-      width: inherit;
-      height: inherit;
+      width: calc(100% - 2px);
+      height: calc(100$ - 2px);
       line-height: inherit;
       padding: inherit;
       border: 0;
@@ -182,17 +187,20 @@ export interface AutoCompleteItem {
       display: none;
       position: absolute;
       z-index: 100;
-      top: 101%;
-      left: 0;
-      width: 100%;
+      top: 100%;
+      left: -1px;
+      width: calc(100% + 2px);
       padding: 0.5em 0.75em;
       margin: 0;
       max-height: 25em;
       overflow: auto;
-      border: 1px solid #eee;
+      border-style: solid;
+      border-width: 1px;
+      border-radius: 0 0 2px 2px;
+      border-color: inherit;
       background-color: #fff;
       list-style: none;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 0px rgba(0, 0, 0, 0.1);
       font-size: inherit;
     }
 
@@ -240,14 +248,11 @@ export interface AutoCompleteItem {
       position: absolute;
       top: 50%;
       left: 50;
-      transform: translate(-50%, -50%);
-    }
-
-    .autocomplete-icon.resetIcon {
+      transform: translate(-50%, -47%);
       opacity: 0.3;
     }
 
-    .autocomplete-icon.resetIcon:hover {
+    .autocomplete-icon.deleteIcon:hover {
       opacity: 1;
       cursor: pointer;
     }
@@ -385,7 +390,15 @@ export class Ng2SimpleAutocomplete implements OnInit {
    * }
    * @memberof Ng2SimpleAutocomplete
    */
-  @Input() inputStyle = <any> {};
+  @Input() style = {
+    'width': '100%',
+    'color': 'inherit',
+    'font-size': 'inherit',
+    'border-radius': '2px',
+    'border-color': '#ddd',
+    'height': '35px',
+    'line-height': '35px',
+  };
 
   // 컴포넌트 변수
   // ------------------------------------------------------------------------
@@ -404,6 +417,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
   maintainFocus: boolean;                     // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
   fontSize = <any> {}; // font-size style extracted from inputStyle
   filteredResults: AutoCompleteItem[] = [];
+  computedStyle = <any> {}; // extracted style unit from @Input style
 
   // 초기화 버튼 표시 여부
   get isResetButtonVisible(): Boolean {
@@ -473,10 +487,7 @@ export class Ng2SimpleAutocomplete implements OnInit {
       this.initSearchHistory();
     }
 
-    // extract fontSize style
-    this.fontSize = Object.assign({}, {
-      'font-size': this.inputStyle['font-size'] || 'inherit',
-    });
+    this.extractStyle(this.style);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -499,6 +510,19 @@ export class Ng2SimpleAutocomplete implements OnInit {
         this.filteredResults = this.searchResults.slice();
       }
     }
+  }
+
+  extractStyle(style = {}) {
+    const inputStyle = Object.assign({}, style);
+    this.style = {
+      'width': inputStyle['width'],
+      'color': inputStyle['color'],
+      'font-size': inputStyle['font-size'],
+      'border-radius': inputStyle['border-radius'],
+      'border-color': inputStyle['border-color'],
+      'height': inputStyle['height'],
+      'line-height': inputStyle['line-height'],
+    };
   }
 
   initSearchHistory() {

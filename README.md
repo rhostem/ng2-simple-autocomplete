@@ -128,6 +128,23 @@ Text of input field. Use 'banana-in-box' notation for 2-way binding.
 List of autocomplete item. 
 
 
+#### `style: object`
+
+Style object for customizing input box style. Customizable CSS property is predefined and another property will be ignored. Property and default value is like below.
+
+```typescript
+@Input() style = {
+  'width': '100%',
+  'color': 'inherit',
+  'font-size': 'inherit',
+  'border-radius': '2px',
+  'border-color': '#ddd',
+  'height': '35px',
+  'line-height': '35px',
+};
+```
+
+
 #### `onChangeInput: EventEmitter`
 
 Invoked when input is changed.
