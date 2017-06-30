@@ -1,7 +1,14 @@
 # ng2-simple-autocomplete
 
-ng2-simple-autocomplete is autocomplete component for Angular. It mainly focuses on asynchronous search result from remote data. But it also supports static dataset. This autocomplete component supports custom styling, selection history,
+ng2-simple-autocomplete is autocomplete component for Angular. It mainly focuses on *asynchronous* search result from remote data. But it also supports static dataset. 
 
+
+## Features
+
+- variable event binding
+- selection history
+- auto filtering of static list
+- custom styling
 
 ## Installation
 
@@ -27,6 +34,7 @@ export class AppModule {
 }
 ```
 
+
 ## Usage sample
 
 ### Dynamic dataset
@@ -35,8 +43,8 @@ export class AppModule {
 <ng2-simple-autocomplete
   [(search)]="keyword"
   [searchResults]="remoteData"
-  (onSelect)="onSelectAutocomplete($event)"
-  (onChange)="onChangeSearchKeyword($event)"
+  (onSelect)="onSelectItem($event)"
+  (onChange)="onChangeInput($event)"
 ></ng2-simple-autocomplete>
 ```
 
@@ -47,11 +55,11 @@ class TestComponent {
   keyword: string;
   remoteData: AutoCompleteItem[] = [];
 
-  onSelect(item: AutoCompleteItem) {
+  onSelectItem(item: AutoCompleteItem) {
     // do something with selected item
   }
 
-  onChange(search: string) {
+  onChangeInput(search: string) {
     // fetch remote data from here and reassign it to searchResults
   }
 }
@@ -65,7 +73,7 @@ Basically, a dataset binded to the autocomplete component does not change unless
 <ng2-simple-autocomplete
   [(search)]="keyword"
   [searchResults]="staticData"
-  (onSelect)="onSelectAutocomplete($event)"
+  (onSelect)="onSelectItem($event)"
   [isStatic]="true"
 ></ng2-simple-autocomplete>
 ```
@@ -77,19 +85,18 @@ class TestComponent {
   keyword: string;
   staticData: AutoCompleteItem[] = [];
 
-  onSelect(item: AutoCompleteItem) {
+  onSelectItem(item: AutoCompleteItem) {
     // do something with selected item
   }
 }
 ```
 
-If `isStatic` property is set as `true`, then dataset is automatically filtered when input changes.
+If `isStatic` property is set as `true`, then the dataset is automatically filtered when input changes.
 
 
 ## Working example
 
 [https://rhostem.github.io/ng2-simple-autocomplete](https://rhostem.github.io/ng2-simple-autocomplete)
-
 
 ## API
 
@@ -97,7 +104,7 @@ If `isStatic` property is set as `true`, then dataset is automatically filtered 
 
 `interfce AutoCompleteItem`
 
-Face of object in `searchResults` array. 
+Shape of object in `searchResults` array. 
 
 ```typescript
 export interface AutoCompleteItem {
@@ -111,7 +118,23 @@ export interface AutoCompleteItem {
 `value` and `text` are mandatory. If `markup` property is specified, component uses it rather than text. So user can customize a result text with HTML.
 
 
-### Input property
+`interfce AutocompleteStyle`
+
+Shape of object for style customizing.
+
+```typescript
+interface AutocompleteStyle {
+  'width'?: string;
+  'color'?: string;
+  'font-size'?: string;
+  'border-radius'?: string;
+  'border-color'?: string;
+  'height'?: string;
+  'line-height'?: string;
+}
+```
+
+### properties
 
 #### `search: string`
 
@@ -132,18 +155,7 @@ List of autocomplete item.
 
 Style object for customizing input box style. Customizable CSS property is predefined and another property will be ignored. Property and default value is like below.
 
-
-
 ```typescript
-interface AutocompleteStyle {
-  'width'?: string;
-  'color'?: string;
-  'font-size'?: string;
-  'border-radius'?: string;
-  'border-color'?: string;
-  'height'?: string;
-  'line-height'?: string;
-}
 
 @Input() style: AutocompleteStyle = {
   'width': '100%',
@@ -163,7 +175,7 @@ Invoked when input is changed.
 
 #### `onSelect: EventEmitter`
 
-Invoked when user selects items in search result of history. User can select item by mouse click or keyboard up/down and enter.
+Invoked when user selects items in search result list or history list. User can select item by mouse click or keyboard up/down and enter.
 
 
 #### `onReset: EventEmitter`
@@ -196,7 +208,7 @@ Invoke `onReset` event when input element losts  focus.
 
 When valid history id is given, then component stores selected item to local storage of user's browser. 
 
-It is **'selection item'** history. Not 'search keyword' history. So it saves `AutocompleteResult` object to history. And `onSelect` event is invoked when user selects history item also.
+It is **'selection item'** history. Not 'search keyword' history. So it stores `AutocompleteResult` object to history. And `onSelect` event is invoked when user selects history item also.
 
 History is visible when `search` is empty and there is at least 1 history item.
 
@@ -209,14 +221,14 @@ default: `Recently selected`
 
 Text ahead of history list. 
 
-If you want to remove this heading, bind `null` value for `historyHeading` property.
+If you want to remove this heading, bind `null` value for this property.
 
 
 #### `autoFocusOnFirst: boolean`
 
 default: `true`
 
-When result list is open, first item is automatically highlighted. So user can select it directly after input search keyword by pressing enter key.
+When result list is open, first item is automatically highlighted. So user can select it directly by pressing enter key.
 
 
 #### `resetOnDelete: boolean`
