@@ -5,10 +5,10 @@ ng2-simple-autocomplete is autocomplete component for Angular. It mainly focuses
 
 ## Features
 
-- variable event binding
-- selection history
-- auto filtering of static list
-- custom styling
+- Variable properties and event bindings.
+- Selection history
+- Auto filtering of static list
+- Custom styling
 
 ## Installation
 
@@ -60,7 +60,8 @@ class TestComponent {
   }
 
   onChangeInput(search: string) {
-    // fetch remote data from here and reassign it to searchResults
+    // fetch remote data from here
+    // And reassign the 'remoteData' which is binded to 'searchResults' property.
   }
 }
 ```
@@ -100,9 +101,9 @@ If `isStatic` property is set as `true`, then the dataset is automatically filte
 
 ## API
 
-### interface
+### Interface
 
-`interfce AutoCompleteItem`
+#### `interfce AutoCompleteItem`
 
 Shape of object in `searchResults` array. 
 
@@ -118,9 +119,9 @@ export interface AutoCompleteItem {
 `value` and `text` are mandatory. If `markup` property is specified, component uses it rather than text. So user can customize a result text with HTML.
 
 
-`interfce AutocompleteStyle`
+####  `interfce AutocompleteStyle`
 
-Shape of object for style customizing.
+Shape of object for style customizing. It emits 
 
 ```javascript
 interface AutocompleteStyle {
@@ -134,7 +135,7 @@ interface AutocompleteStyle {
 }
 ```
 
-### properties
+### Properties
 
 #### `search: string`
 
@@ -169,17 +170,19 @@ Style object for customizing input box style. Customizable CSS property is prede
 
 #### `onChangeInput: EventEmitter`
 
-Invoked when input is changed.
+It emits `search` string and is invoked when input is changed. 
 
 
 #### `onSelect: EventEmitter`
 
-Invoked when user selects items in search result list or history list. User can select item by mouse click or keyboard up/down and enter.
+It emits selected `AutocompleteItem` object and is invoked when user selects items in search results or history list. 
+
+User can select item by mouse click or keyboard up/down and enter.
 
 
 #### `onReset: EventEmitter`
 
-Invoked when user click 'X' button at right side of input box.
+Invoked when user click 'X' button at right side of input box. It emits nothing.
 
 
 #### `isStatic: boolean`
