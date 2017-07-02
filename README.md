@@ -106,16 +106,14 @@ If `isStatic` property is set as `true`, then the dataset is automatically filte
 
 ## API
 
-### Class
+### Interface
 
-> Typescript does not allow exporting interface by [it's design](https://github.com/Microsoft/TypeScript/issues/3194). So the classes are exported as type instead of interface.
-
-#### `class AutoCompleteItem`
+#### `interface AutoCompleteItem`
 
 Shape of object in `searchResults` array. 
 
 ```javascript
-class AutoCompleteItem {
+interface AutoCompleteItem {
   value: any;         
   text: string;       
   markup?: string;    
@@ -126,12 +124,12 @@ class AutoCompleteItem {
 `value` and `text` are mandatory. If `markup` property is specified, component uses it rather than text. So user can customize a result text with HTML.
 
 
-####  `class AutocompleteStyle`
+####  `interface AutocompleteStyle`
 
 Shape of object for style customizing. It emits 
 
 ```javascript
-class AutocompleteStyle {
+interface AutocompleteStyle {
   'width'?: string;
   'color'?: string;
   'font-size'?: string;
