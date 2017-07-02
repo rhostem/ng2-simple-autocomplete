@@ -1,4 +1,4 @@
-  import {
+import {
   Component,
   OnInit,
   ViewChild,
@@ -37,7 +37,7 @@ const removeSpace = (str = '') => {
   return str;
 };
 
-export class AutoCompleteItem {
+class AutoCompleteItem {
   value: any;         // real value
   text: string;       // text for view
   markup?: string;    // markup for view
@@ -51,7 +51,7 @@ export class AutoCompleteItem {
   }
 }
 
-export class AutocompleteStyle {
+class AutocompleteStyle {
   'width'?: string;
   'color'?: string;
   'font-size'?: string;
@@ -344,7 +344,7 @@ export class AutocompleteStyle {
     }
   `],
 })
-export class Ng2SimpleAutocomplete implements OnInit {
+class Ng2SimpleAutocomplete implements OnInit {
   // 검색 입력 텍스트. 부모 컴포넌트에서 banana-in-box ([]) 표기법 사용해서 연결
   // ex) [(search)]="searchText"
   @Input()
@@ -873,3 +873,5 @@ export class Ng2SimpleAutocomplete implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(markup);
   }
 }
+
+export { Ng2SimpleAutocomplete, AutoCompleteItem, AutocompleteStyle };
