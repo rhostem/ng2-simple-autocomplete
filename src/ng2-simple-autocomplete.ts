@@ -177,7 +177,7 @@ export interface AutocompleteStyle {
       left: 0;
       display: block;
       width: calc(100% - 2px);
-      height: calc(100$ - 2px);
+      height: calc(100% - 2px);
       line-height: inherit;
       padding: inherit;
       border: 0;
