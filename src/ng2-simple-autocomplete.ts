@@ -19,7 +19,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 
 // import { find, findIndex } from 'lodash';
-import R from 'ramda';
+import * as R from 'ramda';
 
 const isArrowUp = (keyCode) => keyCode === 38;
 const isArrowDown = (keyCode) => keyCode === 40;
