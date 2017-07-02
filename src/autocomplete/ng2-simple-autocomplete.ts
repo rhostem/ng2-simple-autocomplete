@@ -17,9 +17,10 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
-
-// import { find, findIndex } from 'lodash';
 import * as R from 'ramda';
+
+import { AutoCompleteItem } from './AutoCompleteItem';
+import { AutocompleteStyle } from './AutoCompleteStyle';
 
 const isArrowUp = (keyCode) => keyCode === 38;
 const isArrowDown = (keyCode) => keyCode === 40;
@@ -36,8 +37,6 @@ const removeSpace = (str = '') => {
   }
   return str;
 };
-import { AutoCompleteItem } from './AutoCompleteItem';
-import { AutocompleteStyle } from './AutoCompleteStyle';
 
 @Component({
   selector: 'ng2-simple-autocomplete',

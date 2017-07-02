@@ -26,7 +26,7 @@ import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 import '../styles/styles.scss';
 
-import { Ng2SimpleAutocomplete } from '../ng2-simple-autocomplete';
+import { Ng2SimpleAutocomplete } from '../autocomplete/ng2-simple-autocomplete';
 
 // Application wide providers
 const APP_PROVIDERS = [

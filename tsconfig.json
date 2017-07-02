@@ -34,9 +34,7 @@
     "dist"
   ],
   "include":[
-    "src/ng2-simple-autocomplete.ts",
-    "src/AutoCompleteItem.ts",
-    "src/AutoCompleteStyle.ts",
+    "src/autocomplete/**/*",
     "lib/**/*"
   ],
   "awesomeTypescriptLoaderOptions": {
