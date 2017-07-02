@@ -2,7 +2,7 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { AutoCompleteItem } from '../../ng2-simple-autocomplete';
+import { AutoCompleteItem, AutocompleteStyle } from '../../ng2-simple-autocomplete';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 const remoteData = [
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
 
   asyncResults = [];
 
-  inputStyle = {
+  inputStyle: AutocompleteStyle = {
     'width': '300px',
     'color': 'blue',
     'font-size': '24px',
@@ -60,8 +60,8 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
-  public ngOnInit() {
-  }
+  // public ngOnInit() {
+  // }
 
   onSelectStatic(v: AutoCompleteItem) {
     this.selectedStatic = v;

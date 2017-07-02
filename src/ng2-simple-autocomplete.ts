@@ -37,14 +37,21 @@ const removeSpace = (str = '') => {
   return str;
 };
 
-export interface AutoCompleteItem {
+export class AutoCompleteItem {
   value: any;         // real value
   text: string;       // text for view
   markup?: string;    // markup for view
   isFocus?: boolean;  // does item have focus(highlighted) or not
+
+  constructor(item) {
+    this.value = item.value;
+    this.text = item.text;
+    this.markup = item.markup;
+    this.isFocus = item.isFocus;
+  }
 }
 
-export interface AutocompleteStyle {
+export class AutocompleteStyle {
   'width'?: string;
   'color'?: string;
   'font-size'?: string;
@@ -52,6 +59,16 @@ export interface AutocompleteStyle {
   'border-color'?: string;
   'height'?: string;
   'line-height'?: string;
+
+  constructor(style) {
+    this['width'] = style['width'];
+    this['color'] = style['color'];
+    this['font-size'] = style['font-size'];
+    this['border-radius'] = style['border-radius'];
+    this['border-color'] = style['border-color'];
+    this['height'] = style['height'];
+    this['line-height'] = style['line-height'];
+  }
 }
 
 @Component({

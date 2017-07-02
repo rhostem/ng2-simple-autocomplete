@@ -8,6 +8,7 @@
   "rules": {
     // Custom
     "trailing-comma": [false, {"multiline": "always", "singleline": "never"}],
+    "max-classes-per-file": [false],
     "interface-name": [false, "always-prefix"],
     // Angular 2
     // "component-class-suffix": true,

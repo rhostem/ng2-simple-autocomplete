@@ -45,15 +45,20 @@ export class AppModule {
   [searchResults]="remoteData"
   (onSelect)="onSelectItem($event)"
   (onChange)="onChangeInput($event)"
+  [style]="inputStyle"
 ></ng2-simple-autocomplete>
 ```
 
 ```javascript
-import { AutoCompleteItem } from 'ng2-simple-autocomplete';
+import { AutoCompleteItem, AutocompleteStyle } from 'ng2-simple-autocomplete';
 
 class TestComponent {
   keyword: string;
   remoteData: AutoCompleteItem[] = [];
+  inputStyle: AutocompleteStyle = {
+    'width': '400px',
+    'color': 'blue'
+  };
 
   onSelectItem(item: AutoCompleteItem) {
     // do something with selected item
@@ -101,14 +106,16 @@ If `isStatic` property is set as `true`, then the dataset is automatically filte
 
 ## API
 
-### Interface
+### Class
 
-#### `interfce AutoCompleteItem`
+> Typescript does not allow exporting interface by [it's design](https://github.com/Microsoft/TypeScript/issues/3194). So the classes are exported as type instead of interface.
+
+#### `class AutoCompleteItem`
 
 Shape of object in `searchResults` array. 
 
 ```javascript
-export interface AutoCompleteItem {
+class AutoCompleteItem {
   value: any;         
   text: string;       
   markup?: string;    
@@ -119,12 +126,12 @@ export interface AutoCompleteItem {
 `value` and `text` are mandatory. If `markup` property is specified, component uses it rather than text. So user can customize a result text with HTML.
 
 
-####  `interfce AutocompleteStyle`
+####  `class AutocompleteStyle`
 
 Shape of object for style customizing. It emits 
 
 ```javascript
-interface AutocompleteStyle {
+class AutocompleteStyle {
   'width'?: string;
   'color'?: string;
   'font-size'?: string;
