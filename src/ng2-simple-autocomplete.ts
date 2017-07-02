@@ -36,40 +36,8 @@ const removeSpace = (str = '') => {
   }
   return str;
 };
-
-class AutoCompleteItem {
-  value: any;         // real value
-  text: string;       // text for view
-  markup?: string;    // markup for view
-  isFocus?: boolean;  // does item have focus(highlighted) or not
-
-  constructor(item) {
-    this.value = item.value;
-    this.text = item.text;
-    this.markup = item.markup;
-    this.isFocus = item.isFocus;
-  }
-}
-
-class AutocompleteStyle {
-  'width'?: string;
-  'color'?: string;
-  'font-size'?: string;
-  'border-radius'?: string;
-  'border-color'?: string;
-  'height'?: string;
-  'line-height'?: string;
-
-  constructor(style) {
-    this['width'] = style['width'];
-    this['color'] = style['color'];
-    this['font-size'] = style['font-size'];
-    this['border-radius'] = style['border-radius'];
-    this['border-color'] = style['border-color'];
-    this['height'] = style['height'];
-    this['line-height'] = style['line-height'];
-  }
-}
+import { AutoCompleteItem } from './AutoCompleteItem';
+import { AutocompleteStyle } from './AutoCompleteStyle';
 
 @Component({
   selector: 'ng2-simple-autocomplete',
@@ -874,4 +842,7 @@ class Ng2SimpleAutocomplete implements OnInit {
   }
 }
 
-export { Ng2SimpleAutocomplete, AutoCompleteItem, AutocompleteStyle };
+export { Ng2SimpleAutocomplete, AutocompleteStyle, AutoCompleteItem };
+// export { Ng2SimpleAutocomplete as Ng2SimpleAutocomplete };
+// export { AutocompleteStyle as AutocompleteStyle };
+// export { AutoCompleteItem as AutoCompleteItem };
