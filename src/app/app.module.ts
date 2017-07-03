@@ -27,6 +27,11 @@ import { NoContentComponent } from './no-content';
 import '../styles/styles.scss';
 
 import { Ng2SimpleAutocomplete } from '../ng2-simple-autocomplete';
+import { GithubRepoComponent } from './examples/github-repo/github-repo.component';
+import { AsyncSearchComponent } from './examples/async-search/async-search.component';
+import { StaticListComponent } from './examples/static-list/static-list.component';
+import { StaticHistoryComponent } from './examples/static-history/static-history.component';
+import { StyleCustomizingComponent } from './examples/style-customizing/style-customizing.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -47,6 +52,11 @@ type StoreType = {
     HomeComponent,
     NoContentComponent,
     Ng2SimpleAutocomplete,
+    GithubRepoComponent,
+    AsyncSearchComponent,
+    StaticListComponent,
+    StaticHistoryComponent,
+    StyleCustomizingComponent,
   ],
   /**
    * Import Angular's modules.

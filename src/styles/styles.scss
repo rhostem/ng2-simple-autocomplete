@@ -1,17 +1,87 @@
 /* this file will be extracted to main dist folder and is imported in index.html */
-/* This file is for setting global styles  */
-nav {
-  margin: 16px 0;
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #333;
+
+  * {
+    box-sizing: border-box;
+  }
 }
 
-nav a {
-  background-color: #222;
-  color: white;
-  padding: 8px 16px;
-  margin: 8px;
-  vertical-align: middle;
-  line-height: 1.25;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 4px;
+a {
+  color: #333;
+}
+
+$navHeight: 55px;
+nav {
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: $navHeight;
+  padding: 0 2rem 0 1rem;
+  background: linear-gradient(to right, #43cea2, #185a9d);
+
+  &::after {
+    content: ' ';
+    clear: both;
+    display: table;
+  }
+
+  h1.title {
+    margin: 0;
+    float: left;
+  }
+
+  .repoLinks {
+    float: right;
+    margin-right: 1px;
+  }
+
+  a {
+    background-color: none;
+    color: white;
+    margin: 8px;
+    vertical-align: middle;
+    line-height: $navHeight;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+}
+
+main {
+  margin-top: $navHeight;
+}
+
+.example-title {
+  margin-top: 0;
+}
+
+.exampleDesc {
+  padding: 1rem 0;
+}
+
+.resultTable {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+
+  td {
+    padding: 8px 12px;
+    border: 1px solid #eee;
+
+    &:first-child {
+      width: 120px;
+    }
+  }
+}
+
+pre.code {
+  background-color: #efefef;
+  width: 100%;
+  padding: 1rem;
 }

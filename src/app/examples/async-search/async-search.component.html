@@ -1,0 +1,33 @@
+<div class="autocomplete-wrapper">
+
+  <h2 class="example-title">Searching Github respository by input</h2>
+
+  <p [innerHtml]="desc">
+  </p>
+
+  <!--<pre class="code">
+    <code [innerHtml]="code">
+    </code>
+  </pre>-->
+  <ng2-simple-autocomplete
+    [(search)]="search"
+    [searchResults]="results"
+    (onSelect)="onSelect($event)"
+    (onChangeInput)="onChangeSearch($event)"
+    [isLoading]="isLoading"
+    historyId="async"
+    placeholder="angular"
+  ></ng2-simple-autocomplete>
+
+  <h3>Selected Item</h3>
+  <table class="resultTable">
+    <tr>
+      <td>text (markup)</td>
+      <td>{{!!selected && (selected.markup || selected.text) || ''}}</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>{{selected && selected.value}}</td>
+    </tr>
+  </table>
+</div>

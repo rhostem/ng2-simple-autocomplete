@@ -1,0 +1,67 @@
+/*styles for home content only*/
+.wrap {
+  &::after {
+    content: ' ';
+    clear: both;
+    display: table;
+  }
+}
+
+$asideWidth: 250px;
+.menu {
+  position: fixed;
+  z-index: 1000;
+  top: 55px;
+  left: 0;
+  background-color: #fff;
+  padding: 20px 15px 20px 20px;
+  float: left;
+  width: $asideWidth;
+  height: calc(100vh - 55px);
+  box-shadow: 6px 0 6px rgba(0,0,0,.1);
+}
+
+.menu-title {
+  font-weight: normal;
+  margin-top: 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-link {
+  display: block;
+  margin: 10px 0;
+  padding-left: 5px 5px 20px;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
+.content {
+  float: right;
+  width: calc(100% - #{$asideWidth});
+  margin: 0;
+  padding: 20px 20px 20px 30px;
+}
+
+hr {
+  background: palevioletred;
+  height: 2px;
+  margin: 2rem 0;
+  width: 400px;
+}
+
+.autocomplete-wrapper {
+  width: 400px;
+}
+
+.autocomplete-wrapper input {
+  font-weight: bold;
+  height: 35px;
+  line-height: 35px;
+}
+
+.code--remoteData {
+  padding: 10px;
+  border-radius: 3px;
+  background-color: #efefef;
+}

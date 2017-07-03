@@ -1,9 +1,13 @@
+/* tslint:disable:max-line-length */
 import {
   Component,
   OnInit
 } from '@angular/core';
 import { AutoCompleteItem, AutocompleteStyle } from '../../ng2-simple-autocomplete';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { HttpUtilService } from '../service/http-util.service';
+import 'rxjs/add/operator/toPromise';
+import { Router } from '@angular/router';
 
 const remoteData = [
   { _id: '1', name: 'lorem', },
@@ -13,8 +17,9 @@ const remoteData = [
 
 @Component({
   selector: 'home',  // <home></home>
-  styleUrls: [ './home.component.css' ],
-  templateUrl: './home.component.html'
+  styleUrls: [ './home.component.scss' ],
+  templateUrl: './home.component.html',
+  providers: [ HttpUtilService ],
 })
 export class HomeComponent implements OnInit {
   staticResults = [
@@ -37,7 +42,8 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  asyncResults = [];
+  asyncResults: AutoCompleteItem[] = [];
+  repositories: AutoCompleteItem[] = [];
 
   inputStyle: AutocompleteStyle = {
     'width': '300px',
@@ -55,13 +61,24 @@ export class HomeComponent implements OnInit {
   selectedStaticHistory: AutoCompleteItem;
   selectedAsync: AutoCompleteItem;
 
+  isLoadingRepo: boolean;
+
   constructor(
     public sanitizer: DomSanitizer,
+    public httpUtil: HttpUtilService,
+    public router: Router,
   ) {
   }
 
-  // public ngOnInit() {
-  // }
+  public ngOnInit() {
+    this.listenRouteChange();
+  }
+
+  listenRouteChange() {
+    this.router.events.subscribe((e) => {
+      window.scrollTo(0, 0);
+    });
+  }
 
   onSelectStatic(v: AutoCompleteItem) {
     this.selectedStatic = v;
@@ -91,6 +108,33 @@ export class HomeComponent implements OnInit {
         resolve(remoteData);
       }, 200);
     });
+  }
+
+  /**
+   * on change github respoitory search keyword
+   *
+   * @param {string} search
+   * @memberof HomeComponent
+   */
+  onChangeRepoSearch(search: string) {
+    this.isLoadingRepo = true;
+    this.httpUtil.getAPI(`https://api.github.com/search/repositories?q=${search}&sort=stars&order=desc&limit=10`)
+      .toPromise()
+      .then((res) => {
+        const repos = res.json().items;
+        this.isLoadingRepo = false;
+        this.repositories = repos.map((repo) => {
+          return {
+            text: repo.name,
+            markup: `${repo.owner.login} / <b>${repo.name}</b>`,
+            value: repo.name
+          };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.isLoadingRepo = false;
+      });
   }
 
 

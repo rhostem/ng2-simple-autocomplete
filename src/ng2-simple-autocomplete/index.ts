@@ -238,12 +238,12 @@ const removeSpace = (str = '') => {
       position: absolute;
       z-index: 10;
       top: 0%;
-      right: 0;
+      right: 0.5em;
       width: 1.5em;
       height: 100%;
       padding: 0 0.5em;
       text-align: center;
-      background: white;
+      background: none;
       border-radius: inherit;
     }
 

@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "@angular/animations": "~4.1.2",
+    "@angular/cli": "^1.2.0",
     "@angular/common": "~4.1.2",
     "@angular/compiler": "~4.1.2",
     "@angular/core": "~4.1.2",
@@ -68,6 +69,7 @@
     "core-js": "^2.4.1",
     "http-server": "^0.9.0",
     "ie-shim": "^0.1.0",
+    "markdown": "^0.5.0",
     "ramda": "^0.24.1",
     "rxjs": "~5.0.2",
     "zone.js": "0.8.5"

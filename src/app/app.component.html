@@ -1,12 +1,14 @@
 <nav>
-  <a [routerLink]=" ['./'] "
-    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-    Index
-  </a>
-  <!--<a [routerLink]=" ['./home'] "-->
-    <!--routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">-->
-    <!--Home-->
-  <!--</a>-->
+  <h1 class="title">
+    <a [routerLink]="['./']">
+      ng2-simple-autocomplete
+    </a>
+  </h1>
+
+  <div class="repoLinks">
+    <a href="https://rhostem.github.io/ng2-simple-autocomplete" target="_blank">GITHUB</a>
+    <a href="https://www.npmjs.com/package/ng2-simple-autocomplete" target="_blank">NPM</a>
+  </div>
 </nav>
 <main>
   <router-outlet></router-outlet>

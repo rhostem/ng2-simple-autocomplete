@@ -1,92 +1,81 @@
 <div class="wrap">
-  <h1>ng2-simple-autocomplete</h1>
+  <aside class="menu">
 
-  <div class="autocomplete-wrapper">
-    <h2>async result with history</h2>
-    <ng2-simple-autocomplete
-      [(search)]="searchAsync"
-      [searchResults]="asyncResults"
-      historyId="async"
-      placeholder="lorem"
-      (onSelect)="onSelectAsync($event)"
-      (onChangeInput)="onChangeSearchAsync($event)"
-    ></ng2-simple-autocomplete>
-    <h3>remote data</h3>
-    <div class="code--remoteData">
-      <code >
-        &#123; _id: &#39;1&#39;, name: &#39;lorem&#39;, &#125;,<br>
-        &#123; _id: &#39;2&#39;, name: &#39;ipsum&#39;, &#125;,<br>
-        &#123; _id: &#39;3&#39;, name: &#39;pixel&#39;, &#125;,<br>
-      </code>
+    <h2 class="menu-title">Examples</h2>
+
+    <a [routerLink]="['/home/async-search']"
+      class="menu-link">Async search results</a>
+    <a [routerLink]="['/home/static-list']"
+      class="menu-link">Static list</a>
+    <a [routerLink]="['/home/static-history']"
+      class="menu-link">Static list with history</a>
+    <a [routerLink]="['/home/style-cusomizing']"
+      class="menu-link">Style customizing</a>
+  </aside>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+
+    <!--<div class="autocomplete-wrapper">
+      <h2>static result</h2>
+      <ng2-simple-autocomplete
+        [(search)]="searchStatic"
+        [searchResults]="staticResults"
+        (onSelect)="onSelectStatic($event)"
+        [isStatic]="true"
+      ></ng2-simple-autocomplete>
+      <h3>Selected Item</h3>
+      <ul>
+        <li><label>text or markup</label>: {{!!selectedStatic && (selectedStatic.markup || selectedStatic.text) || ''}}</li>
+        <li><label>value</label>: {{selectedStatic && selectedStatic.value}}</li>
+      </ul>
     </div>
 
-    <h3>Selected Item</h3>
-    <ul>
-      <li><label>text or markup</label>: {{!!selectedAsync && (selectedAsync.markup || selectedAsync.text) || ''}}</li>
-      <li><label>value</label>: {{selectedAsync && selectedAsync.value}}</li>
-    </ul>
-  </div>
+    <hr>
 
-  <hr>
+    <div class="autocomplete-wrapper">
+      <h2>static result with history</h2>
+      <ng2-simple-autocomplete
+        [(search)]="searchStaticHistory"
+        [searchResults]="staticResults"
+        historyId="static"
+        historyHeading="static result history"
+        [isStatic]="true"
+        (onSelect)="onSelectStaticWithHistory($event)"
+      ></ng2-simple-autocomplete>
+      <h3>Selected Item</h3>
+      <ul>
+        <li><label>text or markup</label>: {{!!selectedStaticHistory && (selectedStaticHistory.markup || selectedStaticHistory.text || '')}}</li>
+        <li><label>value</label>: {{selectedStaticHistory && selectedStaticHistory.value}}</li>
+      </ul>
+    </div>
 
-  <div class="autocomplete-wrapper">
-    <h2>static result</h2>
-    <ng2-simple-autocomplete
-      [(search)]="searchStatic"
-      [searchResults]="staticResults"
-      (onSelect)="onSelectStatic($event)"
-      [isStatic]="true"
-    ></ng2-simple-autocomplete>
-    <h3>Selected Item</h3>
-    <ul>
-      <li><label>text or markup</label>: {{!!selectedStatic && (selectedStatic.markup || selectedStatic.text) || ''}}</li>
-      <li><label>value</label>: {{selectedStatic && selectedStatic.value}}</li>
-    </ul>
-  </div>
+    <hr>
 
-  <hr>
+    <div class="autocomplete-wrapper">
+      <h2>style customizing</h2>
+      <ng2-simple-autocomplete
+        [(search)]="searchStatic"
+        [searchResults]="staticResults"
+        (onSelect)="onSelectStatic($event)"
+        [isStatic]="true"
+        [style]="inputStyle"
+      ></ng2-simple-autocomplete>
 
-  <div class="autocomplete-wrapper">
-    <h2>static result with history</h2>
-    <ng2-simple-autocomplete
-      [(search)]="searchStaticHistory"
-      [searchResults]="staticResults"
-      historyId="static"
-      historyHeading="static result history"
-      [isStatic]="true"
-      (onSelect)="onSelectStaticWithHistory($event)"
-    ></ng2-simple-autocomplete>
-    <h3>Selected Item</h3>
-    <ul>
-      <li><label>text or markup</label>: {{!!selectedStaticHistory && (selectedStaticHistory.markup || selectedStaticHistory.text || '')}}</li>
-      <li><label>value</label>: {{selectedStaticHistory && selectedStaticHistory.value}}</li>
-    </ul>
-  </div>
+      <pre [innerHtml]="sanitizer.bypassSecurityTrustHtml('
+    const style = {
+      \'width\': \'300px\',
+      \'color\': \'blue\',
+      \'font-size\': \'24px\',
+      \'border-radius\': \'10px\',
+      \'border-color\': \'purple\',
+      \'height\': \'50px\',
+      \'line-height\': \'50px\',
+    }
+      ')">
+      </pre>
+    </div>-->
 
-  <hr>
-
-  <div class="autocomplete-wrapper">
-    <h2>style customizing</h2>
-    <ng2-simple-autocomplete
-      [(search)]="searchStatic"
-      [searchResults]="staticResults"
-      (onSelect)="onSelectStatic($event)"
-      [isStatic]="true"
-      [style]="inputStyle"
-    ></ng2-simple-autocomplete>
-
-    <pre [innerHtml]="sanitizer.bypassSecurityTrustHtml('
-  const style = {
-    \'width\': \'300px\',
-    \'color\': \'blue\',
-    \'font-size\': \'24px\',
-    \'border-radius\': \'10px\',
-    \'border-color\': \'purple\',
-    \'height\': \'50px\',
-    \'line-height\': \'50px\',
-  }
-    ')">
-    </pre>
   </div>
 
 </div>
