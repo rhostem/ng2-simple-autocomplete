@@ -1,12 +1,12 @@
-const gulp = require('gulp');
-const ts = require('gulp-typescript');
-const jasmine = require('gulp-jasmine');
-const clean = require('gulp-clean');
-const runSequence = require('run-sequence');
+var gulp = require('gulp');
+var ts = require('gulp-typescript');
+var jasmine = require('gulp-jasmine');
+var clean = require('gulp-clean');
+var runSequence = require('run-sequence');
 
 gulp.task('build', function() {
-    const merge = require('merge2');
-    const tsProject = ts.createProject('tsconfig.json');
+    var merge = require('merge2');
+    var tsProject = ts.createProject('tsconfig.json');
 
     var tsResult = tsProject.src()
         .pipe(tsProject());
@@ -37,7 +37,7 @@ gulp.task('test:run', function() {
 });
 
 gulp.task('watch', ['default'], function() {
-    gulp.watch('src/*.ts', ['default']);
+    gulp.watch('src/ng2-simple-autocomplete/**/*.ts', ['default']);
 });
 
 gulp.task('test', [], function(cb) {
@@ -45,5 +45,5 @@ gulp.task('test', [], function(cb) {
 });
 
 gulp.task('default', [], function(cb) {
-    runSequence('clean', 'build', 'copy:asset', cb);
+  runSequence('clean', 'build', 'copy:asset', cb);
 });

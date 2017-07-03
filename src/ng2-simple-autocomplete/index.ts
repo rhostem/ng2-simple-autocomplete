@@ -19,8 +19,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import * as R from 'ramda';
 
-import { AutoCompleteItem } from './AutoCompleteItem';
-import { AutocompleteStyle } from './AutoCompleteStyle';
+import { AutoCompleteItem, AutocompleteStyle } from './model';
 
 const isArrowUp = (keyCode) => keyCode === 38;
 const isArrowDown = (keyCode) => keyCode === 40;
@@ -842,6 +841,3 @@ class Ng2SimpleAutocomplete implements OnInit {
 }
 
 export { Ng2SimpleAutocomplete, AutocompleteStyle, AutoCompleteItem };
-// export { Ng2SimpleAutocomplete as Ng2SimpleAutocomplete };
-// export { AutocompleteStyle as AutocompleteStyle };
-// export { AutoCompleteItem as AutoCompleteItem };

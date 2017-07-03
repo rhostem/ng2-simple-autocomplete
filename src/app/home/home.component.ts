@@ -2,7 +2,7 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { AutoCompleteItem, AutocompleteStyle } from '../../autocomplete/ng2-simple-autocomplete';
+import { AutoCompleteItem, AutocompleteStyle } from '../../ng2-simple-autocomplete';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 const remoteData = [

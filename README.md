@@ -204,7 +204,7 @@ default: `search keyword`
 same as that of `input` element.
 
 
-#### `noResultText: boolean`
+#### `noResultText: string`
 
 default: `false`
 

@@ -34,8 +34,7 @@
     "dist"
   ],
   "include":[
-    "src/autocomplete/**/*",
-    "lib/**/*"
+    "src/ng2-simple-autocomplete/**/*"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": false,
