@@ -12,7 +12,8 @@ const webpackMerge = require('webpack-merge'); // used to merge webpack configs
  */
 const GIT_REMOTE_NAME = 'origin';
 const COMMIT_MESSAGE = 'Updates';
-const GH_REPO_NAME = ghDeploy.getRepoName(GIT_REMOTE_NAME);
+// const GH_REPO_NAME = ghDeploy.getRepoName(GIT_REMOTE_NAME);
+const GH_REPO_NAME = 'ng2-simple-autocomplete';
 
 module.exports = function (options) {
   const webpackConfigFactory = ghDeploy.getWebpackConfigModule(options); // the settings that are common to prod and dev
