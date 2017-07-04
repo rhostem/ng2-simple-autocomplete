@@ -3,7 +3,10 @@
   <h2 class="example-title">Async search results</h2>
 
   <p>
-     This exmample utilizes <a href="https://developer.github.com/v3/" target="_blank">Github open API</a>. When <code>search</code> changes, fetch github repositories by <code>search</code> value from `onChangeInput`. Result items should be processed to match with <code>AutoCompleteItem</code> interface. Then reassign it to <code>serachResult</code>.
+     This exmample utilizes <a href="https://developer.github.com/v3/" target="_blank">Github open API</a>.
+  </p>
+  <p>
+     When <code>search</code> changes, parent component of ng2-simple-autocomplete fetches github repository by <code>search</code> value. Before binding the fetch results to <code>serachResult</code>, it should be processed to match with <code>AutoCompleteItem</code> interface.
   </p>
 
   <p>
@@ -29,11 +32,10 @@
     </tr>
     <tr>
       <td>value</td>
-      <td>{{selected && selected.value}}</td>
+      <td><pre style="margin: 0">{{selected && selected.value}}</pre></td>
     </tr>
   </table>
 
   <pre class="codeblock">
-    <code>{{componentMarkup}}</code>
+    <code >{{componentMarkup}}</code>
   </pre>
-</div>

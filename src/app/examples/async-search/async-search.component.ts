@@ -51,7 +51,12 @@ export class AsyncSearchComponent implements OnInit {
           return {
             text: repo.name,
             markup: `${repo.owner.login} / <b>${repo.name}</b>`,
-            value: repo.id,
+            value:
+`{
+  id: ${repo.id},
+  url: ${repo.html_url},
+  name: ${repo.name},
+}`,
           };
         });
       })

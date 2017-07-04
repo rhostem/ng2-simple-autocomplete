@@ -137,6 +137,7 @@ interface AutocompleteStyle {
   'border-color'?: string;
   'height'?: string;
   'line-height'?: string;
+  'max-height'?: string;
 }
 ```
 
@@ -190,23 +191,17 @@ User can select item by mouse click or keyboard up/down and enter.
 Invoked when user click 'X' button at right side of input box. It emits nothing.
 
 
-#### `isStatic: boolean`
-
-default: `false`
+#### `isStatic: boolean` (default: `false`)
 
 If want to bind static list for `searchResults` property, then set is as true. Then component will automatically filter the list when input changes.
 
 
-#### `placeholder: string`
+#### `placeholder: string` (default: `search keyword`)
 
-default: `search keyword`
-
-same as that of `input` element.
+It is same as that of `input` element.
 
 
-#### `noResultText: string`
-
-default: `false`
+#### `noResultText: string` (default: `false`)
 
 Invoke `onReset` event when input element losts  focus.
 
@@ -219,43 +214,27 @@ It is **'selection item'** history. Not 'search keyword' history. So it stores `
 
 History is visible when `search` is empty and there is at least 1 history item.
 
-If same history ids are used over several component, it shares same history list.
+If *same history id*s are used over several component, it *shares same history* list.
 
 
-#### `historyHeading: string`
-
-default: `Recently selected`
+#### `historyHeading: string` (default: `Recently selected`)
 
 Text ahead of history list. 
 
 If you want to remove this heading, bind `null` value for this property.
 
 
-#### `autoFocusOnFirst: boolean`
+#### `autoFocusOnFirst: boolean` (default: `true`)
 
-default: `true`
-
-When result list is open, first item is automatically highlighted. So user can select it directly by pressing enter key.
+First item is automatically highlighted after result list has displayed. So user can select it directly by pressing enter key after searching.
 
 
-#### `resetOnDelete: boolean`
-
-default: `false`
+#### `resetOnDelete: boolean` (default: `false`)
 
 Invoke `onReset` event when user deletes input keyword by pressing backspace key.
 
 
-#### `resetOnFocusOut: boolean`
+#### `resetOnFocusOut: boolean` (default: `false`)
 
-default: `false`
-
-Invoke `onReset` event when input element losts focus.
-
-
-#### `noResultText: string`
-
-default: `There is no results`
-
-This is visible when there is no items in `searchResults`.
-
+Invoke `onReset` event when input element in component losts focus.
 
