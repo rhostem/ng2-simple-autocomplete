@@ -72,6 +72,7 @@ export class StyleCustomizingComponent implements OnInit {
     'border-color': 'palevioletred',
     'height': '50px',
     'line-height': '50px',
+    'max-height': '10em',
   };
 
   styleCode = `
@@ -83,6 +84,7 @@ export class StyleCustomizingComponent implements OnInit {
     'border-color': 'palevioletred',
     'height': '50px',
     'line-height': '50px',
+    'max-height': '10em',
   }`;
 
   componentMarkup = `

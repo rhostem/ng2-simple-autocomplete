@@ -99,6 +99,7 @@ const removeSpace = (str = '') => {
         #searchResultsEl
         class="autocomplete-result"
         [ngClass]="{ 'is-visible': isResultVisible }"
+        [ngStyle]="{ 'max-height': maxHeight }"
       >
         <li
           class="autocomplete-item"
@@ -114,6 +115,7 @@ const removeSpace = (str = '') => {
         #searchHistoryEl
         class="autocomplete-result"
         [ngClass]="{ 'is-visible': isSearchHistoryVisible }"
+        [ngStyle]="{ 'max-height': maxHeight }"
       >
         <li *ngIf="!!historyHeading" class="autocomplete-resultTitle">
           <span [innerHtml]="sanitize(historyHeading)"></span>
@@ -549,6 +551,7 @@ class Ng2SimpleAutocomplete implements OnInit {
   // ------------------------------------------------------------------------
   _search = ''; // 검색 입력 텍스트
   _searchResults: AutoCompleteItem[] = [];
+  filteredResults: AutoCompleteItem[] = [];
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild('searchResultsEl') searchResultsEl: ElementRef;
   @ViewChild('searchHistoryEl') searchHistoryEl: ElementRef;
@@ -561,7 +564,7 @@ class Ng2SimpleAutocomplete implements OnInit {
   isResultSelected = false;                   // 검색 결과 선택 여부
   maintainFocus: boolean;                     // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
   fontSize = <any> {}; // font-size style extracted from inputStyle
-  filteredResults: AutoCompleteItem[] = [];
+  maxHeight = '20em;' // max height of list
 
   // 초기화 버튼 표시 여부
   get isResetButtonVisible(): Boolean {
@@ -667,6 +670,8 @@ class Ng2SimpleAutocomplete implements OnInit {
       'height': inputStyle['height'],
       'line-height': inputStyle['line-height'],
     };
+
+    this.maxHeight = inputStyle['max-height'];
   }
 
   initSearchHistory() {
