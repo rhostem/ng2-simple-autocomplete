@@ -6,9 +6,10 @@ ng2-simple-autocomplete is autocomplete component for Angular. It mainly focuses
 ## Features
 
 - Variable properties and event bindings.
-- Selection history
-- Auto filtering of static list
-- Custom styling
+- 2-way binding.
+- Selection history.
+- Auto filtering of static list.
+- Custom styling.
 
 ## Installation
 
@@ -126,7 +127,7 @@ interface AutoCompleteItem {
 
 ####  `interface AutocompleteStyle`
 
-Shape of object for style customizing. It emits 
+Shape of object for style customizing.
 
 ```javascript
 interface AutocompleteStyle {
@@ -137,7 +138,7 @@ interface AutocompleteStyle {
   'border-color'?: string;
   'height'?: string;
   'line-height'?: string;
-  'max-height'?: string;
+  'max-height-of-list'?: string;
 }
 ```
 
@@ -171,6 +172,7 @@ Style object for customizing input box style. Customizable CSS property is prede
   'border-color': '#ddd',
   'height': '35px',
   'line-height': '35px',
+  'max-height-of-list': '20em', // max-height property of list box
 };
 ```
 
@@ -216,12 +218,16 @@ History is visible when `search` is empty and there is at least 1 history item.
 
 If *same history id*s are used over several component, it *shares same history* list.
 
-
 #### `historyHeading: string` (default: `Recently selected`)
 
 Text ahead of history list. 
 
 If you want to remove this heading, bind `null` value for this property.
+
+
+#### `maxHistory: number` (default: `15`)
+
+Maximum number of items in the history list.
 
 
 #### `autoFocusOnFirst: boolean` (default: `true`)

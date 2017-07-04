@@ -24,6 +24,7 @@ export class AsyncSearchComponent implements OnInit {
     [isLoading]="isLoading"
     historyId="async"
     placeholder="angular"
+    [maxHistory]="10"
   ></ng2-simple-autocomplete>
   `;
 

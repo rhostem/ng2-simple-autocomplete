@@ -13,5 +13,5 @@ export interface AutocompleteStyle {
   'border-color'?: string;
   'height'?: string;
   'line-height'?: string;
-  'max-height'?: string;
+  'max-height-of-list'?: string;
 };

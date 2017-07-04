@@ -68,11 +68,11 @@ export class StyleCustomizingComponent implements OnInit {
     'width': '450px',
     'color': '#6289eb',
     'font-size': '24px',
-    'border-radius': '10px',
+    'border-radius': '15px',
     'border-color': 'palevioletred',
     'height': '50px',
     'line-height': '50px',
-    'max-height': '10em',
+    'max-height-of-list': '10em',
   };
 
   styleCode = `
@@ -80,11 +80,11 @@ export class StyleCustomizingComponent implements OnInit {
     'width': '450px',
     'color': '#6289eb',
     'font-size': '24px',
-    'border-radius': '10px',
+    'border-radius': '15px',
     'border-color': 'palevioletred',
     'height': '50px',
     'line-height': '50px',
-    'max-height': '10em',
+    'max-height-of-list': '10em',
   }`;
 
   componentMarkup = `

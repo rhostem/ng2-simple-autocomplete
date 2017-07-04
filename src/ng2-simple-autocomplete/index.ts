@@ -521,6 +521,7 @@ class Ng2SimpleAutocomplete implements OnInit {
    * @memberof Ng2SimpleAutocomplete
    */
   @Input() historyHeading = 'Recently selected';
+  @Input() maxHistory = 15;
   @Input() autoFocusOnFirst = true;                   // autofocus on first result item
   @Input() resetOnDelete = false;                     // invoke onReset event binding on delete
   @Input() resetOnFocusOut = false;                   // invoke onReset event binding on focusout
@@ -559,12 +560,11 @@ class Ng2SimpleAutocomplete implements OnInit {
   inputKeyDown$: Observable<any>;             // 검색 입력 이벤트
   isFocusIn: Boolean;
   searchHistory: AutoCompleteItem[] = [];   // 검색 히스토리
-  HISTORY_MAX_LENGTH = 15;
   isNoResults = false;                        // 검색 결과 존재 여부. 알 수 없는 경우도 false로 할당한다.
   isResultSelected = false;                   // 검색 결과 선택 여부
   maintainFocus: boolean;                     // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
   fontSize = <any> {}; // font-size style extracted from inputStyle
-  maxHeight = '20em;' // max height of list
+  maxHeight: string;  // max height of list. default 20em.
 
   // 초기화 버튼 표시 여부
   get isResetButtonVisible(): Boolean {
@@ -671,7 +671,7 @@ class Ng2SimpleAutocomplete implements OnInit {
       'line-height': inputStyle['line-height'],
     };
 
-    this.maxHeight = inputStyle['max-height'];
+    this.maxHeight = inputStyle['max-height-of-list'] || '20em';
   }
 
   initSearchHistory() {
@@ -981,7 +981,7 @@ class Ng2SimpleAutocomplete implements OnInit {
     this.searchHistory = R.pipe(
       R.map(v => Object.assign(v, { isFocus: false })),
       R.uniqWith(R.equals),
-      R.take(this.HISTORY_MAX_LENGTH)
+      R.take(this.maxHistory)
     )(R.flatten([selected, this.searchHistory]));
 
     this.saveHistoryToLocalStorage(this.searchHistory);
