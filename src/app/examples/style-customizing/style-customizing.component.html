@@ -1,3 +1,35 @@
-<p>
-  style-customizing works!
-</p>
+<div class="autocomplete-wrapper">
+
+  <h2 class="example-title">Style customizing</h2>
+
+  <p>ng2-simple-autocomplete component has custom styling property. This example customized with style object</p>
+
+  <ng2-simple-autocomplete
+    [(search)]="search"
+    [searchResults]="results"
+    (onSelect)="onSelect($event)"
+    (onChangeInput)="onChangeSearch($event)"
+    [isStatic]="true"
+    [style]="inputStyle"
+  ></ng2-simple-autocomplete>
+
+  <h3>Selected Item</h3>
+  <table class="resultTable">
+    <tr>
+      <td>text (markup)</td>
+      <td>{{!!selected && (selected.markup || selected.text) || ''}}</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>{{selected && selected.value}}</td>
+    </tr>
+  </table>
+
+  <pre class="codeblock">
+    <code>{{componentMarkup}}</code>
+  </pre>
+
+  <pre class="codeblock">
+    <code [innerHTML]="styleCode"></code>
+  </pre>
+</div>

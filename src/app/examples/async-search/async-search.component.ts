@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AutoCompleteItem } from '../../../ng2-simple-autocomplete';
 import { HttpUtilService } from '../../service/http-util.service';
 import { markdown } from 'markdown';
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'async-search',
@@ -14,8 +15,19 @@ export class AsyncSearchComponent implements OnInit {
   results: AutoCompleteItem[] = [];
   isLoading: boolean;
   selected = <AutoCompleteItem> {};
+  desc = markdown.toHTML('');
 
-  desc = markdown.toHTML('This exmample utilizes [Github open AP](https://developer.github.com/v3/)I. When search input changes, fetch github repositories by name and reassign result to `serachResult` from `onChangeInput`.');
+  componentMarkup = `
+  <ng2-simple-autocomplete
+    [(search)]="search"
+    [searchResults]="results"
+    (onSelect)="onSelect($event)"
+    (onChangeInput)="onChangeSearch($event)"
+    [isLoading]="isLoading"
+    historyId="async"
+    placeholder="angular"
+  ></ng2-simple-autocomplete>
+  `;
 
   constructor(
     public httpUtil: HttpUtilService,
@@ -39,9 +51,12 @@ export class AsyncSearchComponent implements OnInit {
           return {
             text: repo.name,
             markup: `${repo.owner.login} / <b>${repo.name}</b>`,
-            value: repo.name
+            value: repo.id,
           };
         });
+
+        console.log(JSON.stringify(this.results.slice(0, 10)))
+
       })
       .catch((err) => {
         console.log(err);

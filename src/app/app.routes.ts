@@ -8,19 +8,16 @@ import { StaticHistoryComponent } from './examples/static-history/static-history
 import { StyleCustomizingComponent } from './examples/style-customizing/style-customizing.component';
 
 export const ROUTES: Routes = [
-  { path: '',      component: HomeComponent },
   {
-    path: 'home',
+    path: '',
     component: HomeComponent,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: 'async-search', pathMatch: 'full' },
       { path: 'async-search', component: AsyncSearchComponent },
       { path: 'static-list', component: StaticListComponent },
       { path: 'static-history', component: StaticHistoryComponent },
       { path: 'style-cusomizing', component: StyleCustomizingComponent },
     ]
   },
-  // { path: 'home/',  component: HomeComponent },
-  // { path: 'home/',  component: HomeComponent },
   { path: '**',    component: NoContentComponent },
 ];

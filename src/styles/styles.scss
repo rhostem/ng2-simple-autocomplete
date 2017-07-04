@@ -80,8 +80,18 @@ main {
   }
 }
 
-pre.code {
+pre.codeblock {
   background-color: #efefef;
+  border-radius: 3px;
   width: 100%;
   padding: 1rem;
+}
+
+code {
+  background-color: #efefef;
+  padding: 1px 3px;
+}
+
+.autocomplete-wrapper {
+  max-width: 720px;
 }

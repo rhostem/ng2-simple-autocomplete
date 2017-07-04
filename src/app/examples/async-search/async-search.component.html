@@ -1,14 +1,16 @@
 <div class="autocomplete-wrapper">
 
-  <h2 class="example-title">Searching Github respository by input</h2>
+  <h2 class="example-title">Async search results</h2>
 
-  <p [innerHtml]="desc">
+  <p>
+     This exmample utilizes <a href="https://developer.github.com/v3/" target="_blank">Github open API</a>. When <code>search</code> changes, fetch github repositories by <code>search</code> value from `onChangeInput`. Result items should be processed to match with <code>AutoCompleteItem</code> interface. Then reassign it to <code>serachResult</code>.
   </p>
 
-  <!--<pre class="code">
-    <code [innerHtml]="code">
-    </code>
-  </pre>-->
+  <p>
+    This exmaple has <code>historyId</code>. So selected item will be remain in history list.
+  </p>
+
+  <h3>Github respository search</h3>
   <ng2-simple-autocomplete
     [(search)]="search"
     [searchResults]="results"
@@ -30,4 +32,8 @@
       <td>{{selected && selected.value}}</td>
     </tr>
   </table>
+
+  <pre class="codeblock">
+    <code>{{componentMarkup}}</code>
+  </pre>
 </div>

@@ -1,3 +1,33 @@
-<p>
-  static-history works!
-</p>
+<div class="autocomplete-wrapper">
+
+  <h2 class="example-title">Static list with history</h2>
+
+  <p>
+    Difference with 'Static List' example is presence of <code>historyId</code> property. The component displays history list when <code>search</code> property is empty and there is at least 1 item in history list corresponding with the <code>historyId</code>.
+  </p>
+
+  <ng2-simple-autocomplete
+    [(search)]="search"
+    [searchResults]="results"
+    (onSelect)="onSelect($event)"
+    (onChangeInput)="onChangeSearch($event)"
+    [isStatic]="true"
+    historyId="static"
+  ></ng2-simple-autocomplete>
+
+  <h3>Selected Item</h3>
+  <table class="resultTable">
+    <tr>
+      <td>text (markup)</td>
+      <td>{{!!selected && (selected.markup || selected.text) || ''}}</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>{{selected && selected.value}}</td>
+    </tr>
+  </table>
+
+  <pre class="codeblock">
+    <code>{{componentMarkup}}</code>
+  </pre>
+</div>

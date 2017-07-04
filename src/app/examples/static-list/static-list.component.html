@@ -1,3 +1,32 @@
-<p>
-  static-list works!
-</p>
+<div class="autocomplete-wrapper">
+
+  <h2 class="example-title">Static list</h2>
+
+  <p>
+    This component has static list as <code>searchResults</code>. When use static list, you should set <code>isStatic</code> property as true. If you don't, component won't filter the list by <code>search</code> automatically.
+  </p>
+
+  <ng2-simple-autocomplete
+    [(search)]="search"
+    [searchResults]="results"
+    (onSelect)="onSelect($event)"
+    (onChangeInput)="onChangeSearch($event)"
+    [isStatic]="true"
+  ></ng2-simple-autocomplete>
+
+  <h3>Selected Item</h3>
+  <table class="resultTable">
+    <tr>
+      <td>text (markup)</td>
+      <td>{{!!selected && (selected.markup || selected.text) || ''}}</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>{{selected && selected.value}}</td>
+    </tr>
+  </table>
+
+  <pre class="codeblock">
+    <code>{{componentMarkup}}</code>
+  </pre>
+</div>
