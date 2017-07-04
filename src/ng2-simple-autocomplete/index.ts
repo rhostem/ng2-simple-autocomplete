@@ -855,7 +855,6 @@ class Ng2SimpleAutocomplete implements OnInit {
   onClickResult(index, e) {
     const results = this.searchResultsOnVisble;
     this.emitResult(results[index]);
-    console.log(results[index]);
     this.isFocusIn = false;
   }
 
@@ -884,6 +883,7 @@ class Ng2SimpleAutocomplete implements OnInit {
 
   onEsc() {
     this.isFocusIn = false;
+
     if (this.resetOnDelete) {
       this.onResetSearchText();
     }
@@ -952,6 +952,11 @@ class Ng2SimpleAutocomplete implements OnInit {
     this.search = '';
     this.isFocusIn = false; // 검색 결과 및 히스토리 닫기
     this.isNoResults = false;
+
+    // if static list, init the list
+    if (this.isStatic) {
+      this.filterStaticResult('');
+    }
 
     if (this.onReset) {
       this.onReset.emit();
