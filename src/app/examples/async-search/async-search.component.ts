@@ -54,9 +54,6 @@ export class AsyncSearchComponent implements OnInit {
             value: repo.id,
           };
         });
-
-        console.log(JSON.stringify(this.results.slice(0, 10)))
-
       })
       .catch((err) => {
         console.log(err);

@@ -97,8 +97,8 @@ const removeSpace = (str = '') => {
 
       <ul
         #searchResultsEl
-        [ngClass]="{ 'is-visible': isResultVisible }"
         class="autocomplete-result"
+        [ngClass]="{ 'is-visible': isResultVisible }"
       >
         <li
           class="autocomplete-item"
@@ -130,7 +130,7 @@ const removeSpace = (str = '') => {
           [ngClass]="{ 'is-focus': result.isFocus === true }"
         >
           <div
-            (click)="onClickResult(i, $event)"
+            (click)="onClickResult(i)"
             (mouseover)="onMouseOverResultItem(i)"
             [innerHtml]="sanitize(result.markup || result.text)"
           >
@@ -190,9 +190,10 @@ const removeSpace = (str = '') => {
 
     .autocomplete-result {
       box-sizing: border-box;
-      display: none;
+      display: block;
+      opacity: 0;
+      z-index: -999;
       position: absolute;
-      z-index: 100;
       top: 100%;
       left: -1px;
       width: calc(100% + 2px);
@@ -212,6 +213,8 @@ const removeSpace = (str = '') => {
 
     .autocomplete-result.is-visible {
       display: block;
+      opacity: 1;
+      z-index: 100;
     }
 
     .autocomplete-result > li {
@@ -576,7 +579,6 @@ class Ng2SimpleAutocomplete implements OnInit {
 
   // 결과 목록 표시 여부
   get isResultVisible(): Boolean {
-    // return true;
     return this.isFocusIn &&
       !this.isSearchHistoryVisible && // history has higher priority
       !this.isLoading &&
@@ -801,6 +803,12 @@ class Ng2SimpleAutocomplete implements OnInit {
       }
     });
 
+    if (!items.length) {
+      return;
+    }
+
+
+
     const listHeight = listEl.offsetHeight;
     const itemHeight = items[index].offsetHeight;
     const visibleTop = listEl.scrollTop; // 표시영역 top
@@ -847,6 +855,7 @@ class Ng2SimpleAutocomplete implements OnInit {
   onClickResult(index, e) {
     const results = this.searchResultsOnVisble;
     this.emitResult(results[index]);
+    console.log(results[index]);
     this.isFocusIn = false;
   }
 
@@ -928,11 +937,12 @@ class Ng2SimpleAutocomplete implements OnInit {
         this.searchInput.nativeElement.focus();
         this.maintainFocus = false;
       }
-    }, 300);
+    }, 400);
   }
 
   onFocusin() {
     this.isFocusIn = true;
+    this.isNoResults = false;
   }
 
   /**

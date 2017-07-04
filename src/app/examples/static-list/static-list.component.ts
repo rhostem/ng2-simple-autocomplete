@@ -12,11 +12,6 @@ export class StaticListComponent implements OnInit {
   selected = <AutoCompleteItem> {};
   results: AutoCompleteItem[] = [
     {
-      text: 'angular.js',
-      markup: 'angular / <b>angular.js</b>',
-      value: 460078
-    },
-    {
       text: 'ionic',
       markup: 'ionic-team / <b>ionic</b>',
       value: 12256376
@@ -25,16 +20,6 @@ export class StaticListComponent implements OnInit {
       text: 'angular',
       markup: 'angular / <b>angular</b>',
       value: 24195339
-    },
-    {
-      text: 'angular-styleguide',
-      markup: 'johnpapa / <b>angular-styleguide</b>',
-      value: 22362099
-    },
-    {
-      text: 'bootstrap',
-      markup: 'angular-ui / <b>bootstrap</b>',
-      value: 6094683
     },
     {
       text: 'angular-seed',

@@ -7,7 +7,6 @@ import { AutoCompleteItem } from '../../../ng2-simple-autocomplete';
   styleUrls: ['./static-history.component.css']
 })
 export class StaticHistoryComponent implements OnInit {
-
   search: string;
   isLoading: boolean;
   selected = <AutoCompleteItem> {};
