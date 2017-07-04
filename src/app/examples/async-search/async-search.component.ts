@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AutoCompleteItem } from '../../../ng2-simple-autocomplete';
 import { HttpUtilService } from '../../service/http-util.service';
-import { markdown } from 'markdown';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
@@ -15,7 +14,6 @@ export class AsyncSearchComponent implements OnInit {
   results: AutoCompleteItem[] = [];
   isLoading: boolean;
   selected = <AutoCompleteItem> {};
-  desc = markdown.toHTML('');
 
   componentMarkup = `
   <ng2-simple-autocomplete
