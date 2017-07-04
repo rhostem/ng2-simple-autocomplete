@@ -1,12 +1,12 @@
 import {
   Component,
   OnInit,
+  OnChanges,
   ViewChild,
   ElementRef,
   Input,
   Output,
   EventEmitter,
-  OnChanges,
   SimpleChanges,
   Sanitizer,
   SecurityContext,
@@ -102,13 +102,16 @@ const removeSpace = (str = '') => {
         [ngStyle]="{ 'max-height': maxHeight }"
       >
         <li
-          class="autocomplete-item"
           *ngFor="let result of searchResultsOnVisble;let i = index"
+          class="autocomplete-item"
           [ngClass]="{ 'is-focus': result.isFocus === true }"
-          (click)="onClickResult(i)"
           (mouseover)="onMouseOverResultItem(i)"
-          [innerHtml]="sanitize(result.markup || result.text)"
-        ></li>
+        >
+          <div [innerHtml]="sanitize(result.markup || result.text)"></div>
+          <div class="itemClickLayer"
+            (click)="onClickResult(i)"
+          ></div>
+        </li>
       </ul>
 
       <ul
@@ -132,11 +135,13 @@ const removeSpace = (str = '') => {
           [ngClass]="{ 'is-focus': result.isFocus === true }"
         >
           <div
-            (click)="onClickResult(i)"
             (mouseover)="onMouseOverResultItem(i)"
             [innerHtml]="sanitize(result.markup || result.text)"
           >
           </div>
+          <div class="itemClickLayer"
+            (click)="onClickResult(i)"
+          ></div>
           <span class="autocomplete-iconWrapper is-visible" (click)="onDeleteHistoryItem(i)">
             <span class="autocomplete-icon deleteIcon">✕</span>
           </span>
@@ -461,9 +466,18 @@ const removeSpace = (str = '') => {
       0%, 39%, 100% { opacity: 0; }
       40% { opacity: 1; }
     }
-  `],
+
+    .itemClickLayer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }`],
 })
-class Ng2SimpleAutocomplete implements OnInit {
+class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   // 검색 입력 텍스트. 부모 컴포넌트에서 banana-in-box ([]) 표기법 사용해서 연결
   // ex) [(search)]="searchText"
   @Input()
@@ -857,7 +871,7 @@ class Ng2SimpleAutocomplete implements OnInit {
   /**
    * 검색 결과를 마우스로 직접 선택
    */
-  onClickResult(index, e) {
+  onClickResult(index) {
     const results = this.searchResultsOnVisble;
     this.emitResult(results[index]);
     this.isFocusIn = false;
