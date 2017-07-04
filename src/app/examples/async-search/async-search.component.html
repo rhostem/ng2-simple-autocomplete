@@ -6,7 +6,7 @@
      This exmample utilizes <a href="https://developer.github.com/v3/" target="_blank">Github open API</a>.
   </p>
   <p>
-     When <code>search</code> changes, parent component of ng2-simple-autocomplete fetches github repository by <code>search</code> value. Before binding the fetch results to <code>serachResult</code>, it should be processed to match with <code>AutoCompleteItem</code> interface.
+     When <code>search</code> changes, parent component of ng2-simple-autocomplete fetches github repository by <code>search</code> value. Before binding the fetch results to <code>searchResult</code>, it should be processed to match with <code>AutoCompleteItem</code> interface.
   </p>
 
   <p>
@@ -32,10 +32,12 @@
     </tr>
     <tr>
       <td>value</td>
-      <td><pre style="margin: 0">{{selected && selected.value}}</pre></td>
+      <td><pre style="margin: 0">{{!!selected && selected.value}}</pre></td>
     </tr>
   </table>
 
   <pre class="codeblock">
     <code >{{componentMarkup}}</code>
   </pre>
+
+</div>

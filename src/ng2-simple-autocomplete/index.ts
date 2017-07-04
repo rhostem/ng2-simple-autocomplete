@@ -942,7 +942,7 @@ class Ng2SimpleAutocomplete implements OnInit {
         this.searchInput.nativeElement.focus();
         this.maintainFocus = false;
       }
-    }, 400);
+    }, 300);
   }
 
   onFocusin() {
