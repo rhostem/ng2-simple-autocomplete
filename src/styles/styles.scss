@@ -1,5 +1,7 @@
 /* this file will be extracted to main dist folder and is imported in index.html */
 
+@import url('https://fonts.googleapis.com/css?family=Inconsolata|Roboto');
+
 body {
   margin: 0;
   padding: 0;
@@ -7,6 +9,7 @@ body {
 
   line-height: 1.4;
   font-size: 16px;
+  font-family: 'Roboto', sans-serif;
 
   * {
     box-sizing: border-box;
@@ -91,6 +94,7 @@ pre.codeblock {
 }
 
 code {
+  font-family: 'Inconsolata', monospace;
   background-color: #efefef;
   padding: 1px 3px;
 }
