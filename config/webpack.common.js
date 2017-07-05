@@ -193,8 +193,15 @@ module.exports = function (options) {
          * File loader for supporting images, for example, in CSS files.
          */
         {
-          test: /\.(jpg|png|gif)$/,
-          use: 'file-loader'
+          test: /\.(jpe?g|png|gif|svg)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '/assets/images/[name].[ext]',
+              }
+            }
+          ]
         },
 
         /* File loader for supporting fonts, for example, in CSS files.

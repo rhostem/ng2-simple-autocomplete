@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import { AppState } from './app.service';
 import { MenuService } from './service/menu-service.service';
+
+
 /**
  * App Component
  * Top Level Component
@@ -19,14 +21,14 @@ import { MenuService } from './service/menu-service.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
+  menuiconUrl = require('../assets/images/menu_white.png');
+
   constructor(
     public menu: MenuService,
   ) {}
 
   public ngOnInit() {
   }
-
-
 }
 
 /**

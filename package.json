@@ -43,6 +43,7 @@
     "server:dev": "npm run webpack-dev-server -- --config config/webpack.dev.js --progress --profile --watch --content-base src/",
     "start:hmr": "npm run server:dev:hmr",
     "server": "npm run server:dev",
+    "server:prod": "http-server dist -c-1 --cors",
     "start": "npm run server:dev",
     "dev": "npm run server:dev",
     "test": "npm run lint && karma start",
@@ -73,6 +74,7 @@
     "markdown": "^0.5.0",
     "ramda": "^0.24.1",
     "rxjs": "~5.0.2",
+    "url-loader": "^0.5.9",
     "zone.js": "0.8.5"
   },
   "devDependencies": {

@@ -1,8 +1,9 @@
 <nav>
   <h1 class="title">
+      <!--src="../assets/images/menu_white.png"-->
     <img
       class="mobileMenuIcon"
-      src="/assets/images/menu_white.png" alt=""
+      [src]="menuiconUrl" alt=""
       (click)="menu.onClickMenuIcon()"
     >
     <a class="titleText" [routerLink]="['./']">
@@ -19,4 +20,5 @@
 </nav>
 <main>
   <router-outlet></router-outlet>
+
 </main>
