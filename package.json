@@ -36,6 +36,7 @@
     "github-deploy:dev": "npm run webpack -- --config config/webpack.github-deploy.js --progress --profile --env.githubDev",
     "github-deploy:prod": "npm run webpack -- --config config/webpack.github-deploy.js --progress --profile --env.githubProd",
     "github-deploy": "npm run github-deploy:dev",
+    "clean:dist": "rimraf dist",
     "lint": "npm run tslint \"src/**/*.ts\"",
     "rimraf": "rimraf",
     "server:dev:hmr": "npm run server:dev -- --inline --hot",

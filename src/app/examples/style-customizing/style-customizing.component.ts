@@ -65,9 +65,9 @@ export class StyleCustomizingComponent implements OnInit {
   ];
 
   inputStyle: AutocompleteStyle = {
-    'width': '450px',
+    'width': '70%',
     'color': '#6289eb',
-    'font-size': '24px',
+    'font-size': '20px',
     'border-radius': '15px',
     'border-color': 'palevioletred',
     'height': '50px',
@@ -77,9 +77,9 @@ export class StyleCustomizingComponent implements OnInit {
 
   styleCode = `
   style: AutocompleteStyle = {
-    'width': '450px',
+    'width': '70%',
     'color': '#6289eb',
-    'font-size': '24px',
+    'font-size': '20px',
     'border-radius': '15px',
     'border-color': 'palevioletred',
     'height': '50px',

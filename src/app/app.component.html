@@ -1,11 +1,18 @@
 <nav>
   <h1 class="title">
-    <a [routerLink]="['./']">
+    <img
+      class="mobileMenuIcon"
+      src="/assets/images/menu_white.png" alt=""
+      (click)="menu.onClickMenuIcon()"
+    >
+    <a class="titleText" [routerLink]="['./']">
       ng2-simple-autocomplete
     </a>
   </h1>
 
-  <div class="repoLinks">
+  <div
+    [ngClass]="{ repoLinks: true, 'is-visible': menu.isVisibleOnMobile }"
+  >
     <a href="https://rhostem.github.io/ng2-simple-autocomplete" target="_blank">GITHUB</a>
     <a href="https://www.npmjs.com/package/ng2-simple-autocomplete" target="_blank">NPM</a>
   </div>

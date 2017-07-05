@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { AppState } from './app.service';
-
+import { MenuService } from './service/menu-service.service';
 /**
  * App Component
  * Top Level Component
@@ -20,9 +20,13 @@ import { AppState } from './app.service';
 })
 export class AppComponent implements OnInit {
   constructor(
+    public menu: MenuService,
   ) {}
 
-  public ngOnInit() {}
+  public ngOnInit() {
+  }
+
+
 }
 
 /**

@@ -1,3 +1,5 @@
+$mobile-break: 720px;
+
 /*styles for home content only*/
 .wrap {
   &::after {
@@ -12,13 +14,28 @@ $asideWidth: 250px;
   position: fixed;
   z-index: 1000;
   top: 55px;
-  left: 0;
+  left: calc(-1 * #{$asideWidth + 30px});
   background-color: #fff;
   padding: 20px 15px 20px 20px;
   float: left;
   width: $asideWidth;
   height: calc(100vh - 55px);
   box-shadow: 6px 0 6px rgba(0,0,0,.1);
+  transition: all 0.2s ease-in;
+
+  &.is-visible {
+    left: 0;
+  }
+}
+
+@media (min-width: #{$mobile-break}) {
+  .menu {
+    left: 0;
+  }
+
+  &.is-visible {
+    left: 0;
+  }
 }
 
 .menu-title {
@@ -37,11 +54,19 @@ $asideWidth: 250px;
 }
 
 .content {
-  float: right;
-  width: calc(100% - #{$asideWidth});
-  margin: 0;
-  padding: 20px 20px 20px 30px;
+  float: left;
+  margin-left: 0;
+  width: 100%;
+  padding: 1.5rem 1.25rem 1.25rem 2rem;
 }
+
+@media (min-width: #{$mobile-break}) {
+  .content {
+    width: calc(100% - #{$asideWidth});
+    margin-left: $asideWidth;
+  }
+}
+
 
 hr {
   background: palevioletred;

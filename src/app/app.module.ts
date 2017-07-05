@@ -32,9 +32,11 @@ import { StaticListComponent } from './examples/static-list/static-list.componen
 import { StaticHistoryComponent } from './examples/static-history/static-history.component';
 import { StyleCustomizingComponent } from './examples/style-customizing/style-customizing.component';
 import { KeepHtmlPipe } from './pipe/keep-html.pipe';
+import { MenuService } from './service/menu-service.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
+  MenuService,
 ];
 
 type StoreType = {
@@ -72,7 +74,7 @@ type StoreType = {
    */
   providers: [
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
   ]
 })
 export class AppModule {

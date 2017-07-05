@@ -19,15 +19,19 @@
   <table class="resultTable">
     <tr>
       <td>text (markup)</td>
-      <td>{{!!selected && (selected.markup || selected.text) || ''}}</td>
+      <td>
+        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.markup || selected.text) || ''}}</code></pre>
+      </td>
     </tr>
     <tr>
       <td>value</td>
-      <td>{{!!selected && selected.value}}</td>
+      <td>
+        <pre *ngIf="!!selected" class="codeblock"><code>{{!!selected && selected.value}}</code></pre>
+      </td>
     </tr>
   </table>
 
-  <pre class="codeblock">
-    <code>{{componentMarkup}}</code>
+  <pre class="codeblock exampleCode-wrapper">
+    <code >{{componentMarkup}}</code>
   </pre>
 </div>

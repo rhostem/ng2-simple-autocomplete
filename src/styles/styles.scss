@@ -1,6 +1,7 @@
 /* this file will be extracted to main dist folder and is imported in index.html */
-
 @import url('https://fonts.googleapis.com/css?family=Inconsolata|Roboto');
+
+$mobile-break: 720px;
 
 body {
   margin: 0;
@@ -8,11 +9,17 @@ body {
   color: #333;
 
   line-height: 1.4;
-  font-size: 16px;
+  font-size: 14px;
   font-family: 'Roboto', sans-serif;
 
   * {
     box-sizing: border-box;
+  }
+}
+
+@media (min-width: #{$mobile-break}) {
+  body {
+    font-size: 16px;
   }
 }
 
@@ -28,7 +35,7 @@ nav {
   top: 0;
   left: 0;
   height: $navHeight;
-  padding: 0 2rem 0 1rem;
+  padding: 0 1rem;
   background: linear-gradient(to right, #43cea2, #185a9d);
 
   &::after {
@@ -40,24 +47,59 @@ nav {
   h1.title {
     margin: 0;
     float: left;
+    font-weight: 100;
   }
 
-  .repoLinks {
-    float: right;
-    margin-right: 1px;
-  }
-
-  a {
+  .titleText {
     background-color: none;
     color: white;
     margin: 8px;
-    vertical-align: middle;
+    vertical-align: top;
     line-height: $navHeight;
     text-align: center;
     text-decoration: none;
     border-radius: 4px;
   }
+
+  .repoLinks {
+    display: none;
+    float: right;
+    margin-right: 10px;
+    height: $navHeight;
+    line-height: $navHeight;
+
+    & > a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 100;
+      margin-left: 10px;
+    }
+  }
+
+  @media (min-width: #{$mobile-break}) {
+    .repoLinks {
+      display: block;
+    }
+  }
 }
+
+.mobileMenuIcon {
+  width: 20px;
+  height: 20px;
+  margin: 17px 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media (min-width: #{$mobile-break}) {
+  .repoLinks {
+    display: none;
+  }
+}
+
+
 
 main {
   margin-top: $navHeight;
@@ -83,22 +125,33 @@ main {
     &:first-child {
       width: 120px;
     }
+
+    pre {
+      margin: 0;
+    }
   }
 }
 
 pre.codeblock {
-  background-color: #efefef;
   border-radius: 3px;
   width: 100%;
   padding: 1rem;
+  overflow-x: auto;
+}
+
+.exampleCode-wrapper {
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-radius: 3px;
 }
 
 code {
   font-family: 'Inconsolata', monospace;
-  background-color: #efefef;
   padding: 1px 3px;
+  overflow-x: auto;
 }
 
 .autocomplete-wrapper {
   max-width: 720px;
 }
+

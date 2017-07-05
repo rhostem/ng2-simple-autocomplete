@@ -1,13 +1,16 @@
 /* tslint:disable:max-line-length */
 import {
   Component,
-  OnInit
+  OnInit,
+  OnChanges,
+  SimpleChanges
 } from '@angular/core';
 import { AutoCompleteItem, AutocompleteStyle } from '../../ng2-simple-autocomplete';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpUtilService } from '../service/http-util.service';
 import 'rxjs/add/operator/toPromise';
 import { Router } from '@angular/router';
+import { MenuService } from '../service/menu-service.service';
 
 const remoteData = [
   { _id: '1', name: 'lorem', },
@@ -21,7 +24,7 @@ const remoteData = [
   templateUrl: './home.component.html',
   providers: [ HttpUtilService ],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnChanges {
   staticResults = [
     {
       text: 'ng2',
@@ -60,13 +63,14 @@ export class HomeComponent implements OnInit {
   selectedStatic: AutoCompleteItem;
   selectedStaticHistory: AutoCompleteItem;
   selectedAsync: AutoCompleteItem;
-
   isLoadingRepo: boolean;
+  isMenuVisible = false;
 
   constructor(
     public sanitizer: DomSanitizer,
     public httpUtil: HttpUtilService,
     public router: Router,
+    public menu: MenuService,
   ) {
   }
 
@@ -74,8 +78,13 @@ export class HomeComponent implements OnInit {
     this.listenRouteChange();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+  }
+
   listenRouteChange() {
     this.router.events.subscribe((e) => {
+      this.menu.isVisibleOnMobile = false;
       window.scrollTo(0, 0);
     });
   }

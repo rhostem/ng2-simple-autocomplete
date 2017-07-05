@@ -1,5 +1,6 @@
 // TODO(gdi2290): switch to DLLs
 
+
 /**
  * Polyfills
  */
@@ -35,6 +36,7 @@ import 'core-js/es6/reflect';
 
 import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
+const ENV: string = process.env.ENV || process.env.NODE_ENV || 'test';
 
 if ('production' === ENV) {
   // Production

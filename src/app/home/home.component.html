@@ -1,8 +1,8 @@
 <div class="wrap">
-  <aside class="menu">
-
+  <aside
+    [ngClass]="{ 'menu': true, 'is-visible': menu.isVisibleOnMobile }"
+  >
     <h2 class="menu-title">Examples</h2>
-
     <a routerLink="/async-search"
       class="menu-link">Async search results</a>
     <a routerLink="/static-list"

@@ -615,13 +615,12 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
    * @memberof Ng2SimpleAutocomplete
    */
   get isSearchHistoryVisible(): Boolean {
-    return true;
-    // return this.isFocusIn &&
-    //   !!this.historyId && // history id is required
-    //   this.searchHistory.length &&
-    //   !this.isInputExist &&
-    //   !this.isLoading &&
-    //   !this.isNoResults;
+    return this.isFocusIn &&
+      !!this.historyId && // history id is required
+      this.searchHistory.length &&
+      !this.isInputExist &&
+      !this.isLoading &&
+      !this.isNoResults;
   }
 
   // 검색 결과와 히스토리 중에서 표시된 목록 선택
