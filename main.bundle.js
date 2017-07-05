@@ -80865,7 +80865,7 @@ module.exports = _curry3(function zipWith(fn, a, b) {
 /* 661 */
 /***/ (function(module, exports) {
 
-module.exports = "<nav>\n  <h1 class=\"title\">\n    <img\n      class=\"mobileMenuIcon\"\n      src=\"/assets/images/menu_white.png\" alt=\"\"\n      (click)=\"menu.onClickMenuIcon()\"\n    >\n    <a class=\"titleText\" [routerLink]=\"['./']\">\n      ng2-simple-autocomplete\n    </a>\n  </h1>\n\n  <div\n    [ngClass]=\"{ repoLinks: true, 'is-visible': menu.isVisibleOnMobile }\"\n  >\n    <a href=\"https://rhostem.github.io/ng2-simple-autocomplete\" target=\"_blank\">GITHUB</a>\n    <a href=\"https://www.npmjs.com/package/ng2-simple-autocomplete\" target=\"_blank\">NPM</a>\n  </div>\n</nav>\n<main>\n  <router-outlet></router-outlet>\n</main>\n"
+module.exports = "<nav>\n  <h1 class=\"title\">\n    <img\n      class=\"mobileMenuIcon\"\n      src=\"assets/images/menu_white.png\" alt=\"\"\n      (click)=\"menu.onClickMenuIcon()\"\n    >\n    <a class=\"titleText\" [routerLink]=\"['./']\">\n      ng2-simple-autocomplete\n    </a>\n  </h1>\n\n  <div\n    [ngClass]=\"{ repoLinks: true, 'is-visible': menu.isVisibleOnMobile }\"\n  >\n    <a href=\"https://rhostem.github.io/ng2-simple-autocomplete\" target=\"_blank\">GITHUB</a>\n    <a href=\"https://www.npmjs.com/package/ng2-simple-autocomplete\" target=\"_blank\">NPM</a>\n  </div>\n</nav>\n<main>\n  <router-outlet></router-outlet>\n</main>\n"
 
 /***/ }),
 /* 662 */
