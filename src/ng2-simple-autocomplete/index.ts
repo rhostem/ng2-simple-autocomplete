@@ -105,10 +105,11 @@ const removeSpace = (str = '') => {
           *ngFor="let result of searchResultsOnVisble;let i = index"
           class="autocomplete-item"
           [ngClass]="{ 'is-focus': result.isFocus === true }"
-          (mouseover)="onMouseOverResultItem(i)"
         >
           <div [innerHtml]="sanitize(result.markup || result.text)"></div>
-          <div class="itemClickLayer"
+          <div
+            class="itemClickLayer"
+            (mouseover)="onMouseOverResultItem(i)"
             (click)="onClickResult(i)"
           ></div>
         </li>
@@ -121,12 +122,15 @@ const removeSpace = (str = '') => {
         [ngStyle]="{ 'max-height': maxHeight }"
       >
         <li *ngIf="!!historyHeading" class="autocomplete-resultTitle">
-          <span [innerHtml]="sanitize(historyHeading)"></span>
+          <div
+            [innerHtml]="sanitize(historyHeading)"
+            class="resultTitleText"
+          ></div>
           <!--
-          <span
+          <div
             (click)="onClickResetHistory()"
             class="autocomplete-historyTrash"
-          ></span>
+          ></div>
           -->
         </li>
         <li
@@ -135,11 +139,11 @@ const removeSpace = (str = '') => {
           [ngClass]="{ 'is-focus': result.isFocus === true }"
         >
           <div
-            (mouseover)="onMouseOverResultItem(i)"
             [innerHtml]="sanitize(result.markup || result.text)"
           >
           </div>
           <div class="itemClickLayer"
+            (mouseover)="onMouseOverResultItem(i)"
             (click)="onClickResult(i)"
           ></div>
           <span class="autocomplete-iconWrapper is-visible" (click)="onDeleteHistoryItem(i)">
@@ -204,7 +208,7 @@ const removeSpace = (str = '') => {
       top: 100%;
       left: -1px;
       width: calc(100% + 2px);
-      padding: 0.5em 0.75em;
+      padding: 0.5em 0;
       margin: 0;
       max-height: 20em;
       overflow: auto;
@@ -224,14 +228,11 @@ const removeSpace = (str = '') => {
       z-index: 100;
     }
 
-    .autocomplete-result > li {
-      line-height: 1.4 !important;
-    }
-
     .autocomplete-item {
+      line-height: 1.4 !important;
       position: relative;
-      padding: 0.5em;
-      padding-right: 1.5em;
+      padding: 0.5em 0.75em;
+      padding-right: 2.25em;
       max-height: 200px;
     }
 
@@ -249,7 +250,7 @@ const removeSpace = (str = '') => {
       z-index: 10;
       top: 0%;
       right: 0.5em;
-      width: 1.5em;
+      width: 1.75em;
       height: 100%;
       padding: 0 0.5em;
       text-align: center;
@@ -292,9 +293,13 @@ const removeSpace = (str = '') => {
     }
 
     .autocomplete-resultTitle {
-      padding: 5px 8px;
+      padding: 0 0.75em;
+    }
+
+    .autocomplete-resultTitle > .resultTitleText {
+      padding: 0.3em 0;
       font-size: 0.85em;
-      opacity: 0.8;
+      line-height: 1.4;
       border-bottom: 1px solid rgba(230, 230, 230, 0.7);
     }
 
@@ -610,12 +615,13 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
    * @memberof Ng2SimpleAutocomplete
    */
   get isSearchHistoryVisible(): Boolean {
-    return this.isFocusIn &&
-      !!this.historyId && // history id is required
-      this.searchHistory.length &&
-      !this.isInputExist &&
-      !this.isLoading &&
-      !this.isNoResults;
+    return true;
+    // return this.isFocusIn &&
+    //   !!this.historyId && // history id is required
+    //   this.searchHistory.length &&
+    //   !this.isInputExist &&
+    //   !this.isLoading &&
+    //   !this.isNoResults;
   }
 
   // 검색 결과와 히스토리 중에서 표시된 목록 선택
