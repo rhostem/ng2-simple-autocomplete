@@ -6413,7 +6413,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* import 'core-js/es6/promise'; */
 
 
-if (false) {
+var ENV = "development" || "development" || 'test';
+if ('production' === ENV) {
     // Production
 }
 else {
