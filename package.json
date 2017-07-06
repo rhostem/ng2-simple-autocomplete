@@ -1,6 +1,6 @@
 {
   "name": "ng2-simple-autocomplete",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "autocomplete for Angular",
   "main": "dist/index.js",
   "typings": "definitions/index.d.ts",
