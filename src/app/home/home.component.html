@@ -11,71 +11,22 @@
       class="menu-link">Static list with history</a>
     <a routerLink="/style-cusomizing"
       class="menu-link">Style customizing</a>
+
+    <div class="repoLinks">
+      <hr class="horizontalBorder">
+      <a
+        href="https://github.com/rhostem/ng2-simple-autocomplete"
+        target="_blank" class="menu-link"
+      >GITHUB</a>
+      <a
+        href="https://www.npmjs.com/package/ng2-simple-autocomplete"
+        target="_blank" class="menu-link"
+      >NPM</a>
+    </div>
   </aside>
 
   <div class="content">
     <router-outlet></router-outlet>
-
-    <!--<div class="autocomplete-wrapper">
-      <h2>static result</h2>
-      <ng2-simple-autocomplete
-        [(search)]="searchStatic"
-        [searchResults]="staticResults"
-        (onSelect)="onSelectStatic($event)"
-        [isStatic]="true"
-      ></ng2-simple-autocomplete>
-      <h3>Selected Item</h3>
-      <ul>
-        <li><label>text or markup</label>: {{!!selectedStatic && (selectedStatic.markup || selectedStatic.text) || ''}}</li>
-        <li><label>value</label>: {{selectedStatic && selectedStatic.value}}</li>
-      </ul>
-    </div>
-
-    <hr>
-
-    <div class="autocomplete-wrapper">
-      <h2>static result with history</h2>
-      <ng2-simple-autocomplete
-        [(search)]="searchStaticHistory"
-        [searchResults]="staticResults"
-        historyId="static"
-        historyHeading="static result history"
-        [isStatic]="true"
-        (onSelect)="onSelectStaticWithHistory($event)"
-      ></ng2-simple-autocomplete>
-      <h3>Selected Item</h3>
-      <ul>
-        <li><label>text or markup</label>: {{!!selectedStaticHistory && (selectedStaticHistory.markup || selectedStaticHistory.text || '')}}</li>
-        <li><label>value</label>: {{selectedStaticHistory && selectedStaticHistory.value}}</li>
-      </ul>
-    </div>
-
-    <hr>
-
-    <div class="autocomplete-wrapper">
-      <h2>style customizing</h2>
-      <ng2-simple-autocomplete
-        [(search)]="searchStatic"
-        [searchResults]="staticResults"
-        (onSelect)="onSelectStatic($event)"
-        [isStatic]="true"
-        [style]="inputStyle"
-      ></ng2-simple-autocomplete>
-
-      <pre [innerHtml]="sanitizer.bypassSecurityTrustHtml('
-    const style = {
-      \'width\': \'300px\',
-      \'color\': \'blue\',
-      \'font-size\': \'24px\',
-      \'border-radius\': \'10px\',
-      \'border-color\': \'purple\',
-      \'height\': \'50px\',
-      \'line-height\': \'50px\',
-    }
-      ')">
-      </pre>
-    </div>-->
-
   </div>
 
 </div>

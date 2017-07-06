@@ -90,9 +90,10 @@ const removeSpace = (str = '') => {
 
 
       <div
-        [ngClass]="{ 'is-visible': isNoResultsVisible }" class="autocomplete-result"
+        class="autocomplete-result"
+        [ngClass]="{ 'is-visible': isNoResultsVisible }"
       >
-        {{ noResultText }}
+        <span class="autocomplete-item">{{ noResultText }}</span>
       </div>
 
       <ul

@@ -8,7 +8,6 @@ import {
 import { AppState } from './app.service';
 import { MenuService } from './service/menu-service.service';
 
-
 /**
  * App Component
  * Top Level Component
@@ -16,7 +15,7 @@ import { MenuService } from './service/menu-service.service';
 @Component({
   selector: 'app',
   styleUrls: [
-    './app.component.css'
+    './app.component.scss'
   ],
   templateUrl: './app.component.html',
 })

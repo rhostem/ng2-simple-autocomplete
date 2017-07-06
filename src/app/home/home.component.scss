@@ -1,4 +1,4 @@
-$mobile-break: 720px;
+@import '../../styles/config.scss';
 
 /*styles for home content only*/
 .wrap {
@@ -9,7 +9,6 @@ $mobile-break: 720px;
   }
 }
 
-$asideWidth: 250px;
 .menu {
   position: fixed;
   z-index: 1000;
@@ -28,7 +27,7 @@ $asideWidth: 250px;
   }
 }
 
-@media (min-width: #{$mobile-break}) {
+@media (min-width: #{$desktop-break}) {
   .menu {
     left: 0;
   }
@@ -57,22 +56,19 @@ $asideWidth: 250px;
   float: left;
   margin-left: 0;
   width: 100%;
-  padding: 1.5rem 1.25rem 1.25rem 2rem;
+  padding: 1.5rem 1.25rem 1.25rem 1.25rem;
 }
 
-@media (min-width: #{$mobile-break}) {
+@media (min-width: #{$desktop-break}) {
   .content {
     width: calc(100% - #{$asideWidth});
     margin-left: $asideWidth;
+    padding: 1.5rem 1.25rem 1.25rem 2rem;
   }
 }
 
-
-hr {
-  background: palevioletred;
-  height: 2px;
-  margin: 2rem 0;
-  width: 400px;
+.horizontalBorder {
+  width: 100%;
 }
 
 .autocomplete-wrapper {
@@ -89,4 +85,14 @@ hr {
   padding: 10px;
   border-radius: 3px;
   background-color: #efefef;
+}
+
+.repoLinks {
+  display: block;
+}
+
+@media (min-width: #{$desktop-break}) {
+  .repoLinks {
+    display: none;
+  }
 }

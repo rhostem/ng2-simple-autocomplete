@@ -1,0 +1,73 @@
+@import '../styles/config.scss';
+
+nav {
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: $navHeight;
+  padding: 0 1rem;
+  background: linear-gradient(to right, #43cea2, #185a9d);
+
+  &::after {
+    content: ' ';
+    clear: both;
+    display: table;
+  }
+}
+
+h1.title {
+  margin: 0;
+  float: left;
+  font-weight: 100;
+}
+
+.titleText {
+  background-color: none;
+  color: white;
+  margin: 8px;
+  vertical-align: top;
+  line-height: $navHeight;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.repoLinks {
+  display: none;
+  float: right;
+  margin-right: 10px;
+  height: $navHeight;
+  line-height: $navHeight;
+
+  & > a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 100;
+    margin-left: 10px;
+  }
+}
+
+@media (min-width: #{$desktop-break}) {
+  .repoLinks {
+    display: block;
+  }
+}
+
+.mobileMenuIcon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 17px 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media (min-width: #{$desktop-break}) {
+  .mobileMenuIcon {
+    display: none;
+  }
+}
