@@ -195,17 +195,17 @@ Invoked when user click 'X' button at right side of input box. It emits nothing.
 
 #### `isStatic: boolean` (default: `false`)
 
-If want to bind static list for `searchResults` property, then set is as true. Then component will automatically filter the list when input changes.
+If want to bind static list for `searchResults` property, then set it as true. Then component will automatically filter the list when input changes.
 
 
 #### `placeholder: string` (default: `search keyword`)
 
-It is same as that of `input` element.
+Same as that of `input` element of HTML.
 
 
 #### `noResultText: string` (default: `false`)
 
-Invoke `onReset` event when input element losts  focus.
+Notificiation text visible when there is no search results with input text.
 
 
 #### `historyId: string`
