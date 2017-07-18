@@ -2,18 +2,20 @@
 
   <h2 class="example-title">Async search results</h2>
 
-  <p>
-     This example utilizes <a href="https://developer.github.com/v3/" target="_blank">Github open API</a>.
-  </p>
-  <p>
-     When <code>search</code> changes, parent component of ng2-simple-autocomplete fetches github repository by <code>search</code> value. Before binding the fetch results to <code>searchResult</code>, it should be processed to match with <code>AutoCompleteItem</code> interface.
-  </p>
+  <p>This exmaple handles async dataset with <a href="https://developer.github.com/v3/" target="_blank">Github open API</a>.</p>
 
-  <p>
-    If you'd like to show loading spinner on left, you have to set <code>isLoading</code> property from async process. And This exmaple has <code>historyId</code>. So selected item will be remain in history list.
-  </p>
+  <p>When <code>search</code> value changes, parent component of ng2-simple-autocomplete fetches github repository data with <code>search</code> value. Before binding the fetch results to <code>searchResult</code> proprety, the raw data should be processed to match with <code>AutoCompleteItem</code> interface.</p>
 
-  <h3>Github respository search</h3>
+  <p>If you'd like to show loading spinner on right, you have to set <code>isLoading</code> property from async process(for example, set <code>true</code> before fetch, set <code>false</code> when fetch resolves).</p>
+
+  <p>And This exmaple has <code>historyId</code>. So selected item will be remain in history list.</p>
+
+  <h3>Component Markup</h3>
+  <pre class="codeblock exampleCode-wrapper" style="margin-top: 20px">
+    <code >{{componentMarkup}}</code>
+  </pre>
+
+  <h3>Rendered component</h3>
   <ng2-simple-autocomplete
     [(search)]="search"
     [searchResults]="results"
@@ -28,9 +30,15 @@
   <h3>Selected Item</h3>
   <table class="resultTable">
     <tr>
-      <td>text (markup)</td>
+      <td>text</td>
       <td>
-        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.markup || selected.text) || ''}}</code></pre>
+        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.text || '')}}</code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td>markup</td>
+      <td>
+        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.markup || '')}}</code></pre>
       </td>
     </tr>
     <tr>
@@ -40,9 +48,5 @@
       </td>
     </tr>
   </table>
-
-  <pre class="codeblock exampleCode-wrapper" style="margin-top: 20px">
-    <code >{{componentMarkup}}</code>
-  </pre>
 
 </div>

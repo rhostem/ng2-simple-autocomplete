@@ -6,6 +6,12 @@
     This component has static list as <code>searchResults</code>. When use static list, you should set <code>isStatic</code> property as true. If you don't, component won't filter the list by <code>search</code> automatically.
   </p>
 
+  <h3>Component Markup</h3>
+  <pre class="codeblock exampleCode-wrapper">
+    <code >{{componentMarkup}}</code>
+  </pre>
+
+  <h3>Rendered component</h3>
   <ng2-simple-autocomplete
     [(search)]="search"
     [searchResults]="results"
@@ -17,9 +23,15 @@
   <h3>Selected Item</h3>
   <table class="resultTable">
     <tr>
-      <td>text (markup)</td>
+      <td>text</td>
       <td>
-        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.markup || selected.text) || ''}}</code></pre>
+        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.text || '')}}</code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td>markup</td>
+      <td>
+        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.markup || '')}}</code></pre>
       </td>
     </tr>
     <tr>
@@ -30,11 +42,8 @@
     </tr>
   </table>
 
+  <h3><code>searchResults</code> property</h3>
   <pre class="codeblock exampleCode-wrapper">
-    <code >{{componentMarkup}}</code>
-  </pre>
-
-  <pre class="codeblock exampleCode-wrapper">
-    <code>{{listMarkup}}</code>
+     <code [innerHTML]="">{{listMarkup}}</code>
   </pre>
 </div>
