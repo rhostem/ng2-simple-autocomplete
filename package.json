@@ -1,6 +1,6 @@
 {
   "name": "ng2-simple-autocomplete",
-  "version": "0.4.6",
+  "version": "0.5.0",
   "description": "autocomplete for Angular",
   "main": "dist/index.js",
   "typings": "definitions/index.d.ts",
@@ -137,7 +137,6 @@
     "style-loader": "^0.18.1",
     "to-string-loader": "^1.1.5",
     "ts-node": "^3.0.2",
-
     "tslint": "~4.5.1",
     "tslint-loader": "^3.5.2",
     "typescript": "2.3.4",
