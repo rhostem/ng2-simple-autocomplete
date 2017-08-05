@@ -1,6 +1,6 @@
 # ng2-simple-autocomplete
 
-ng2-simple-autocomplete is autocomplete component for Angular. It mainly focuses on *asynchronous* search result from remote data. But it also supports static dataset. 
+ng2-simple-autocomplete is autocomplete component for Angular. It mainly focuses on *asynchronous* search result from remote data. But it also supports static dataset.
 
 
 ## Features
@@ -10,6 +10,10 @@ ng2-simple-autocomplete is autocomplete component for Angular. It mainly focuses
 - Selection history.
 - Auto filtering of static list.
 - Custom styling.
+
+## Working example
+
+[https://rhostem.github.io/ng2-simple-autocomplete](https://rhostem.github.io/ng2-simple-autocomplete)
 
 ## Installation
 
@@ -100,25 +104,20 @@ class TestComponent {
 
 If `isStatic` property is set as `true`, then the dataset is automatically filtered when input changes.
 
-
-## Working example
-
-[https://rhostem.github.io/ng2-simple-autocomplete](https://rhostem.github.io/ng2-simple-autocomplete)
-
 ## API
 
 ### Interface
 
 #### `interface AutoCompleteItem`
 
-Shape of object in `searchResults` array. 
+Shape of object in `searchResults` array.
 
 ```javascript
 interface AutoCompleteItem {
-  value: any;         
-  text: string;       
-  markup?: string;    
-  isFocus?: boolean;  
+  value: any;
+  text: string;
+  markup?: string;
+  isFocus?: boolean;
 }
 ```
 
@@ -156,7 +155,7 @@ Text of input field. Use 'banana-in-box' notation for 2-way binding.
 
 #### `searchResults: AutoCompleteItem[]`
 
-List of autocomplete item. 
+List of autocomplete item.
 
 
 #### `style`
@@ -178,12 +177,12 @@ Style object for customizing input box style. Customizable CSS property is prede
 
 #### `onChangeInput: EventEmitter`
 
-It emits `search` string and is invoked when input is changed. 
+It emits `search` string and is invoked when input is changed.
 
 
 #### `onSelect: EventEmitter`
 
-It emits selected `AutocompleteItem` object and is invoked when user selects items in search results or history list. 
+It emits selected `AutocompleteItem` object and is invoked when user selects items in search results or history list.
 
 User can select item by mouse click or keyboard up/down and enter.
 
@@ -210,7 +209,7 @@ Notificiation text visible when there is no search results with input text.
 
 #### `historyId: string`
 
-When valid history id is given, then component stores selected item to local storage of user's browser. 
+When valid history id is given, then component stores selected item to local storage of user's browser.
 
 It is **'selection item'** history. Not 'search keyword' history. So it stores `AutocompleteResult` object to history. And `onSelect` event is invoked when user selects history item also.
 
@@ -220,7 +219,7 @@ If *same history id*s are used over several component, it *shares same history* 
 
 #### `historyHeading: string` (default: `Recently selected`)
 
-Text ahead of history list. 
+Text ahead of history list.
 
 If you want to remove this heading, bind `null` value for this property.
 

@@ -4,6 +4,17 @@
 
   <p>ng2-simple-autocomplete component has custom styling property. This example customized with style object</p>
 
+  <h3>Component Markup</h3>
+  <pre class="codeblock exampleCode-wrapper">
+    <code >{{componentMarkup}}</code>
+  </pre>
+
+  <h3><code>style</code> property</h3>
+  <pre class="codeblock exampleCode-wrapper">
+    <code [innerHTML]="styleCode"></code>
+  </pre>
+
+  <h3>Rendered component</h3>
   <ng2-simple-autocomplete
     [(search)]="search"
     [searchResults]="results"
@@ -16,9 +27,15 @@
   <h3>Selected Item</h3>
   <table class="resultTable">
     <tr>
-      <td>text (markup)</td>
+      <td>text</td>
       <td>
-        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.markup || selected.text) || ''}}</code></pre>
+        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.text || '')}}</code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td>markup</td>
+      <td>
+        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.markup || '')}}</code></pre>
       </td>
     </tr>
     <tr>
@@ -29,11 +46,5 @@
     </tr>
   </table>
 
-  <pre class="codeblock exampleCode-wrapper">
-    <code >{{componentMarkup}}</code>
-  </pre>
 
-  <pre class="codeblock exampleCode-wrapper">
-    <code [innerHTML]="styleCode"></code>
-  </pre>
 </div>
