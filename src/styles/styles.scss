@@ -45,10 +45,17 @@ pre.codeblock {
   overflow-x: auto;
 }
 
-.exampleCode-wrapper {
+pre code[class*="lang"] {
+  display: block;
+  padding: 1rem;
+  background-color: #f2f2f2;
+}
+
+pre.exampleCode-wrapper {
   margin: 20px 0;
   border: 1px solid #eee;
   border-radius: 3px;
+  background-color: none;
 }
 
 code {

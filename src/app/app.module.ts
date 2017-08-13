@@ -33,6 +33,7 @@ import { StaticHistoryComponent } from './examples/static-history/static-history
 import { StyleCustomizingComponent } from './examples/style-customizing/style-customizing.component';
 import { KeepHtmlPipe } from './pipe/keep-html.pipe';
 import { MenuService } from './service/menu-service.service';
+import { ReadmeComponent } from './readme/readme.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -59,6 +60,7 @@ type StoreType = {
     StaticHistoryComponent,
     StyleCustomizingComponent,
     KeepHtmlPipe,
+    ReadmeComponent,
   ],
   /**
    * Import Angular's modules.

@@ -40,6 +40,9 @@ const METADATA = webpackMerge(commonConfig({
   HMR: false
 });
 
+const marked = require("marked");
+const renderer = new marked.Renderer();
+
 module.exports = function (env) {
   return webpackMerge(commonConfig({
     env: ENV
@@ -120,6 +123,21 @@ module.exports = function (env) {
           }),
           include: [helpers.root('src', 'styles')]
         },
+        {
+          test: /\.md$/,
+          use: [
+            {
+              loader: "html-loader"
+            },
+            {
+              loader: "markdown-loader",
+              options: {
+                pedantic: true,
+                renderer
+              }
+            }
+          ]
+        }
 
       ]
 
