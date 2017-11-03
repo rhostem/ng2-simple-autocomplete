@@ -41,15 +41,15 @@ const removeSpace = (str = '') => {
   selector: 'ng2-simple-autocomplete',
   template: `
     <div
-      class="autocomplete"
-      [ngStyle]="style"
+      [ngClass]="{'autocomplete': !useCSSFramework}"
+      [ngStyle]="{style: !useCSSFramework}"
     >
 
       <input
         #searchInput
         [(ngModel)]="_search"
         class="autocomplete-input"
-        [ngClass]="isResultSelected && 'is-selected'"
+        [ngClass]="inputClasses"
         type="text"
         autocomplete="off"
         (keydown)="preventCursorPosition($event)"
@@ -507,6 +507,20 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   // ------------------------------------------------------------------------
   @Output() onReset = new EventEmitter();             // 입력 값 초기화 콜백
   /**
+   * apply 3rd-party/custom class(es) for input
+   *
+   * @type {Boolean}
+   * @memberof Ng2SimpleAutocomplete
+   */
+  @Input() useCSSFramework = false;
+  /**
+   * specify which 3rd-party/custom class(es) to apply to the input
+   *
+   * @type {String}
+   * @memberof Ng2SimpleAutocomplete
+   */
+  @Input() frameworkInputStyle: String = '';
+  /**
    * if searchResult is static list, list will be filtered when input changes
    * @memberof Ng2SimpleAutocomplete
    */
@@ -585,6 +599,10 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   maintainFocus: boolean;                     // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
   fontSize = <any> {}; // font-size style extracted from inputStyle
   maxHeight: string;  // max height of list. default 20em.
+
+  get inputClasses() {
+    return `${this.isResultSelected ? 'is-selected' : ''} ${this.useCSSFramework ? this.frameworkInputStyle : 'autocomplete-input'}`;
+  }
 
   // 초기화 버튼 표시 여부
   get isResetButtonVisible(): Boolean {
