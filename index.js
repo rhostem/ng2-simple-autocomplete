@@ -41,6 +41,10 @@ var Ng2SimpleAutocomplete = (function () {
         // ------------------------------------------------------------------------
         this.onReset = new core_1.EventEmitter(); // 입력 값 초기화 콜백
         /**
+         * apply 3rd-party/custom class(es) for input
+         */
+        this.classNames = null;
+        /**
          * if searchResult is static list, list will be filtered when input changes
          * @memberof Ng2SimpleAutocomplete
          */
@@ -74,15 +78,7 @@ var Ng2SimpleAutocomplete = (function () {
          * }
          * @memberof Ng2SimpleAutocomplete
          */
-        this.style = {
-            'width': '100%',
-            'color': 'inherit',
-            'font-size': 'inherit',
-            'border-radius': '2px',
-            'border-color': '#ddd',
-            'height': '35px',
-            'line-height': '35px',
-        };
+        this.style = undefined;
         // 컴포넌트 변수
         // ------------------------------------------------------------------------
         this._search = ''; // 검색 입력 텍스트
@@ -106,6 +102,20 @@ var Ng2SimpleAutocomplete = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Ng2SimpleAutocomplete.prototype, "containerClassName", {
+        get: function () {
+            return this.classNames ? this.classNames : 'autocomplete';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Ng2SimpleAutocomplete.prototype, "inputClassName", {
+        get: function () {
+            return (this.isResultSelected ? 'is-selected' : '') + " 'autocomplete-input'}";
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Ng2SimpleAutocomplete.prototype, "isResetButtonVisible", {
         // 초기화 버튼 표시 여부
         get: function () {
@@ -123,7 +133,9 @@ var Ng2SimpleAutocomplete = (function () {
     });
     Object.defineProperty(Ng2SimpleAutocomplete.prototype, "isResultExists", {
         get: function () {
-            var result = R.not(this.isStatic) ? this.searchResults.length : this.filteredResults.length;
+            var result = R.not(this.isStatic)
+                ? this.searchResults.length
+                : this.filteredResults.length;
             return !!result;
         },
         enumerable: true,
@@ -132,10 +144,10 @@ var Ng2SimpleAutocomplete = (function () {
     Object.defineProperty(Ng2SimpleAutocomplete.prototype, "isResultVisible", {
         // 결과 목록 표시 여부
         get: function () {
-            return this.isFocusIn &&
+            return (this.isFocusIn &&
                 !this.isSearchHistoryVisible &&
                 !this.isLoading &&
-                this.isResultExists;
+                this.isResultExists);
         },
         enumerable: true,
         configurable: true
@@ -149,12 +161,12 @@ var Ng2SimpleAutocomplete = (function () {
          * @memberof Ng2SimpleAutocomplete
          */
         get: function () {
-            return this.isFocusIn &&
+            return (this.isFocusIn &&
                 !!this.historyId &&
                 this.searchHistory.length &&
                 !this.isInputExist &&
                 !this.isLoading &&
-                !this.isNoResults;
+                !this.isNoResults);
         },
         enumerable: true,
         configurable: true
@@ -196,8 +208,9 @@ var Ng2SimpleAutocomplete = (function () {
             Array.isArray(changes.searchResults.currentValue)) {
             this.searchResults = changes.searchResults.currentValue.map(function (v, index) {
                 // focus on first result item
-                return (_this.autoFocusOnFirst && index === 0) ?
-                    Object.assign(v, { isFocus: true }) : v;
+                return _this.autoFocusOnFirst && index === 0
+                    ? Object.assign(v, { isFocus: true })
+                    : v;
             });
             if (!changes.searchResults.firstChange) {
                 this.isNoResults = !this.searchResults.length;
@@ -212,26 +225,23 @@ var Ng2SimpleAutocomplete = (function () {
         if (style === void 0) { style = {}; }
         var inputStyle = Object.assign({}, style);
         this.style = {
-            'width': inputStyle['width'],
-            'color': inputStyle['color'],
+            width: inputStyle['width'],
+            color: inputStyle['color'],
             'font-size': inputStyle['font-size'],
             'border-radius': inputStyle['border-radius'],
             'border-color': inputStyle['border-color'],
-            'height': inputStyle['height'],
+            height: inputStyle['height'],
             'line-height': inputStyle['line-height'],
         };
         this.maxHeight = inputStyle['max-height-of-list'] || '20em';
     };
     Ng2SimpleAutocomplete.prototype.initSearchHistory = function () {
-        var history = window.localStorage
-            .getItem("ng2_simple_autocomplete_history_" + this.historyId);
+        var history = window.localStorage.getItem("ng2_simple_autocomplete_history_" + this.historyId);
         this.searchHistory = history ? JSON.parse(history) : [];
     };
     Ng2SimpleAutocomplete.prototype.initEventStream = function () {
-        this.inputKeyUp$ = Observable_1.Observable.fromEvent(this.searchInput.nativeElement, 'keyup')
-            .map(function (e) { return e; });
-        this.inputKeyDown$ = Observable_1.Observable.fromEvent(this.searchInput.nativeElement, 'keydown')
-            .map(function (e) { return e; });
+        this.inputKeyUp$ = Observable_1.Observable.fromEvent(this.searchInput.nativeElement, 'keyup').map(function (e) { return e; });
+        this.inputKeyDown$ = Observable_1.Observable.fromEvent(this.searchInput.nativeElement, 'keydown').map(function (e) { return e; });
         this.listenEventStream();
     };
     Ng2SimpleAutocomplete.prototype.listenEventStream = function () {
@@ -256,15 +266,11 @@ var Ng2SimpleAutocomplete = (function () {
             _this.onEsc();
         });
         // enter
-        this.inputKeyUp$
-            .filter(function (e) { return isEnter(e.keyCode); })
-            .subscribe(function (e) {
+        this.inputKeyUp$.filter(function (e) { return isEnter(e.keyCode); }).subscribe(function (e) {
             _this.onEnterResult(e);
         });
         // cursor up & down
-        this.inputKeyDown$
-            .filter(function (e) { return isArrowUpDown(e.keyCode); })
-            .subscribe(function (e) {
+        this.inputKeyDown$.filter(function (e) { return isArrowUpDown(e.keyCode); }).subscribe(function (e) {
             e.preventDefault();
             _this.onFocusNextResult(e);
         });
@@ -329,11 +335,13 @@ var Ng2SimpleAutocomplete = (function () {
      * @memberOf AutocompleteComponent
      */
     Ng2SimpleAutocomplete.prototype.scrollToFocusedItem = function (index) {
-        var listEl = this.isResultVisible ?
-            this.searchResultsEl.nativeElement : this.searchHistoryEl.nativeElement;
+        var listEl = this.isResultVisible
+            ? this.searchResultsEl.nativeElement
+            : this.searchHistoryEl.nativeElement;
         var items = Array.prototype.slice.call(listEl.childNodes);
         items = items.filter(function (node) {
             if (node.nodeType === 1) {
+                // if element node
                 return node.className.includes('autocomplete-item');
             }
             else {
@@ -398,8 +406,7 @@ var Ng2SimpleAutocomplete = (function () {
         var results = this.searchResultsOnVisble;
         var focusedIdx = results.findIndex(function (result) { return result.isFocus; });
         var focused = results[focusedIdx];
-        var unselected = (!this.autoFocusOnFirst || !this.search) ?
-            { text: this.search, value: null } : null;
+        var unselected = !this.autoFocusOnFirst || !this.search ? { text: this.search, value: null } : null;
         // 자동포커스 옵션이 false인 경우에만 선택되지 않은 값을 전달한다.
         var selected = focused || unselected;
         if (!R.isNil(selected)) {
@@ -532,6 +539,10 @@ tslib_1.__decorate([
 tslib_1.__decorate([
     core_1.Input(),
     tslib_1.__metadata("design:type", Object)
+], Ng2SimpleAutocomplete.prototype, "classNames", void 0);
+tslib_1.__decorate([
+    core_1.Input(),
+    tslib_1.__metadata("design:type", Object)
 ], Ng2SimpleAutocomplete.prototype, "isStatic", void 0);
 tslib_1.__decorate([
     core_1.Input(),
@@ -588,8 +599,10 @@ tslib_1.__decorate([
 Ng2SimpleAutocomplete = tslib_1.__decorate([
     core_1.Component({
         selector: 'ng2-simple-autocomplete',
-        template: "\n    <div\n      class=\"autocomplete\"\n      [ngStyle]=\"style\"\n    >\n\n      <input\n        #searchInput\n        [(ngModel)]=\"_search\"\n        class=\"autocomplete-input\"\n        [ngClass]=\"isResultSelected && 'is-selected'\"\n        type=\"text\"\n        autocomplete=\"off\"\n        (keydown)=\"preventCursorPosition($event)\"\n        (focus)=\"onFocusin()\"\n        (focusout)=\"onFocusout($event)\"\n        [placeholder]=\"placeholder\"\n      />\n      <div\n        class=\"autocomplete-iconWrapper\"\n        [ngClass]=\"{ 'is-visible': isResetButtonVisible}\"\n        [ngStyle]=\"{ 'font-size': style['font-size']}\"\n        (click)=\"onResetSearchText()\"\n      >\n        <span class=\"autocomplete-icon deleteIcon\">\u2715</span>\n      </div>\n\n\n      <div\n        [ngClass]=\"{\n          'autocomplete-iconWrapper': true, 'is-visible': isLoading\n        }\"\n      >\n        <div class=\"sk-fading-circle autocomplete-icon\">\n          <div class=\"sk-circle1 sk-circle\"></div>\n          <div class=\"sk-circle2 sk-circle\"></div>\n          <div class=\"sk-circle3 sk-circle\"></div>\n          <div class=\"sk-circle4 sk-circle\"></div>\n          <div class=\"sk-circle5 sk-circle\"></div>\n          <div class=\"sk-circle6 sk-circle\"></div>\n          <div class=\"sk-circle7 sk-circle\"></div>\n          <div class=\"sk-circle8 sk-circle\"></div>\n          <div class=\"sk-circle9 sk-circle\"></div>\n          <div class=\"sk-circle10 sk-circle\"></div>\n          <div class=\"sk-circle11 sk-circle\"></div>\n          <div class=\"sk-circle12 sk-circle\"></div>\n        </div>\n      </div>\n\n\n      <div\n        class=\"autocomplete-result\"\n        [ngClass]=\"{ 'is-visible': isNoResultsVisible }\"\n      >\n        <span class=\"autocomplete-item\">{{ noResultText }}</span>\n      </div>\n\n      <ul\n        #searchResultsEl\n        class=\"autocomplete-result\"\n        [ngClass]=\"{ 'is-visible': isResultVisible }\"\n        [ngStyle]=\"{ 'max-height': maxHeight }\"\n      >\n        <li\n          *ngFor=\"let result of searchResultsOnVisble;let i = index\"\n          class=\"autocomplete-item\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n        >\n          <div [innerHtml]=\"sanitize(result.markup || result.text)\"></div>\n          <div\n            class=\"itemClickLayer\"\n            (mouseover)=\"onMouseOverResultItem(i)\"\n            (click)=\"onClickResult(i)\"\n          ></div>\n        </li>\n      </ul>\n\n      <ul\n        #searchHistoryEl\n        class=\"autocomplete-result\"\n        [ngClass]=\"{ 'is-visible': isSearchHistoryVisible }\"\n        [ngStyle]=\"{ 'max-height': maxHeight }\"\n      >\n        <li *ngIf=\"!!historyHeading\" class=\"autocomplete-resultTitle\">\n          <div\n            [innerHtml]=\"sanitize(historyHeading)\"\n            class=\"resultTitleText\"\n          ></div>\n          <!--\n          <div\n            (click)=\"onClickResetHistory()\"\n            class=\"autocomplete-historyTrash\"\n          ></div>\n          -->\n        </li>\n        <li\n          *ngFor=\"let result of searchHistory;let i = index\"\n          class=\"autocomplete-item\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n        >\n          <div\n            [innerHtml]=\"sanitize(result.markup || result.text)\"\n          >\n          </div>\n          <div class=\"itemClickLayer\"\n            (mouseover)=\"onMouseOverResultItem(i)\"\n            (click)=\"onClickResult(i)\"\n          ></div>\n          <span class=\"autocomplete-iconWrapper is-visible\" (click)=\"onDeleteHistoryItem(i)\">\n            <span class=\"autocomplete-icon deleteIcon\">\u2715</span>\n          </span>\n        </li>\n\n        <!--\n        <li\n          *ngIf=\"!searchHistory.length\"\n          class=\"autocomplete-item\"\n        >no search history</li>\n        -->\n      </ul>\n    </div>\n  ",
-        styles: ["\n    .autocomplete {\n      position: relative;\n      display: inline-block;\n      box-sizing: border-box;\n      padding: 0 0.75em;\n      width: 100%;\n      height: 35px;\n      line-height: 35px;\n      color: inherit;\n      font-size: inherit;\n      border-width: 1px;\n      border-style: solid;\n      border-radius: 2px;\n      border-color: #ddd;\n    }\n\n    .autocomplete-input {\n      box-sizing: border-box;\n      position: absolute;\n      top: 0;\n      left: 0;\n      display: block;\n      width: calc(100% - 2px);\n      height: calc(100% - 2px);\n      line-height: inherit;\n      padding: inherit;\n      border: 0;\n      background: none;\n      font-size: inherit;\n      font-weight: inherit;\n      color: inherit;\n      outline-width: 0;\n    }\n\n    .autocomplete-input.is-selected {\n      display: block;\n    }\n\n    .autocomplete-result {\n      box-sizing: border-box;\n      display: block;\n      opacity: 0;\n      z-index: -999;\n      position: absolute;\n      top: 100%;\n      left: -1px;\n      width: calc(100% + 2px);\n      padding: 0.5em 0;\n      margin: 0;\n      max-height: 20em;\n      overflow: auto;\n      border-style: solid;\n      border-width: 1px;\n      border-radius: inherit;\n      border-color: inherit;\n      background-color: #fff;\n      list-style: none;\n      box-shadow: 0 2px 0px rgba(0, 0, 0, 0.1);\n      font-size: inherit;\n    }\n\n    .autocomplete-result.is-visible {\n      display: block;\n      opacity: 1;\n      z-index: 100;\n    }\n\n    .autocomplete-item {\n      line-height: 1.4 !important;\n      position: relative;\n      padding: 0.5em 0.75em;\n      padding-right: 2.25em;\n      max-height: 200px;\n    }\n\n    .autocomplete-item.is-focus {\n      background-color: #eee;\n    }\n\n    .autocomplete-item:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-iconWrapper {\n      display: none;\n      position: absolute;\n      z-index: 10;\n      top: 0%;\n      right: 0.5em;\n      width: 1.75em;\n      height: 100%;\n      padding: 0 0.5em;\n      text-align: center;\n      background: none;\n      border-radius: inherit;\n    }\n\n    .autocomplete-iconWrapper.is-visible {\n      display: block;\n    }\n\n    .autocomplete-icon {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      transform: translate(-50%, -47%);\n      opacity: 0.3;\n    }\n\n    .autocomplete-icon.deleteIcon:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n\n    .autocomplete-iconWrapper:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-isLoading {\n      z-index: 20;\n    }\n\n    .autocomplete-closeBtn {\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-closeBtn:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-resultTitle {\n      padding: 0 0.75em;\n    }\n\n    .autocomplete-resultTitle > .resultTitleText {\n      padding: 0.3em 0;\n      font-size: 0.85em;\n      line-height: 1.4;\n      border-bottom: 1px solid rgba(230, 230, 230, 0.7);\n    }\n\n    .autocomplete-historyTrash {\n      float: right;\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-historyTrash:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-deleteHistoryItemBtn {\n      z-index: 10;\n      position: absolute;\n      top: 50%;\n      right: 0;\n      transform: translateY(-50%);\n      width: 1.5em;\n      display: block;\n      color: #3b4752;\n      opacity: 0.3;\n      transition: all 0.2s ease-in-out;\n      font-size: 1em;\n      text-align: center;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover > i {\n      transform: scale(1.5);\n    }\n\n    .sk-fading-circle {\n      width: 1.2em;\n      height: 1.2em;\n      position: relative;\n    }\n\n    .sk-fading-circle .sk-circle {\n      width: 100%;\n      height: 100%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n\n    .sk-fading-circle .sk-circle:before {\n      content: '';\n      display: block;\n      margin: 0 auto;\n      width: 15%;\n      height: 15%;\n      background-color: #333;\n      border-radius: 100%;\n      -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;\n              animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;\n    }\n    .sk-fading-circle .sk-circle2 {\n      -webkit-transform: rotate(30deg);\n          -ms-transform: rotate(30deg);\n              transform: rotate(30deg);\n    }\n    .sk-fading-circle .sk-circle3 {\n      -webkit-transform: rotate(60deg);\n          -ms-transform: rotate(60deg);\n              transform: rotate(60deg);\n    }\n    .sk-fading-circle .sk-circle4 {\n      -webkit-transform: rotate(90deg);\n          -ms-transform: rotate(90deg);\n              transform: rotate(90deg);\n    }\n    .sk-fading-circle .sk-circle5 {\n      -webkit-transform: rotate(120deg);\n          -ms-transform: rotate(120deg);\n              transform: rotate(120deg);\n    }\n    .sk-fading-circle .sk-circle6 {\n      -webkit-transform: rotate(150deg);\n          -ms-transform: rotate(150deg);\n              transform: rotate(150deg);\n    }\n    .sk-fading-circle .sk-circle7 {\n      -webkit-transform: rotate(180deg);\n          -ms-transform: rotate(180deg);\n              transform: rotate(180deg);\n    }\n    .sk-fading-circle .sk-circle8 {\n      -webkit-transform: rotate(210deg);\n          -ms-transform: rotate(210deg);\n              transform: rotate(210deg);\n    }\n    .sk-fading-circle .sk-circle9 {\n      -webkit-transform: rotate(240deg);\n          -ms-transform: rotate(240deg);\n              transform: rotate(240deg);\n    }\n    .sk-fading-circle .sk-circle10 {\n      -webkit-transform: rotate(270deg);\n          -ms-transform: rotate(270deg);\n              transform: rotate(270deg);\n    }\n    .sk-fading-circle .sk-circle11 {\n      -webkit-transform: rotate(300deg);\n          -ms-transform: rotate(300deg);\n              transform: rotate(300deg);\n    }\n    .sk-fading-circle .sk-circle12 {\n      -webkit-transform: rotate(330deg);\n          -ms-transform: rotate(330deg);\n              transform: rotate(330deg);\n    }\n    .sk-fading-circle .sk-circle2:before {\n      -webkit-animation-delay: -1.1s;\n              animation-delay: -1.1s;\n    }\n    .sk-fading-circle .sk-circle3:before {\n      -webkit-animation-delay: -1s;\n              animation-delay: -1s;\n    }\n    .sk-fading-circle .sk-circle4:before {\n      -webkit-animation-delay: -0.9s;\n              animation-delay: -0.9s;\n    }\n    .sk-fading-circle .sk-circle5:before {\n      -webkit-animation-delay: -0.8s;\n              animation-delay: -0.8s;\n    }\n    .sk-fading-circle .sk-circle6:before {\n      -webkit-animation-delay: -0.7s;\n              animation-delay: -0.7s;\n    }\n    .sk-fading-circle .sk-circle7:before {\n      -webkit-animation-delay: -0.6s;\n              animation-delay: -0.6s;\n    }\n    .sk-fading-circle .sk-circle8:before {\n      -webkit-animation-delay: -0.5s;\n              animation-delay: -0.5s;\n    }\n    .sk-fading-circle .sk-circle9:before {\n      -webkit-animation-delay: -0.4s;\n              animation-delay: -0.4s;\n    }\n    .sk-fading-circle .sk-circle10:before {\n      -webkit-animation-delay: -0.3s;\n              animation-delay: -0.3s;\n    }\n    .sk-fading-circle .sk-circle11:before {\n      -webkit-animation-delay: -0.2s;\n              animation-delay: -0.2s;\n    }\n    .sk-fading-circle .sk-circle12:before {\n      -webkit-animation-delay: -0.1s;\n              animation-delay: -0.1s;\n    }\n\n    @-webkit-keyframes sk-circleFadeDelay {\n      0%, 39%, 100% { opacity: 0; }\n      40% { opacity: 1; }\n    }\n\n    @keyframes sk-circleFadeDelay {\n      0%, 39%, 100% { opacity: 0; }\n      40% { opacity: 1; }\n    }\n\n    .itemClickLayer {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      opacity: 0;\n    }"],
+        template: "\n    <div\n      [ngClass]=\"['containerBase', containerClassName]\"\n      [ngStyle]=\"style\"\n    >\n\n      <input\n        #searchInput\n        [(ngModel)]=\"_search\"\n        class=\"autocomplete-input\"\n        [ngClass]=\"inputClassName\"\n        type=\"text\"\n        autocomplete=\"off\"\n        (keydown)=\"preventCursorPosition($event)\"\n        (focus)=\"onFocusin()\"\n        (focusout)=\"onFocusout($event)\"\n        [placeholder]=\"placeholder\"\n      />\n      <div\n        class=\"autocomplete-iconWrapper\"\n        [ngClass]=\"{ 'is-visible': isResetButtonVisible}\"\n        [ngStyle]=\"{ 'font-size': style['font-size']}\"\n        (click)=\"onResetSearchText()\"\n      >\n        <span class=\"autocomplete-icon deleteIcon\">\u2715</span>\n      </div>\n\n\n      <div\n        [ngClass]=\"{\n          'autocomplete-iconWrapper': true, 'is-visible': isLoading\n        }\"\n      >\n        <div class=\"sk-fading-circle autocomplete-icon\">\n          <div class=\"sk-circle1 sk-circle\"></div>\n          <div class=\"sk-circle2 sk-circle\"></div>\n          <div class=\"sk-circle3 sk-circle\"></div>\n          <div class=\"sk-circle4 sk-circle\"></div>\n          <div class=\"sk-circle5 sk-circle\"></div>\n          <div class=\"sk-circle6 sk-circle\"></div>\n          <div class=\"sk-circle7 sk-circle\"></div>\n          <div class=\"sk-circle8 sk-circle\"></div>\n          <div class=\"sk-circle9 sk-circle\"></div>\n          <div class=\"sk-circle10 sk-circle\"></div>\n          <div class=\"sk-circle11 sk-circle\"></div>\n          <div class=\"sk-circle12 sk-circle\"></div>\n        </div>\n      </div>\n\n\n      <div\n        class=\"autocomplete-result\"\n        [ngClass]=\"{ 'is-visible': isNoResultsVisible }\"\n      >\n        <span class=\"autocomplete-item\">{{ noResultText }}</span>\n      </div>\n\n      <ul\n        #searchResultsEl\n        class=\"autocomplete-result\"\n        [ngClass]=\"{ 'is-visible': isResultVisible }\"\n        [ngStyle]=\"{ 'max-height': maxHeight }\"\n      >\n        <li\n          *ngFor=\"let result of searchResultsOnVisble;let i = index\"\n          class=\"autocomplete-item\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n        >\n          <div [innerHtml]=\"sanitize(result.markup || result.text)\"></div>\n          <div\n            class=\"itemClickLayer\"\n            (mouseover)=\"onMouseOverResultItem(i)\"\n            (click)=\"onClickResult(i)\"\n          ></div>\n        </li>\n      </ul>\n\n      <ul\n        #searchHistoryEl\n        class=\"autocomplete-result\"\n        [ngClass]=\"{ 'is-visible': isSearchHistoryVisible }\"\n        [ngStyle]=\"{ 'max-height': maxHeight }\"\n      >\n        <li *ngIf=\"!!historyHeading\" class=\"autocomplete-resultTitle\">\n          <div\n            [innerHtml]=\"sanitize(historyHeading)\"\n            class=\"resultTitleText\"\n          ></div>\n          <!--\n          <div\n            (click)=\"onClickResetHistory()\"\n            class=\"autocomplete-historyTrash\"\n          ></div>\n          -->\n        </li>\n        <li\n          *ngFor=\"let result of searchHistory;let i = index\"\n          class=\"autocomplete-item\"\n          [ngClass]=\"{ 'is-focus': result.isFocus === true }\"\n        >\n          <div\n            [innerHtml]=\"sanitize(result.markup || result.text)\"\n          >\n          </div>\n          <div class=\"itemClickLayer\"\n            (mouseover)=\"onMouseOverResultItem(i)\"\n            (click)=\"onClickResult(i)\"\n          ></div>\n          <span class=\"autocomplete-iconWrapper is-visible\" (click)=\"onDeleteHistoryItem(i)\">\n            <span class=\"autocomplete-icon deleteIcon\">\u2715</span>\n          </span>\n        </li>\n\n        <!--\n        <li\n          *ngIf=\"!searchHistory.length\"\n          class=\"autocomplete-item\"\n        >no search history</li>\n        -->\n      </ul>\n    </div>\n  ",
+        styles: [
+            "\n    .containerBase {\n      position: relative;\n    }\n\n    .autocomplete {\n      position: relative;\n      display: inline-block;\n      box-sizing: border-box;\n      padding: 0 0.75em;\n      width: 100%;\n      height: 35px;\n      line-height: 35px;\n      color: inherit;\n      font-size: inherit;\n      border-width: 1px;\n      border-style: solid;\n      border-radius: 2px;\n      border-color: #ddd;\n    }\n\n    .autocomplete-input {\n      box-sizing: border-box;\n      position: absolute;\n      top: 0;\n      left: 0;\n      display: block;\n      width: calc(100% - 0.12em);\n      height: calc(100% - 0.12em);\n      line-height: inherit;\n      padding: inherit;\n      border: 0;\n      background: none;\n      font-size: inherit;\n      font-weight: inherit;\n      color: inherit;\n      outline-width: 0;\n    }\n\n    .autocomplete-input.is-selected {\n      display: block;\n    }\n\n    .autocomplete-result {\n      box-sizing: border-box;\n      display: block;\n      opacity: 0;\n      z-index: -999;\n      position: absolute;\n      top: 100%;\n      left: -1px;\n      width: calc(100% + 2px);\n      padding: 0.5em 0;\n      margin: 0;\n      max-height: 20em;\n      overflow: auto;\n      border-style: solid;\n      border-width: 1px;\n      border-radius: inherit;\n      border-color: inherit;\n      background-color: #fff;\n      list-style: none;\n      box-shadow: 0 2px 0px rgba(0, 0, 0, 0.1);\n      font-size: inherit;\n    }\n\n    .autocomplete-result.is-visible {\n      display: block;\n      opacity: 1;\n      z-index: 100;\n    }\n\n    .autocomplete-item {\n      line-height: 1.4 !important;\n      position: relative;\n      padding: 0.5em 0.75em;\n      padding-right: 2.25em;\n      max-height: 200px;\n    }\n\n    .autocomplete-item.is-focus {\n      background-color: #eee;\n    }\n\n    .autocomplete-item:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-iconWrapper {\n      display: none;\n      position: absolute;\n      z-index: 10;\n      top: 0%;\n      right: 0.5em;\n      width: 1.75em;\n      height: 100%;\n      padding: 0 0.5em;\n      text-align: center;\n      background: none;\n      border-radius: inherit;\n    }\n\n    .autocomplete-iconWrapper.is-visible {\n      display: block;\n    }\n\n    .autocomplete-icon {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      transform: translate(-50%, -47%);\n      opacity: 0.3;\n    }\n\n    .autocomplete-icon.deleteIcon:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n\n    .autocomplete-iconWrapper:hover {\n      cursor: pointer;\n    }\n\n    .autocomplete-isLoading {\n      z-index: 20;\n    }\n\n    .autocomplete-closeBtn {\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-closeBtn:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-resultTitle {\n      padding: 0 0.75em;\n    }\n\n    .autocomplete-resultTitle > .resultTitleText {\n      padding: 0.3em 0;\n      font-size: 0.85em;\n      line-height: 1.4;\n      border-bottom: 1px solid rgba(230, 230, 230, 0.7);\n    }\n\n    .autocomplete-historyTrash {\n      float: right;\n      transition: all 0.2s ease-in-out;\n    }\n\n    .autocomplete-historyTrash:hover {\n      cursor: pointer;\n      transform: scale(1.5);\n    }\n\n    .autocomplete-deleteHistoryItemBtn {\n      z-index: 10;\n      position: absolute;\n      top: 50%;\n      right: 0;\n      transform: translateY(-50%);\n      width: 1.5em;\n      display: block;\n      color: #3b4752;\n      opacity: 0.3;\n      transition: all 0.2s ease-in-out;\n      font-size: 1em;\n      text-align: center;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover {\n      opacity: 1;\n      cursor: pointer;\n    }\n\n    .autocomplete-deleteHistoryItemBtn:hover > i {\n      transform: scale(1.5);\n    }\n\n    .sk-fading-circle {\n      width: 1.2em;\n      height: 1.2em;\n      position: relative;\n    }\n\n    .sk-fading-circle .sk-circle {\n      width: 100%;\n      height: 100%;\n      position: absolute;\n      left: 0;\n      top: 0;\n    }\n\n    .sk-fading-circle .sk-circle:before {\n      content: '';\n      display: block;\n      margin: 0 auto;\n      width: 15%;\n      height: 15%;\n      background-color: #333;\n      border-radius: 100%;\n      -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;\n              animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;\n    }\n    .sk-fading-circle .sk-circle2 {\n      -webkit-transform: rotate(30deg);\n          -ms-transform: rotate(30deg);\n              transform: rotate(30deg);\n    }\n    .sk-fading-circle .sk-circle3 {\n      -webkit-transform: rotate(60deg);\n          -ms-transform: rotate(60deg);\n              transform: rotate(60deg);\n    }\n    .sk-fading-circle .sk-circle4 {\n      -webkit-transform: rotate(90deg);\n          -ms-transform: rotate(90deg);\n              transform: rotate(90deg);\n    }\n    .sk-fading-circle .sk-circle5 {\n      -webkit-transform: rotate(120deg);\n          -ms-transform: rotate(120deg);\n              transform: rotate(120deg);\n    }\n    .sk-fading-circle .sk-circle6 {\n      -webkit-transform: rotate(150deg);\n          -ms-transform: rotate(150deg);\n              transform: rotate(150deg);\n    }\n    .sk-fading-circle .sk-circle7 {\n      -webkit-transform: rotate(180deg);\n          -ms-transform: rotate(180deg);\n              transform: rotate(180deg);\n    }\n    .sk-fading-circle .sk-circle8 {\n      -webkit-transform: rotate(210deg);\n          -ms-transform: rotate(210deg);\n              transform: rotate(210deg);\n    }\n    .sk-fading-circle .sk-circle9 {\n      -webkit-transform: rotate(240deg);\n          -ms-transform: rotate(240deg);\n              transform: rotate(240deg);\n    }\n    .sk-fading-circle .sk-circle10 {\n      -webkit-transform: rotate(270deg);\n          -ms-transform: rotate(270deg);\n              transform: rotate(270deg);\n    }\n    .sk-fading-circle .sk-circle11 {\n      -webkit-transform: rotate(300deg);\n          -ms-transform: rotate(300deg);\n              transform: rotate(300deg);\n    }\n    .sk-fading-circle .sk-circle12 {\n      -webkit-transform: rotate(330deg);\n          -ms-transform: rotate(330deg);\n              transform: rotate(330deg);\n    }\n    .sk-fading-circle .sk-circle2:before {\n      -webkit-animation-delay: -1.1s;\n              animation-delay: -1.1s;\n    }\n    .sk-fading-circle .sk-circle3:before {\n      -webkit-animation-delay: -1s;\n              animation-delay: -1s;\n    }\n    .sk-fading-circle .sk-circle4:before {\n      -webkit-animation-delay: -0.9s;\n              animation-delay: -0.9s;\n    }\n    .sk-fading-circle .sk-circle5:before {\n      -webkit-animation-delay: -0.8s;\n              animation-delay: -0.8s;\n    }\n    .sk-fading-circle .sk-circle6:before {\n      -webkit-animation-delay: -0.7s;\n              animation-delay: -0.7s;\n    }\n    .sk-fading-circle .sk-circle7:before {\n      -webkit-animation-delay: -0.6s;\n              animation-delay: -0.6s;\n    }\n    .sk-fading-circle .sk-circle8:before {\n      -webkit-animation-delay: -0.5s;\n              animation-delay: -0.5s;\n    }\n    .sk-fading-circle .sk-circle9:before {\n      -webkit-animation-delay: -0.4s;\n              animation-delay: -0.4s;\n    }\n    .sk-fading-circle .sk-circle10:before {\n      -webkit-animation-delay: -0.3s;\n              animation-delay: -0.3s;\n    }\n    .sk-fading-circle .sk-circle11:before {\n      -webkit-animation-delay: -0.2s;\n              animation-delay: -0.2s;\n    }\n    .sk-fading-circle .sk-circle12:before {\n      -webkit-animation-delay: -0.1s;\n              animation-delay: -0.1s;\n    }\n\n    @-webkit-keyframes sk-circleFadeDelay {\n      0%, 39%, 100% { opacity: 0; }\n      40% { opacity: 1; }\n    }\n\n    @keyframes sk-circleFadeDelay {\n      0%, 39%, 100% { opacity: 0; }\n      40% { opacity: 1; }\n    }\n\n    .itemClickLayer {\n      position: absolute;\n      top: 0;\n      left: 0;\n      z-index: 1;\n      width: 100%;\n      height: 100%;\n      opacity: 0;\n    }",
+        ],
     }),
     tslib_1.__metadata("design:paramtypes", [platform_browser_1.DomSanitizer])
 ], Ng2SimpleAutocomplete);
