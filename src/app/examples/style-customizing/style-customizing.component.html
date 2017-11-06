@@ -1,20 +1,18 @@
 <div class="autocomplete-wrapper">
 
+
+
   <h2 class="example-title">Style customizing</h2>
 
   <p>ng2-simple-autocomplete component has custom styling property. This example customized with style object</p>
 
-  <h3>Component Markup</h3>
+  <h3>1. with inline style</h3>
   <pre class="codeblock exampleCode-wrapper">
-    <code >{{componentMarkup}}</code>
-  </pre>
-
-  <h3><code>style</code> property</h3>
-  <pre class="codeblock exampleCode-wrapper">
+    <code>{{inlineStyleComponentMarkup}}</code>
     <code [innerHTML]="styleCode"></code>
   </pre>
 
-  <h3>Rendered component</h3>
+  <p>rendered output</p>
   <ng2-simple-autocomplete
     [(search)]="search"
     [searchResults]="results"
@@ -24,27 +22,21 @@
     [style]="inputStyle"
   ></ng2-simple-autocomplete>
 
-  <h3>Selected Item</h3>
-  <table class="resultTable">
-    <tr>
-      <td>text</td>
-      <td>
-        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.text || '')}}</code></pre>
-      </td>
-    </tr>
-    <tr>
-      <td>markup</td>
-      <td>
-        <pre *ngIf="!!selected"  class="codeblock"><code>{{!!selected && (selected.markup || '')}}</code></pre>
-      </td>
-    </tr>
-    <tr>
-      <td>value</td>
-      <td>
-        <pre *ngIf="!!selected" class="codeblock"><code>{{!!selected && selected.value}}</code></pre>
-      </td>
-    </tr>
-  </table>
 
+  <h3>2. with global class</h3>
+  <p><code>form-control</code>class of Bootstrap</p>
+  <pre class="codeblock exampleCode-wrapper">
+    <code>{{globalClassComponentMarkup}}</code>
+  </pre>
+
+  <p>rendered output</p>
+  <ng2-simple-autocomplete
+    [(search)]="search"
+    [searchResults]="results"
+    (onSelect)="onSelect($event)"
+    (onChangeInput)="onChangeSearch($event)"
+    [isStatic]="true"
+    classNames="form-control"
+  ></ng2-simple-autocomplete>
 
 </div>

@@ -41,15 +41,15 @@ const removeSpace = (str = '') => {
   selector: 'ng2-simple-autocomplete',
   template: `
     <div
-      [ngClass]="{'autocomplete': !useCSSFramework}"
-      [ngStyle]="{style: !useCSSFramework}"
+      [ngClass]="['containerBase', containerClassName]"
+      [ngStyle]="style"
     >
 
       <input
         #searchInput
         [(ngModel)]="_search"
         class="autocomplete-input"
-        [ngClass]="inputClasses"
+        [ngClass]="inputClassName"
         type="text"
         autocomplete="off"
         (keydown)="preventCursorPosition($event)"
@@ -163,6 +163,10 @@ const removeSpace = (str = '') => {
   `,
   styles: [
     `
+    .containerBase {
+      position: relative;
+    }
+
     .autocomplete {
       position: relative;
       display: inline-block;
@@ -185,8 +189,8 @@ const removeSpace = (str = '') => {
       top: 0;
       left: 0;
       display: block;
-      width: calc(100% - 2px);
-      height: calc(100% - 2px);
+      width: calc(100% - 0.12em);
+      height: calc(100% - 0.12em);
       line-height: inherit;
       padding: inherit;
       border: 0;
@@ -507,21 +511,12 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   // optional
   // ------------------------------------------------------------------------
   @Output() onReset = new EventEmitter(); // 입력 값 초기화 콜백
-  /**
-   * apply 3rd-party/custom class(es) for input
-   *
-   * @type {Boolean}
-   * @memberof Ng2SimpleAutocomplete
-   */
-  @Input() useCSSFramework = false;
 
   /**
-   * specify which 3rd-party/custom class(es) to apply to the input
-   *
-   * @type {String}
-   * @memberof Ng2SimpleAutocomplete
+   * apply 3rd-party/custom class(es) for input
    */
-  @Input() frameworkInputStyle: String = '';
+  @Input() classNames = null;
+
   /**
    * if searchResult is static list, list will be filtered when input changes
    * @memberof Ng2SimpleAutocomplete
@@ -574,16 +569,7 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
    * }
    * @memberof Ng2SimpleAutocomplete
    */
-  @Input()
-  style: AutocompleteStyle = {
-    width: '100%',
-    color: 'inherit',
-    'font-size': 'inherit',
-    'border-radius': '2px',
-    'border-color': '#ddd',
-    height: '35px',
-    'line-height': '35px',
-  };
+  @Input() style: AutocompleteStyle = undefined;
 
   // 컴포넌트 변수
   // ------------------------------------------------------------------------
@@ -603,10 +589,12 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   fontSize = <any>{}; // font-size style extracted from inputStyle
   maxHeight: string; // max height of list. default 20em.
 
-  get inputClasses() {
-    return `${this.isResultSelected ? 'is-selected' : ''} ${this.useCSSFramework
-      ? this.frameworkInputStyle
-      : 'autocomplete-input'}`;
+  get containerClassName() {
+    return this.classNames ? this.classNames : 'autocomplete';
+  }
+
+  get inputClassName() {
+    return `${this.isResultSelected ? 'is-selected' : ''} 'autocomplete-input'}`;
   }
 
   // 초기화 버튼 표시 여부
