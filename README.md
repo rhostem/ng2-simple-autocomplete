@@ -158,7 +158,7 @@ Text of input field. Use 'banana-in-box' notation for 2-way binding.
 List of autocomplete item.
 
 
-#### `style`
+#### `style: AutocompleteStyle`
 
 Style object for customizing input box style. Customizable CSS property is predefined and *another property will be ignored*. Property and default value is like below.
 
@@ -174,6 +174,10 @@ Style object for customizing input box style. Customizable CSS property is prede
   'max-height-of-list': '20em', // max-height property of list box
 };
 ```
+
+#### `classNames: string`
+
+CSS classes for styling. Class names for this property **must be** declared in global area(ie. declare or import at index.html). If your classes are declared in component context, that won't work.
 
 #### `onChangeInput: EventEmitter`
 

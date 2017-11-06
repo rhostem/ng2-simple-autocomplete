@@ -104,7 +104,7 @@ export class StyleCustomizingComponent implements OnInit {
     (onSelect)="onSelect($event)"
     (onChangeInput)="onChangeSearch($event)"
     [isStatic]="true"
-    [style]="inputStyle"
+    classNames="form-control"
   ></ng2-simple-autocomplete>
   `;
 
