@@ -21,14 +21,14 @@ import * as R from 'ramda';
 
 import { AutoCompleteItem, AutocompleteStyle } from './model';
 
-const isArrowUp = (keyCode) => keyCode === 38;
-const isArrowDown = (keyCode) => keyCode === 40;
-const isArrowUpDown = (keyCode) => isArrowUp(keyCode) || isArrowDown(keyCode);
-const isEnter = (keyCode) => keyCode === 13;
-const isBackspace = (keyCode) => keyCode === 8;
-const isDelete = (keyCode) => keyCode === 46;
-const isESC = (keyCode) => keyCode === 27;
-const isTab = (keyCode) => keyCode === 9;
+const isArrowUp = keyCode => keyCode === 38;
+const isArrowDown = keyCode => keyCode === 40;
+const isArrowUpDown = keyCode => isArrowUp(keyCode) || isArrowDown(keyCode);
+const isEnter = keyCode => keyCode === 13;
+const isBackspace = keyCode => keyCode === 8;
+const isDelete = keyCode => keyCode === 46;
+const isESC = keyCode => keyCode === 27;
+const isTab = keyCode => keyCode === 9;
 const isEmptyString = (str = '') => str.replace(/\s/g, '') === '';
 const removeSpace = (str = '') => {
   if (typeof str === 'string') {
@@ -161,7 +161,8 @@ const removeSpace = (str = '') => {
       </ul>
     </div>
   `,
-  styles: [`
+  styles: [
+    `
     .autocomplete {
       position: relative;
       display: inline-block;
@@ -481,7 +482,8 @@ const removeSpace = (str = '') => {
       width: 100%;
       height: 100%;
       opacity: 0;
-    }`],
+    }`,
+  ],
 })
 class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   // 검색 입력 텍스트. 부모 컴포넌트에서 banana-in-box ([]) 표기법 사용해서 연결
@@ -494,18 +496,17 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
     this._search = v;
     this.searchChange.emit(v);
   }
-  @Output() searchChange = new EventEmitter();  // search 2-way binding
-
+  @Output() searchChange = new EventEmitter(); // search 2-way binding
 
   // required input
   // ------------------------------------------------------------------------
   @Input() searchResults: AutoCompleteItem[] = [];
-  @Output() onChangeInput = new EventEmitter();       // 검색어 입력 변경
-  @Output() onSelect = new EventEmitter();            // 검색 결과 항목 선택 콜백
+  @Output() onChangeInput = new EventEmitter(); // 검색어 입력 변경
+  @Output() onSelect = new EventEmitter(); // 검색 결과 항목 선택 콜백
 
   // optional
   // ------------------------------------------------------------------------
-  @Output() onReset = new EventEmitter();             // 입력 값 초기화 콜백
+  @Output() onReset = new EventEmitter(); // 입력 값 초기화 콜백
   /**
    * apply 3rd-party/custom class(es) for input
    *
@@ -513,6 +514,7 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
    * @memberof Ng2SimpleAutocomplete
    */
   @Input() useCSSFramework = false;
+
   /**
    * specify which 3rd-party/custom class(es) to apply to the input
    *
@@ -556,10 +558,10 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
    */
   @Input() historyHeading = 'Recently selected';
   @Input() maxHistory = 15;
-  @Input() autoFocusOnFirst = true;                   // autofocus on first result item
-  @Input() resetOnDelete = false;                     // invoke onReset event binding on delete
-  @Input() resetOnFocusOut = false;                   // invoke onReset event binding on focusout
-  @Input() noResultText = 'There is no results';      // text when there is no search result.
+  @Input() autoFocusOnFirst = true; // autofocus on first result item
+  @Input() resetOnDelete = false; // invoke onReset event binding on delete
+  @Input() resetOnFocusOut = false; // invoke onReset event binding on focusout
+  @Input() noResultText = 'There is no results'; // text when there is no search result.
 
   /**
    * style object. it overwrites basic style of input element by [ngStyle] binding.
@@ -572,13 +574,14 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
    * }
    * @memberof Ng2SimpleAutocomplete
    */
-  @Input() style: AutocompleteStyle = {
-    'width': '100%',
-    'color': 'inherit',
+  @Input()
+  style: AutocompleteStyle = {
+    width: '100%',
+    color: 'inherit',
     'font-size': 'inherit',
     'border-radius': '2px',
     'border-color': '#ddd',
-    'height': '35px',
+    height: '35px',
     'line-height': '35px',
   };
 
@@ -590,18 +593,20 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild('searchResultsEl') searchResultsEl: ElementRef;
   @ViewChild('searchHistoryEl') searchHistoryEl: ElementRef;
-  inputKeyUp$: Observable<any>;               // 검색 입력 이벤트
-  inputKeyDown$: Observable<any>;             // 검색 입력 이벤트
+  inputKeyUp$: Observable<any>; // 검색 입력 이벤트
+  inputKeyDown$: Observable<any>; // 검색 입력 이벤트
   isFocusIn: Boolean;
-  searchHistory: AutoCompleteItem[] = [];   // 검색 히스토리
-  isNoResults = false;                        // 검색 결과 존재 여부. 알 수 없는 경우도 false로 할당한다.
-  isResultSelected = false;                   // 검색 결과 선택 여부
-  maintainFocus: boolean;                     // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
-  fontSize = <any> {}; // font-size style extracted from inputStyle
-  maxHeight: string;  // max height of list. default 20em.
+  searchHistory: AutoCompleteItem[] = []; // 검색 히스토리
+  isNoResults = false; // 검색 결과 존재 여부. 알 수 없는 경우도 false로 할당한다.
+  isResultSelected = false; // 검색 결과 선택 여부
+  maintainFocus: boolean; // 포커스아웃시 강제로 포커스를 유지하고 싶을 때 사용한다.
+  fontSize = <any>{}; // font-size style extracted from inputStyle
+  maxHeight: string; // max height of list. default 20em.
 
   get inputClasses() {
-    return `${this.isResultSelected ? 'is-selected' : ''} ${this.useCSSFramework ? this.frameworkInputStyle : 'autocomplete-input'}`;
+    return `${this.isResultSelected ? 'is-selected' : ''} ${this.useCSSFramework
+      ? this.frameworkInputStyle
+      : 'autocomplete-input'}`;
   }
 
   // 초기화 버튼 표시 여부
@@ -614,16 +619,20 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   }
 
   get isResultExists() {
-    const result = R.not(this.isStatic) ? this.searchResults.length : this.filteredResults.length;
+    const result = R.not(this.isStatic)
+      ? this.searchResults.length
+      : this.filteredResults.length;
     return !!result;
   }
 
   // 결과 목록 표시 여부
   get isResultVisible(): Boolean {
-    return this.isFocusIn &&
+    return (
+      this.isFocusIn &&
       !this.isSearchHistoryVisible && // history has higher priority
       !this.isLoading &&
-      this.isResultExists;
+      this.isResultExists
+    );
   }
 
   /**
@@ -634,12 +643,14 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
    * @memberof Ng2SimpleAutocomplete
    */
   get isSearchHistoryVisible(): Boolean {
-    return this.isFocusIn &&
+    return (
+      this.isFocusIn &&
       !!this.historyId && // history id is required
       this.searchHistory.length &&
       !this.isInputExist &&
       !this.isLoading &&
-      !this.isNoResults;
+      !this.isNoResults
+    );
   }
 
   // 검색 결과와 히스토리 중에서 표시된 목록 선택
@@ -659,9 +670,7 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
     return this.isFocusIn && this.isNoResults;
   }
 
-  constructor(
-    public sanitizer: DomSanitizer
-  ) {}
+  constructor(public sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     this.searchResults = this.searchResults || [];
@@ -676,14 +685,16 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     // 검색 결과가 업데이트된 경우
-    if (changes &&
+    if (
+      changes &&
       changes.searchResults &&
       Array.isArray(changes.searchResults.currentValue)
     ) {
       this.searchResults = changes.searchResults.currentValue.map((v, index) => {
         // focus on first result item
-        return (this.autoFocusOnFirst && index === 0) ?
-          Object.assign(v, { isFocus: true }) : v;
+        return this.autoFocusOnFirst && index === 0
+          ? Object.assign(v, { isFocus: true })
+          : v;
       });
 
       if (!changes.searchResults.firstChange) {
@@ -700,12 +711,12 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   extractStyle(style = {}) {
     const inputStyle = Object.assign({}, style);
     this.style = {
-      'width': inputStyle['width'],
-      'color': inputStyle['color'],
+      width: inputStyle['width'],
+      color: inputStyle['color'],
       'font-size': inputStyle['font-size'],
       'border-radius': inputStyle['border-radius'],
       'border-color': inputStyle['border-color'],
-      'height': inputStyle['height'],
+      height: inputStyle['height'],
       'line-height': inputStyle['line-height'],
     };
 
@@ -713,17 +724,21 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   }
 
   initSearchHistory() {
-    const history = window.localStorage
-      .getItem(`ng2_simple_autocomplete_history_${this.historyId}`);
+    const history = window.localStorage.getItem(
+      `ng2_simple_autocomplete_history_${this.historyId}`
+    );
     this.searchHistory = history ? JSON.parse(history) : [];
   }
 
   initEventStream() {
-    this.inputKeyUp$ = Observable.fromEvent(this.searchInput.nativeElement, 'keyup')
-      .map((e: any) => e);
+    this.inputKeyUp$ = Observable.fromEvent(this.searchInput.nativeElement, 'keyup').map(
+      (e: any) => e
+    );
 
-    this.inputKeyDown$ = Observable.fromEvent(this.searchInput.nativeElement, 'keydown')
-      .map((e: any) => e);
+    this.inputKeyDown$ = Observable.fromEvent(
+      this.searchInput.nativeElement,
+      'keydown'
+    ).map((e: any) => e);
 
     this.listenEventStream();
   }
@@ -731,14 +746,15 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   listenEventStream() {
     // key up event
     this.inputKeyUp$
-      .filter(e =>
-        !isArrowUpDown(e.keyCode) &&
-        !isEnter(e.keyCode) &&
-        !isESC(e.keyCode) &&
-        !isTab(e.keyCode)
+      .filter(
+        e =>
+          !isArrowUpDown(e.keyCode) &&
+          !isEnter(e.keyCode) &&
+          !isESC(e.keyCode) &&
+          !isTab(e.keyCode)
       )
       .debounceTime(400)
-      .subscribe((e) => {
+      .subscribe(e => {
         this.onKeyUp(e);
       });
 
@@ -746,29 +762,25 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
     this.inputKeyUp$
       .filter(e => isESC(e.keyCode))
       .debounceTime(100)
-      .subscribe((e) => {
+      .subscribe(e => {
         this.onEsc();
       });
 
     // enter
-    this.inputKeyUp$
-      .filter(e => isEnter(e.keyCode))
-      .subscribe((e) => {
-        this.onEnterResult(e);
-      });
+    this.inputKeyUp$.filter(e => isEnter(e.keyCode)).subscribe(e => {
+      this.onEnterResult(e);
+    });
 
     // cursor up & down
-    this.inputKeyDown$
-      .filter(e => isArrowUpDown(e.keyCode))
-      .subscribe((e) => {
-        e.preventDefault();
-        this.onFocusNextResult(e);
-      });
+    this.inputKeyDown$.filter(e => isArrowUpDown(e.keyCode)).subscribe(e => {
+      e.preventDefault();
+      this.onFocusNextResult(e);
+    });
 
     // delete
     this.inputKeyDown$
       .filter(e => isBackspace(e.keyCode) || isDelete(e.keyCode))
-      .subscribe((e) => {
+      .subscribe(e => {
         this.onDeleteSearchText();
       });
   }
@@ -834,14 +846,16 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
    * @memberOf AutocompleteComponent
    */
   scrollToFocusedItem(index) {
-    const listEl = this.isResultVisible ?
-      this.searchResultsEl.nativeElement : this.searchHistoryEl.nativeElement;
+    const listEl = this.isResultVisible
+      ? this.searchResultsEl.nativeElement
+      : this.searchHistoryEl.nativeElement;
 
     let items = Array.prototype.slice.call(listEl.childNodes);
     items = items.filter((node: any) => {
-      if (node.nodeType === 1) { // if element node
+      if (node.nodeType === 1) {
+        // if element node
         return node.className.includes('autocomplete-item');
-      } else  {
+      } else {
         return false;
       }
     });
@@ -849,8 +863,6 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
     if (!items.length) {
       return;
     }
-
-
 
     const listHeight = listEl.offsetHeight;
     const itemHeight = items[index].offsetHeight;
@@ -913,8 +925,8 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
     const results = this.searchResultsOnVisble;
     const focusedIdx = results.findIndex((result: AutoCompleteItem) => result.isFocus);
     const focused = results[focusedIdx];
-    const unselected = (!this.autoFocusOnFirst || !this.search) ?
-      { text: this.search, value: null } : null;
+    const unselected =
+      !this.autoFocusOnFirst || !this.search ? { text: this.search, value: null } : null;
     // 자동포커스 옵션이 false인 경우에만 선택되지 않은 값을 전달한다.
     const selected = focused || unselected;
 
@@ -942,10 +954,9 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
     this.searchChange.emit(selected.text); // 2-way binding
     this.onSelect.emit(selected);
 
-    const isValidText = R.compose(
-      R.not,
-      R.both(isEmptyString, R.isNil)
-    )(selected.text || selected.markup);
+    const isValidText = R.compose(R.not, R.both(isEmptyString, R.isNil))(
+      selected.text || selected.markup
+    );
 
     const isValidHistoryId = R.identity(this.historyId);
 
@@ -1037,8 +1048,10 @@ class Ng2SimpleAutocomplete implements OnInit, OnChanges {
   }
 
   saveHistoryToLocalStorage(history) {
-    window.localStorage.setItem(`ng2_simple_autocomplete_history_${this.historyId}`,
-      JSON.stringify(history));
+    window.localStorage.setItem(
+      `ng2_simple_autocomplete_history_${this.historyId}`,
+      JSON.stringify(history)
+    );
   }
 
   sanitize(markup: string): SafeHtml {
