@@ -1,9 +1,14 @@
 # ng2-simple-autocomplete
 
-ng2-simple-autocomplete is autocomplete component for Angular. It mainly focuses on *asynchronous* search result from remote data. But it also supports static dataset.
+## <span style="color:red">&#9888;</span> This project is not maintained for now.
 
+There is serveral problems to use this component in latest Angular version and Angular CLI. (this component is developed in Angular 4.1.2). I don't have a plan to update this component for now.
+
+---
 
 ## Features
+
+ng2-simple-autocomplete is autocomplete component for Angular. It mainly focuses on *asynchronous* search result from remote data. But it also supports static dataset.
 
 - Variable properties and event bindings.
 - 2-way binding.
